@@ -1,0 +1,29 @@
+# 歐豆攝影教室網站後台設定（Pages CMS）
+media:
+  input: images
+  output: /images
+  categories: [image]
+
+content:
+  - name: pages
+    label: 自訂頁面（貼原始碼）
+    type: collection
+    path: p
+    filename:
+      template: "page-{year}{month}{day}-{hour}{minute}.html"
+      field: true
+
+  - name: home
+    label: 首頁
+    type: file
+    path: index.html
+
+  - name: lv1
+    label: 攝影基礎班 LV1
+    type: file
+    path: lv1.html
+
+  - name: tools
+    label: 攝影工具區（目錄頁）
+    type: file
+    path: tools.html
