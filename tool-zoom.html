@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>變焦練習器｜歐豆攝影教室</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Barlow+Condensed:wght@500;600&display=swap');
+.olddo-tool{--o-bg:#F3F4F2;--o-panel:#FFFFFF;--o-ink:#1E2124;--o-muted:#5E6468;--o-line:#D9DCD8;--o-accent:#D7322B;--o-sel:#1E2124;--o-on-sel:#FFFFFF;--o-road:#CFD2CE;--o-road-line:#FFFFFF;--o-cone:55,138,221;--o-cone-hot:215,50,43;
+--o-wide-bg:#E3EEFA;--o-wide-fg:#18497F;--o-std-bg:#DFF3EA;--o-std-fg:#0B5A45;--o-tele-bg:#FBE6DF;--o-tele-fg:#7A2D14;
+--o-font-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;--o-font-num:"Barlow Condensed","Arial Narrow",sans-serif;
+background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-size:16px;line-height:1.7;max-width:900px;margin:0 auto;padding:28px 16px 40px;display:flex;flex-direction:column;gap:20px;box-sizing:border-box;border-radius:12px;text-align:left}
+.olddo-tool *{box-sizing:border-box}
+.olddo-tool .olddo-head{display:flex;flex-direction:column;gap:4px}
+.olddo-tool .olddo-eyebrow{font-size:13px;letter-spacing:.08em;color:var(--o-accent);font-weight:500}
+.olddo-tool h1.olddo-h1{font-size:clamp(28px,6vw,40px);line-height:1.2;margin:0;font-weight:700;color:var(--o-ink);font-family:var(--o-font-body)}
+.olddo-tool .olddo-lead{margin:0;color:var(--o-muted);max-width:60ch}
+.olddo-tool .olddo-lcd{background:var(--o-panel);border:1px solid var(--o-line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.olddo-tool .olddo-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.olddo-tool .olddo-lbl{font-size:13px;color:var(--o-muted);min-width:4.5em}
+.olddo-tool .olddo-mode{font-family:var(--o-font-num);font-weight:600;font-size:20px;background:var(--o-accent);color:#fff;border-radius:6px;padding:0 10px;line-height:30px}
+.olddo-tool .olddo-big{font-family:var(--o-font-num);font-weight:600;font-size:34px;line-height:1;min-width:3.6em}
+.olddo-tool input.olddo-range{flex:1;min-width:160px;accent-color:var(--o-accent);height:28px;margin:0}
+.olddo-tool button.olddo-btn{font-family:var(--o-font-body);font-size:15px;border:1px solid var(--o-line);background:transparent;color:var(--o-ink);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:38px;margin:0;box-shadow:none;text-transform:none}
+.olddo-tool button.olddo-num{font-family:var(--o-font-num);font-size:19px;font-weight:500;min-width:56px}
+.olddo-tool button.olddo-btn[aria-pressed="true"]{background:var(--o-sel);color:var(--o-on-sel);border-color:var(--o-sel)}
+.olddo-tool canvas.olddo-cv{width:100%;height:auto;display:block;border-radius:10px;max-width:100%}
+.olddo-tool .olddo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+.olddo-tool .olddo-grid.olddo-grid-32{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}
+@media (max-width:620px){.olddo-tool .olddo-grid,.olddo-tool .olddo-grid.olddo-grid-32{grid-template-columns:minmax(0,1fr)}}
+.olddo-tool .olddo-cap{font-size:14px;color:var(--o-muted);margin-top:6px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.olddo-tool .olddo-cap b{color:var(--o-ink);font-weight:500}
+.olddo-tool .olddo-cap b.olddo-deg{font-family:var(--o-font-num);font-size:22px}
+.olddo-tool .olddo-tag{font-size:14px;font-weight:500;border-radius:6px;padding:2px 10px}
+.olddo-tool .olddo-tips{background:var(--o-panel);border:1px solid var(--o-line);border-radius:12px;padding:16px 18px}
+.olddo-tool .olddo-tips h2{font-size:18px;margin:0 0 8px;font-weight:700;color:var(--o-ink)}
+.olddo-tool .olddo-tips ol,.olddo-tool .olddo-tips ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
+.olddo-tool .olddo-tips li{margin:0}
+.olddo-tool .olddo-foot{font-size:13px;color:var(--o-muted)}
+.olddo-tool .olddo-foot a{color:var(--o-ink)}
+</style>
+</head>
+<body>
+<style>body{margin:0;background:#F3F4F2}.olddo-sitebar a{color:#161616;text-decoration:none}.olddo-sitebar a:hover{text-decoration:underline}</style>
+<div class="olddo-sitebar" style="border-bottom:1px solid #D8D4CC;background:#F4F2EE">
+<nav aria-label="網站選單" style="max-width:1080px;margin:0 auto;padding:14px 16px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;font-size:15px">
+<a href="index.html" style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:19px;letter-spacing:.06em;flex-grow:1">歐豆攝影教室</a>
+<a href="tools.html">← 攝影工具區</a>
+<a href="index.html#schedule">近期開課</a>
+</nav></div>
+
+<div class="olddo-tool">
+  <div class="olddo-head">
+    <div class="olddo-eyebrow">歐豆攝影教室・互動教材</div>
+    <h1 class="olddo-h1">變焦：焦距越長，看得越窄越近</h1>
+    <p class="olddo-lead">拖動變焦環，看同一個位置拍出去，畫面範圍和視角怎麼改變。人站在原地沒動，只是鏡頭焦距變了。</p>
+  </div>
+
+  <div class="olddo-lcd" aria-label="鏡頭設定">
+    <div class="olddo-row"><span class="olddo-lbl">焦距</span><span class="olddo-big" id="olddo-z-flo">16mm</span>
+      <input class="olddo-range" type="range" id="olddo-z-fl" min="16" max="200" step="1" value="16" aria-label="焦距">
+      <button class="olddo-btn" id="olddo-z-play" aria-pressed="false">自動變焦</button></div>
+    <div class="olddo-row" id="olddo-z-pre"><span class="olddo-lbl">常用</span>
+      <button class="olddo-btn olddo-num" id="olddo-z-p16" data-v="16">16</button><button class="olddo-btn olddo-num" id="olddo-z-p24" data-v="24">24</button><button class="olddo-btn olddo-num" id="olddo-z-p35" data-v="35">35</button><button class="olddo-btn olddo-num" id="olddo-z-p50" data-v="50">50</button><button class="olddo-btn olddo-num" id="olddo-z-p85" data-v="85">85</button><button class="olddo-btn olddo-num" id="olddo-z-p135" data-v="135">135</button><button class="olddo-btn olddo-num" id="olddo-z-p200" data-v="200">200</button>
+    </div>
+  </div>
+
+  <div class="olddo-grid olddo-grid-32">
+    <div><canvas class="olddo-cv" id="olddo-z-cv" width="1200" height="800" aria-label="相機看到的畫面"></canvas>
+      <div class="olddo-cap">相機看到的畫面 <span class="olddo-tag" id="olddo-z-tag">廣角</span></div></div>
+    <div><canvas class="olddo-cv" id="olddo-z-top" width="480" height="520" aria-label="俯視圖：鏡頭視角"></canvas>
+      <div class="olddo-cap">俯視・視角 <b class="olddo-deg" id="olddo-z-aov">97°</b></div></div>
+  </div>
+
+  <div class="olddo-tips">
+    <h2>上課重點</h2>
+    <ul>
+      <li>廣角（35mm 以下）：收進大範圍，適合風景、室內、大合照。</li>
+      <li>標準（35–70mm）：接近人眼看到的感覺，街拍、生活照都好用。</li>
+      <li>望遠（70mm 以上）：把遠處拉近、背景變單純，適合人像特寫和拍不能靠近的主體。</li>
+      <li>焦距是以全片幅換算；APS-C 機身約要乘 1.5（Canon 1.6）。</li>
+    </ul>
+  </div>
+
+  <div class="olddo-foot">歐豆攝影教室・<a href="https://olddo.com">olddo.com</a></div>
+</div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const ROOT=document.getElementById('olddo-z-cv').closest('.olddo-tool');
+
+const ctx=$('olddo-z-cv').getContext('2d'),tc=$('olddo-z-top').getContext('2d');
+const sl=$('olddo-z-fl');let f=16,dir=1,playing=false;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tok(n){return getComputedStyle(ROOT).getPropertyValue(n).trim();}
+function scene(){
+ctx.fillStyle='#B5D4F4';ctx.fillRect(-3000,-3000,6000,6000);
+ctx.fillStyle='#F1EFE8';[[-700,-230],[700,-220],[100,-250]].forEach(([x,y])=>{ctx.beginPath();ctx.ellipse(x,y,50,16,0,0,7);ctx.fill();});
+ctx.fillStyle='#FAC775';ctx.beginPath();ctx.arc(-450,-180,40,0,7);ctx.fill();
+ctx.fillStyle='#85B7EB';ctx.beginPath();ctx.moveTo(-900,40);ctx.lineTo(-500,-120);ctx.lineTo(-200,20);ctx.lineTo(150,-160);ctx.lineTo(500,10);ctx.lineTo(900,-100);ctx.lineTo(1200,40);ctx.lineTo(1200,200);ctx.lineTo(-900,200);ctx.fill();
+ctx.fillStyle='#97C459';ctx.fillRect(-3000,30,6000,3000);ctx.fillStyle='#C0DD97';ctx.fillRect(-3000,30,6000,14);
+ctx.fillStyle='#854F0B';ctx.fillRect(-382,-20,16,70);ctx.fillStyle='#3B6D11';ctx.beginPath();ctx.arc(-374,-40,48,0,7);ctx.fill();
+ctx.fillStyle='#D3D1C7';ctx.fillRect(280,-30,120,80);ctx.fillStyle='#993C1D';ctx.beginPath();ctx.moveTo(265,-30);ctx.lineTo(340,-90);ctx.lineTo(415,-30);ctx.fill();
+ctx.fillStyle='#185FA5';ctx.fillRect(325,10,30,40);
+ctx.fillStyle='#D85A30';ctx.fillRect(-9,-24,18,30);ctx.fillStyle='#444441';ctx.fillRect(-8,6,6,22);ctx.fillRect(2,6,6,22);
+ctx.beginPath();ctx.arc(0,-34,9,0,7);ctx.fill();ctx.fillStyle='#FAC775';ctx.beginPath();ctx.arc(0,-35,6,0.2,2.9);ctx.fill();
+ctx.strokeStyle='#2C2C2A';ctx.lineWidth=2;
+[[-150,-170],[-120,-185],[620,-150]].forEach(([x,y])=>{ctx.beginPath();ctx.moveTo(x-8,y);ctx.quadraticCurveTo(x-4,y-6,x,y);ctx.quadraticCurveTo(x+4,y-6,x+8,y);ctx.stroke();});}
+function draw(){const W=1200,H=800,s=f/16*0.72;
+ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,W,H);ctx.setTransform(s,0,0,s,W/2,H/2+12*s);scene();ctx.setTransform(1,0,0,1,0,0);
+ctx.strokeStyle='rgba(255,255,255,.75)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(W/2-20,H/2);ctx.lineTo(W/2+20,H/2);ctx.moveTo(W/2,H/2-20);ctx.lineTo(W/2,H/2+20);ctx.stroke();
+ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(24,24,190,60);ctx.fillStyle='#fff';ctx.font='600 42px "Barlow Condensed",sans-serif';ctx.fillText(Math.round(f)+'mm',44,68);
+const k=2,w=240,h=260;tc.setTransform(k,0,0,k,0,0);tc.fillStyle=tok('--o-panel');tc.fillRect(0,0,w,h);
+const a=Math.atan(18/f),L=190,cx=120,cy=240,dx=Math.tan(a)*L;
+tc.fillStyle='rgba('+tok('--o-cone')+',.2)';tc.strokeStyle='rgba('+tok('--o-cone')+',1)';tc.lineWidth=1.5;
+tc.beginPath();tc.moveTo(cx,cy);tc.lineTo(cx-dx,cy-L);tc.lineTo(cx+dx,cy-L);tc.closePath();tc.fill();tc.stroke();
+tc.fillStyle='#D85A30';tc.beginPath();tc.arc(120,60,7,0,7);tc.fill();tc.fillStyle='#639922';tc.fillRect(60,40,10,16);tc.fillStyle='#888780';tc.fillRect(168,44,16,12);
+tc.fillStyle=tok('--o-ink');tc.fillRect(108,236,24,14);
+tc.font='12px "Noto Sans TC",sans-serif';tc.fillStyle=tok('--o-muted');tc.textAlign='center';tc.fillText('人',120,40);tc.fillText('樹',65,34);tc.fillText('房子',176,38);tc.fillText('你的位置',120,232);tc.textAlign='left';
+$('olddo-z-aov').textContent=Math.round(2*a*180/Math.PI)+'°';$('olddo-z-flo').textContent=Math.round(f)+'mm';sl.value=Math.round(f);
+const t=$('olddo-z-tag'),c=f<35?['廣角','wide']:f<70?['標準','std']:['望遠','tele'];t.textContent=c[0];t.style.background='var(--o-'+c[1]+'-bg)';t.style.color='var(--o-'+c[1]+'-fg)';
+document.querySelectorAll('#olddo-z-pre button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.v===Math.round(f)));}
+function setPlay(p){playing=p;$('olddo-z-play').setAttribute('aria-pressed',p);$('olddo-z-play').textContent=p?'停止':'自動變焦';}
+function tick(){if(playing){f+=dir*0.25*(f/40+0.4);if(f>=200){f=200;dir=-1;}if(f<=16){f=16;dir=1;}draw();}requestAnimationFrame(tick);}
+sl.addEventListener('input',()=>{f=+sl.value;setPlay(false);draw();});
+$('olddo-z-play').addEventListener('click',()=>setPlay(!playing));
+document.querySelectorAll('#olddo-z-pre button').forEach(b=>b.addEventListener('click',()=>{f=+b.dataset.v;setPlay(false);draw();}));
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+if(document.fonts)document.fonts.ready.then(draw);
+draw();setPlay(true);requestAnimationFrame(tick);
+
+})();
+</script>
+</body>
+</html>

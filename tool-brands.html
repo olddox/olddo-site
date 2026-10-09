@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>相機品牌圖鑑｜歐豆攝影教室</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Barlow+Condensed:wght@500;600&display=swap');
+.olddo-brand{--o-bg:#F3F4F2;--o-panel:#FFFFFF;--o-ink:#1E2124;--o-muted:#5E6468;--o-line:#D9DCD8;--o-accent:#D7322B;--o-sel:#1E2124;--o-on-sel:#FFFFFF;--o-soft:#ECEEEB;
+--o-font-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;--o-font-num:"Barlow Condensed","Arial Narrow",sans-serif;
+background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-size:16px;line-height:1.7;max-width:980px;margin:0 auto;padding:28px 16px 40px;display:flex;flex-direction:column;gap:20px;box-sizing:border-box;text-align:left}
+.olddo-brand *{box-sizing:border-box}
+.olddo-brand .olddo-eyebrow{font-size:13px;letter-spacing:.08em;color:var(--o-accent);font-weight:500}
+.olddo-brand h1.olddo-h1{font-size:clamp(28px,6vw,40px);line-height:1.2;margin:0;font-weight:700;color:var(--o-ink);font-family:var(--o-font-body)}
+.olddo-brand .olddo-lead{margin:0;color:var(--o-muted);max-width:62ch}
+.olddo-brand .olddo-filter{display:flex;flex-direction:column;gap:8px}
+.olddo-brand .olddo-flabel{font-size:13px;color:var(--o-muted)}
+.olddo-brand .olddo-chips{display:flex;flex-wrap:wrap;gap:8px}
+.olddo-brand button.olddo-chip{font-family:var(--o-font-body);font-size:15px;border:1px solid var(--o-line);background:var(--o-panel);color:var(--o-ink);border-radius:999px;padding:5px 14px;cursor:pointer;min-height:38px;margin:0;box-shadow:none;text-transform:none;line-height:1.4}
+.olddo-brand button.olddo-chip[aria-pressed="true"]{background:var(--o-sel);color:var(--o-on-sel);border-color:var(--o-sel)}
+.olddo-brand button.olddo-chip:focus-visible,.olddo-brand summary:focus-visible{outline:2px solid var(--o-accent);outline-offset:2px}
+.olddo-brand .olddo-count{font-size:14px;color:var(--o-muted)}
+.olddo-brand .olddo-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;align-items:start}
+.olddo-brand .olddo-card{background:var(--o-panel);border:1px solid var(--o-line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.olddo-brand .olddo-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.olddo-brand .olddo-name{font-family:var(--o-font-num);font-size:30px;font-weight:600;line-height:1;letter-spacing:.01em;color:var(--o-ink)}
+.olddo-brand .olddo-zh{font-size:14px;color:var(--o-muted)}
+.olddo-brand .olddo-tags{display:flex;flex-wrap:wrap;gap:6px}
+.olddo-brand .olddo-tag{font-size:13px;border-radius:6px;padding:1px 8px;background:var(--o-soft);color:var(--o-ink)}
+.olddo-brand .olddo-tag.olddo-mount{background:transparent;border:1px solid var(--o-line);color:var(--o-muted)}
+.olddo-brand .olddo-one{margin:0;font-size:15px;font-weight:500;color:var(--o-ink)}
+.olddo-brand ul.olddo-pts{margin:0;padding-left:1.2em;font-size:15px;color:var(--o-ink)}
+.olddo-brand ul.olddo-pts li{margin:0}
+.olddo-brand .olddo-for{font-size:14px;color:var(--o-muted)}
+.olddo-brand .olddo-for b{color:var(--o-accent);font-weight:500}
+.olddo-brand details.olddo-det{border-top:1px solid var(--o-line);padding-top:8px;font-size:15px}
+.olddo-brand summary.olddo-sum{cursor:pointer;color:var(--o-ink);font-weight:500}
+.olddo-brand details.olddo-det p{margin:6px 0 0;color:var(--o-ink)}
+.olddo-brand .olddo-tips{background:var(--o-panel);border:1px solid var(--o-line);border-radius:12px;padding:16px 18px}
+.olddo-brand .olddo-tips h2{font-size:18px;margin:0 0 8px;font-weight:700;color:var(--o-ink)}
+.olddo-brand .olddo-tips ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
+.olddo-brand .olddo-tips li{margin:0}
+.olddo-brand .olddo-pick{background:var(--o-panel);border:2px solid var(--o-ink);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.olddo-brand .olddo-pick h2{font-size:22px;margin:0;font-weight:700;color:var(--o-ink)}
+.olddo-brand .olddo-step{display:flex;flex-direction:column;gap:8px}
+.olddo-brand .olddo-stepn{font-size:14px;font-weight:500;color:var(--o-ink)}
+.olddo-brand .olddo-stepn span{font-family:var(--o-font-num);font-size:18px;color:var(--o-accent);margin-right:6px}
+.olddo-brand .olddo-hint{font-size:13px;color:var(--o-muted)}
+.olddo-brand button.olddo-go{font-family:var(--o-font-body);font-size:16px;font-weight:500;background:var(--o-sel);color:var(--o-on-sel);border:1px solid var(--o-sel);border-radius:10px;padding:12px 28px;cursor:pointer;margin:0;min-height:48px;align-self:flex-start;box-shadow:none;text-transform:none}
+.olddo-brand button.olddo-go:focus-visible{outline:2px solid var(--o-accent);outline-offset:2px}
+.olddo-brand .olddo-err{font-size:13px;color:var(--o-accent);min-height:1em}
+.olddo-brand .olddo-res{display:flex;flex-direction:column;gap:12px}
+.olddo-brand .olddo-rec{border:1px solid var(--o-line);border-radius:12px;padding:14px 16px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;align-items:baseline;background:var(--o-bg)}
+.olddo-brand .olddo-rank{font-family:var(--o-font-num);font-size:34px;font-weight:600;color:var(--o-accent);line-height:1;grid-row:span 8}
+.olddo-brand .olddo-rname{font-family:var(--o-font-num);font-size:26px;font-weight:600;line-height:1.1;color:var(--o-ink)}
+.olddo-brand .olddo-rline{font-size:15px;color:var(--o-ink)}
+.olddo-brand .olddo-rline b{font-weight:500;color:var(--o-muted)}
+.olddo-brand .olddo-match{display:flex;flex-wrap:wrap;gap:6px}
+.olddo-brand .olddo-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.olddo-brand input.olddo-in{font-family:var(--o-font-num);font-size:22px;width:6.5em;padding:6px 10px;border:1px solid var(--o-line);border-radius:8px;background:var(--o-panel);color:var(--o-ink);margin:0;height:auto;box-shadow:none}
+.olddo-brand input.olddo-in:focus-visible{outline:2px solid var(--o-accent);outline-offset:2px}
+.olddo-brand .olddo-out{background:var(--o-bg);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.olddo-brand .olddo-eq{font-family:var(--o-font-num);font-size:40px;font-weight:600;line-height:1.1;color:var(--o-ink)}
+.olddo-brand .olddo-eq small{font-size:20px;color:var(--o-muted);font-weight:500}
+.olddo-brand .olddo-wt{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.olddo-brand .olddo-wbar{flex:1;min-width:80px;max-width:220px;height:6px;border-radius:3px;background:var(--o-line);overflow:hidden;display:inline-block}
+.olddo-brand .olddo-wbar i{display:block;height:100%;background:var(--o-muted)}
+.olddo-brand .olddo-filt{display:flex;flex-direction:column;gap:2px}
+.olddo-brand .olddo-ft{font-size:14px;color:var(--o-muted);padding-left:10px;border-left:2px solid var(--o-line)}
+.olddo-brand .olddo-ft b{color:var(--o-ink);font-weight:500;margin-right:2px}
+.olddo-brand .olddo-ft.olddo-fin{border-left-color:var(--o-accent)}
+.olddo-brand .olddo-ft.olddo-fin b{color:var(--o-accent)}
+.olddo-brand .olddo-out:empty{display:none}
+.olddo-brand .olddo-conv{border-width:1px;border-color:var(--o-line)}
+.olddo-brand .olddo-tag.olddo-miss{background:transparent;border:1px dashed var(--o-line);color:var(--o-muted)}
+.olddo-brand .olddo-note{font-size:13px;color:var(--o-muted);border-top:1px solid var(--o-line);padding-top:10px}
+.olddo-brand .olddo-empty{color:var(--o-muted);font-size:15px}
+.olddo-brand .olddo-foot{font-size:13px;color:var(--o-muted)}
+.olddo-brand .olddo-foot a{color:var(--o-ink)}
+</style>
+</head>
+<body>
+<style>body{margin:0;background:#F3F4F2}.olddo-sitebar a{color:#161616;text-decoration:none}.olddo-sitebar a:hover{text-decoration:underline}</style>
+<div class="olddo-sitebar" style="border-bottom:1px solid #D8D4CC;background:#F4F2EE">
+<nav aria-label="網站選單" style="max-width:1080px;margin:0 auto;padding:14px 16px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;font-size:15px">
+<a href="index.html" style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:19px;letter-spacing:.06em;flex-grow:1">歐豆攝影教室</a>
+<a href="tools.html">← 攝影工具區</a>
+<a href="index.html#schedule">近期開課</a>
+</nav></div>
+
+<div class="olddo-brand">
+  <div>
+    <div class="olddo-eyebrow">歐豆攝影教室・互動教材</div>
+    <h1 class="olddo-h1">相機品牌圖鑑</h1>
+    <p class="olddo-lead">十個常見相機品牌一次看懂：用的片幅、卡口、個性和適合誰。先用「幫我挑相機」設定預算和題材，看看推薦哪些品牌。</p>
+  </div>
+
+  <div class="olddo-pick">
+    <h2>幫我挑相機</h2>
+    <div class="olddo-step"><div class="olddo-stepn"><span>1</span>預算多少？</div>
+      <div class="olddo-chips" id="olddo-b-budget"></div>
+      <div class="olddo-hint">指機身加一顆基本鏡頭的新品大約價格（新台幣）。</div></div>
+    <div class="olddo-step"><div class="olddo-stepn"><span>2</span>最常拍什麼？（可複選）</div>
+      <div class="olddo-chips" id="olddo-b-want"></div>
+      <div class="olddo-hint">防潑水：機身有防塵防滴密封，雨天、海邊比較安心。防手震：機身內建防手震，慢快門手持也穩。計算攝影：相機內建多張合成，例如 Live ND、手持高解析、星軌即時合成。內建 ND：相機本身就能減光（實體 ND 或 ND 模擬），拍流水、白天開大光圈可以先不買 ND 鏡。</div></div>
+    <button class="olddo-go" id="olddo-b-go">看推薦</button>
+    <div class="olddo-err" id="olddo-b-err" role="alert"></div>
+    <div class="olddo-res" id="olddo-b-res" aria-live="polite"></div>
+  </div>
+
+  <div class="olddo-pick olddo-conv">
+    <h2>焦段換算器</h2>
+    <div class="olddo-hint">同一顆鏡頭裝在不同片幅上，拍到的範圍不一樣。換算成「全片幅等效焦段」，才能比較誰拍得比較廣、比較遠。</div>
+    <div class="olddo-step"><div class="olddo-stepn"><span>1</span>常見鏡頭組（點一下帶入）</div>
+      <div class="olddo-chips" id="olddo-b-kits"></div></div>
+    <div class="olddo-step"><div class="olddo-stepn"><span>2</span>片幅</div>
+      <div class="olddo-chips" id="olddo-b-cf"></div></div>
+    <div class="olddo-step"><div class="olddo-stepn"><span>3</span>鏡頭焦段（mm）</div>
+      <div class="olddo-row"><input class="olddo-in" id="olddo-b-f1" type="number" inputmode="decimal" min="1" max="2000" value="14" aria-label="最短焦段"><span>到</span><input class="olddo-in" id="olddo-b-f2" type="number" inputmode="decimal" min="1" max="2000" value="42" aria-label="最長焦段（定焦可留空）"><span class="olddo-hint">定焦鏡第二格留空</span></div></div>
+    <div class="olddo-err" id="olddo-b-cerr" role="alert"></div>
+    <div class="olddo-out" id="olddo-b-cout" aria-live="polite"></div>
+  </div>
+
+  <div class="olddo-filter">
+    <span class="olddo-flabel" style="font-size:15px;color:var(--o-ink);font-weight:500">或是自己逛逛全部品牌</span>
+    <span class="olddo-flabel">我想拍</span>
+    <div class="olddo-chips" id="olddo-b-need"></div>
+    <span class="olddo-flabel">片幅</span>
+    <div class="olddo-chips" id="olddo-b-fmt"></div>
+    <span class="olddo-count" id="olddo-b-count"></span>
+  </div>
+
+  <div class="olddo-list" id="olddo-b-list"></div>
+
+  <div class="olddo-tips">
+    <h2>挑品牌前先知道</h2>
+    <ol>
+      <li>選品牌其實是選「卡口」。之後買的鏡頭都要配合這個卡口，換品牌等於整套重買。</li>
+      <li>先想清楚最常拍什麼，再看哪個系統的鏡頭適合，機身反而可以之後再升級。</li>
+      <li>去店裡實際握握看。手感、按鈕位置、觀景窗好不好看，每個人感受都不一樣。</li>
+      <li>沒有最好的品牌。現在各家畫質都很好，拍得好看靠的是光線、構圖和你按快門的那一刻。</li>
+    </ol>
+  </div>
+
+  <div class="olddo-foot">代表系列依 2026 年資料整理，新機推出很快，購買前請以各品牌官網為準。・歐豆攝影教室・<a href="https://olddo.com">olddo.com</a></div>
+</div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const B=[
+ {n:'Canon',kit:{t1:['EOS R50＋RF-S 18-45mm',1.6,18,45,510,'只有基本 HDR，沒有特別的機內合成',{}],t2:['EOS R10＋RF-S 18-150mm',1.6,18,150,740,'HDR、對焦包圍',{}],t3:['EOS R6 系列＋RF 24-105mm',1,24,105,1370,'HDR、對焦包圍與機內景深合成、預拍',{}],t4:['EOS R5 系列＋RF 24-70mm',1,24,70,1650,'HDR、機內景深合成、預拍、高解析合成',{}]},t:{t1:'EOS R50、R100 單鏡組',t2:'EOS R10、R8（入門全片幅）',t3:'EOS R6 系列',t4:'EOS R5 系列、R1'},zh:'佳能・日本',f:['全片幅','APS-C'],m:'RF 卡口',one:'從入門到專業最齊全，市占長年領先。',pts:['色彩討喜，人像膚色好看','對焦追蹤穩定，新手也容易拍到清楚','單眼時代的 EF 鏡頭可以轉接使用'],for:'第一台相機、人像、家庭紀錄',need:['入門','人像','野鳥運動','錄影','防手震','防潑水','計算攝影'],ser:'APS-C 入門：EOS R50、R10。全片幅：R8、R6 系列、R5 系列；旗艦 R1。'},
+ {n:'Nikon',kit:{t1:['Z30＋16-50mm',1.5,16,50,540,'只有基本 HDR，沒有特別的機內合成',{}],t2:['Z50 系列＋16-50mm',1.5,16,50,690,'只有基本 HDR，沒有特別的機內合成',{}],t3:['Z6 系列＋24-120mm',1,24,120,1390,'像素位移高解析、對焦位移、預先釋放拍攝（高解析與景深合成要用電腦軟體）',{}],t4:['Z8＋24-120mm',1,24,120,1540,'像素位移高解析、對焦位移、預先釋放拍攝（高解析與景深合成要用電腦軟體）',{}]},t:{t1:'Z30 單鏡組',t2:'Z50 系列、Zfc、Z5 系列',t3:'Z6 系列、Zf',t4:'Z8、Z9'},zh:'尼康・日本',f:['全片幅','APS-C'],m:'Z 卡口',one:'光學口碑好、手感紮實，也有復古造型機。',pts:['Z 卡口口徑大，鏡頭光學設計空間足','握把與操控手感受好評','Zf、Zfc 復古外型，拍起來很有感覺'],for:'人像、風景、喜歡傳統操作手感',need:['人像','野鳥運動','極致畫質','入門','防手震','防潑水','計算攝影'],ser:'APS-C：Z50 系列、Zfc。全片幅：Z5、Z6 系列、Zf、Z8；旗艦 Z9。旗下另有 RED 電影攝影機。'},
+ {n:'Sony',kit:{t1:['ZV-E10 系列＋16-50mm',1.5,16,50,530,'只有基本 HDR，沒有特別的機內合成',{}],t2:['A6700＋18-135mm',1.5,18,135,820,'只有基本 HDR，沒有特別的機內合成',{}],t3:['A7 系列＋28-70mm',1,28,70,950,'只有基本 HDR，沒有特別的機內合成',{}],t4:['A7R 系列＋24-70mm',1,24,70,1420,'像素位移高解析（要用電腦軟體合成）',{}]},t:{t1:'ZV-E10 系列單鏡組',t2:'A6700、A7C 系列',t3:'A7 系列、A7C R',t4:'A7R 系列、A1、A9'},zh:'索尼・日本',f:['全片幅','APS-C'],m:'E 卡口',one:'無反光鏡相機的先行者，鏡頭選擇最多。',pts:['副廠鏡頭最多（Sigma、Tamron 等），預算彈性大','人眼與動物辨識對焦強','錄影功能強，ZV 系列專為 Vlog 設計'],for:'錄影創作者、想要大量鏡頭選擇',need:['錄影','入門','人像','野鳥運動','旅行輕便','防手震','防潑水'],ser:'APS-C：A6000 系列、ZV-E10 系列。全片幅：A7 系列、A7R（高畫素）、A7S（錄影）、A1／A9（高速）。'},
+ {n:'Fujifilm',kit:{t1:['X-M5＋XC 15-45mm',1.5,15,45,490,'只有基本 HDR，沒有特別的機內合成',{}],t2:['X-S20＋XC 15-45mm',1.5,15,45,630,'只有基本 HDR，沒有特別的機內合成',{}],t3:['X-T5＋XF 18-55mm',1.5,18,55,870,'像素位移高解析（要用電腦軟體合成）',{}],t4:['GFX100 系列＋GF 32-64mm',0.79,32,64,1910,'像素位移高解析（要用電腦軟體合成）',{}]},t:{t1:'X-M5 單鏡組',t2:'X-S20、X-T30 系列、X-E 系列',t3:'X-T5、X100 系列、X-H2',t4:'GFX100 系列（中片幅）'},zh:'富士・日本',f:['APS-C','中片幅'],m:'X 卡口・G 卡口',one:'底片模擬色彩，直出就好看。',pts:['內建多種底片模擬，不修圖也有味道','轉盤式復古操作，看得到快門、ISO 數字','GFX 系列讓中片幅變得相對好入手'],for:'喜歡直出色彩、街拍、生活隨拍',need:['色彩直出','街拍','旅行輕便','極致畫質','防潑水','防手震','內建 ND'],kitND:{t3:['X100VI 23mm 定焦',1.5,23,0,520,'只有基本 HDR，沒有特別的機內合成',{nd:'內建 4 級 ND 濾鏡'}]},ser:'X 系列（APS-C）：X-T、X-S、X-E、X100 定焦隨身機。GFX 系列（中片幅）：GFX100 系列、GFX100RF 定焦機。'},
+ {n:'Panasonic',kit:{t1:['Lumix G 系列＋12-32mm',2,12,32,420,'只有基本 HDR，沒有特別的機內合成',{}],t2:['Lumix S5 系列＋20-60mm',1,20,60,1090,'手持高解析、即時合成（星軌、光繪邊拍邊看）',{}],t3:['S5 IIX＋24-105mm',1,24,105,1420,'手持高解析、即時合成（星軌、光繪邊拍邊看）',{}],t4:['S1 系列＋24-105mm',1,24,105,1480,'手持高解析、即時合成（星軌、光繪邊拍邊看）',{}]},t:{t1:'Lumix G 系列（M4/3）',t2:'Lumix S5 系列（全片幅）、G9 II',t3:'S5 IIX、GH7',t4:'S1 系列'},zh:'國際牌 Lumix・日本',f:['全片幅','M4/3'],m:'L 卡口・M4/3 卡口',one:'錄影規格強，影像創作者愛用。',pts:['錄影功能齊全，散熱與長時間錄製表現好','機身防手震強','L 卡口可與 Leica、Sigma 鏡頭共用','內建即時合成、手持高解析等多張合成功能'],for:'錄影、Vlog、想兼顧拍照和影片',need:['錄影','防手震','旅行輕便','計算攝影','防潑水'],ser:'全片幅：Lumix S 系列（S5 系列、S1 系列）。M4/3：G 系列、GH 系列（錄影）。'},
+ {n:'OM System',kit:{t1:['PEN E-P7＋14-42mm EZ',2,14,42,430,'即時合成（星軌、光繪邊拍邊看）、Live Bulb／Live Time、逆光 HDR（4 張合成）、多重曝光、梯形校正、對焦包圍',{}],t2:['OM System PEN＋14-42mm',2,14,42,500,'手持高解析、ND 模擬、HDR、景深合成、多重曝光',{nd:'內建 ND 模擬'}],t3:['OM-1 系列＋12-45mm',2,12,45,850,'Live ND、Live GND（OM-1 Mark II）、手持高解析、景深合成、即時合成星軌、Pro Capture 預拍',{nd:'內建 Live ND（OM-1 Mark II 最多 ND128）',gnd:'內建 Live GND（OM-1 Mark II）'}],t4:['OM-1 系列＋150-400mm',2,150,400,2480,'Live ND、Live GND（OM-1 Mark II）、手持高解析、景深合成、即時合成星軌、Pro Capture 預拍',{nd:'內建 Live ND（OM-1 Mark II 最多 ND128）',gnd:'內建 Live GND（OM-1 Mark II）'}]},t:{t1:'Olympus PEN E-P7（舊款庫存或二手）、E-M10 系列',t2:'OM System PEN（2026 新款）、OM-5 系列',t3:'OM-1 系列',t4:'OM-1 系列＋長焦大砲鏡頭'},zh:'原 Olympus・日本',f:['M4/3'],m:'M4/3 卡口',one:'整套最輕巧，打鳥、登山很吃香。',pts:['機身鏡頭都小，望遠等效焦段乘 2','防手震強，慢快門手持也穩','防塵防滴做得紮實，戶外不怕','內建計算攝影：Live ND、手持高解析、星軌即時合成','2026 新款 OM System PEN：復古小巧、加了 OLED 觀景窗，機身防手震約 5.5 級，前面有彩色／黑白轉盤'],for:'野鳥、登山旅行、想要輕便長焦；PEN 適合生活隨拍',need:['野鳥運動','防手震','計算攝影','防潑水','旅行輕便','街拍','色彩直出','內建 ND'],ser:'OM-1 系列（高速旗艦）、OM-3、OM-5（輕巧防滴）；OM System PEN（2026 年 9 月發表，2000 萬畫素、OLED 觀景窗、彩色／黑白轉盤、手持高解析與 ND 模擬）、E-M10 系列（入門）；舊款 Olympus PEN E-P7、E-PL 系列二手也很多。'},
+ {n:'Leica',kit:{t4:['Q 系列 28mm 定焦',1,28,0,740,'只有基本 HDR，沒有特別的機內合成',{}]},t:{t4:'Q 系列、M 系列、SL 系列'},zh:'徠卡・德國',f:['全片幅'],m:'M 卡口・L 卡口',one:'百年工藝與街拍傳奇，價格也最高。',pts:['M 系列旁軸手動對焦，拍照節奏完全不同','Q 系列全片幅定焦隨身機，街拍好用','有只拍黑白的 Monochrom 機種'],for:'街拍、紀實、重視工藝與手感',need:['街拍','極致畫質','防潑水','防手震'],ser:'M 系列（旁軸）、Q 系列（定焦隨身）、SL 系列（L 卡口無反）。'},
+ {n:'Hasselblad',kit:{t4:['X2D 系列＋XCD 55mm',0.79,55,0,1330,'只有基本 HDR，沒有特別的機內合成',{}]},t:{t4:'X2D 系列、907X 系列'},zh:'哈蘇・瑞典',f:['中片幅'],m:'X 卡口',one:'中片幅畫質與色彩，商業攝影常客。',pts:['中片幅細節與色彩過渡非常細膩','機身設計簡潔漂亮','目前由大疆（DJI）持有多數股權'],for:'商業、風景、追求極致畫質',need:['極致畫質','防手震'],ser:'X 系統（X2D 系列）、907X 系列。'},
+ {n:'Ricoh・Pentax',kit:{t2:['Ricoh GR III 18.3mm 定焦（官方標示約 28mm）',1.5,18.3,0,260,'只有基本 HDR，沒有特別的機內合成',{nd:'內建 2 級 ND（白天開大光圈夠用，流水長曝仍要另購）'}],t3:['Pentax K-1 系列＋28-105mm',1,28,105,1450,'Pixel Shift 手持高解析、Astrotracer 星空追蹤（內建 GPS）',{}]},t:{t2:'Ricoh GR 系列、Pentax K-3 系列',t3:'Pentax K-1 系列'},zh:'理光・日本',f:['APS-C','全片幅'],m:'K 卡口・GR 定焦',one:'GR 是口袋街拍神機，Pentax 堅持單眼。',pts:['GR 系列 APS-C 定焦，口袋大小開機就拍','Pentax 仍做光學觀景窗單眼','機身防滴、操控有個性','Pentax 有 Pixel Shift 高解析、Astrotracer 星空追蹤'],for:'街拍、隨身紀錄、喜歡單眼光學觀景窗',need:['街拍','防潑水','旅行輕便','色彩直出','計算攝影','內建 ND'],ser:'Ricoh GR 系列（GR III、GR IIIx 等）。Pentax K 系列單眼（K-3、K-1 系列）。'},
+ {n:'Sigma',kit:{t3:['fp＋45mm 定焦',1,45,0,640,'只有基本 HDR，沒有特別的機內合成',{}],t4:['BF＋45mm 定焦',1,45,0,660,'只有基本 HDR，沒有特別的機內合成',{}]},t:{t3:'fp 系列',t4:'BF、fp L'},zh:'適馬・日本',f:['全片幅'],m:'L 卡口（鏡頭多卡口）',one:'鏡頭大廠，Art 系列畫質口碑好。',pts:['鏡頭支援 Sony E、L、Fujifilm X 等多種卡口','Art 系列大光圈定焦，人像很受歡迎','fp、BF 機身小巧極簡，設計感強'],for:'想要好鏡頭又不想買原廠價',need:['人像','錄影','極致畫質'],ser:'鏡頭：Art、Contemporary、Sports 三條產品線。相機：fp 系列、BF。'}
+];
+const NEEDS=['全部','入門','人像','旅行輕便','野鳥運動','街拍','錄影','色彩直出','極致畫質','防潑水','防手震','計算攝影','內建 ND'];
+const FMTS=['全部','中片幅','全片幅','APS-C','M4/3'];
+let need='全部',fmt='全部';
+function chips(id,arr,get,set){$(id).innerHTML=arr.map(x=>'<button class="olddo-chip" data-v="'+x+'" aria-pressed="'+(x===get())+'">'+x+'</button>').join('');
+ document.querySelectorAll('#'+id+' button').forEach(b=>b.addEventListener('click',()=>{set(b.dataset.v);render();}));}
+function card(b){return '<div class="olddo-card"><div class="olddo-top"><span class="olddo-name">'+b.n+'</span><span class="olddo-zh">'+b.zh+'</span></div>'+
+ '<div class="olddo-tags">'+b.f.map(x=>'<span class="olddo-tag">'+x+'</span>').join('')+'<span class="olddo-tag olddo-mount">'+b.m+'</span></div>'+
+ '<p class="olddo-one">'+b.one+'</p><ul class="olddo-pts">'+b.pts.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
+ '<div class="olddo-for"><b>適合：</b>'+b.for+'</div><details class="olddo-det"><summary class="olddo-sum">代表系列</summary><p>'+b.ser+'</p></details></div>';}
+function render(){
+ chips('olddo-b-need',NEEDS,()=>need,v=>need=v);chips('olddo-b-fmt',FMTS,()=>fmt,v=>fmt=v);
+ const L=B.filter(b=>(need==='全部'||b.need.includes(need))&&(fmt==='全部'||b.f.includes(fmt)));
+ $('olddo-b-count').textContent=(need==='全部'&&fmt==='全部')?'共 '+B.length+' 個品牌':'符合的品牌：'+L.length+' 個';
+ $('olddo-b-list').innerHTML=L.length?L.map(card).join(''):'<div class="olddo-empty">沒有同時符合這兩個條件的品牌，換一個片幅試試。</div>';}
+const BUD=[{k:'t1',l:'3 萬以內'},{k:'t2',l:'3–6 萬'},{k:'t3',l:'6–10 萬'},{k:'t4',l:'10 萬以上'}];
+const ORDER=['Canon','Sony','Nikon','Fujifilm','Panasonic','OM System','Ricoh・Pentax','Sigma','Leica','Hasselblad'];
+const EXC={t1:{'防手震':['OM System'],'防潑水':[],'計算攝影':['OM System']},t2:{'計算攝影':['OM System','Panasonic','Ricoh・Pentax'],'防手震':['Nikon','Sony','Fujifilm','Panasonic','OM System','Ricoh・Pentax'],'防潑水':['Nikon','Sony','Fujifilm','Panasonic','OM System','Ricoh・Pentax']},t3:{'街拍':['Fujifilm','Leica','Ricoh・Pentax'],'色彩直出':['Fujifilm','Ricoh・Pentax']},t4:{'街拍':['Fujifilm','Leica'],'色彩直出':['Fujifilm']}};
+const HARD=['防手震','防潑水','內建 ND'];
+function kitFor(b){return want.includes('內建 ND')&&b.kitND&&b.kitND[bud]?b.kitND[bud]:b.kit[bud];}
+let bud=null,want=[];
+function pickUI(){
+ $('olddo-b-budget').innerHTML=BUD.map(x=>'<button class="olddo-chip" data-v="'+x.k+'" aria-pressed="'+(x.k===bud)+'">'+x.l+'</button>').join('');
+ $('olddo-b-want').innerHTML=NEEDS.slice(1).map(x=>'<button class="olddo-chip" data-v="'+x+'" aria-pressed="'+want.includes(x)+'">'+x+'</button>').join('');
+ document.querySelectorAll('#olddo-b-budget button').forEach(b=>b.addEventListener('click',()=>{bud=b.dataset.v;$('olddo-b-err').textContent='';pickUI();}));
+ document.querySelectorAll('#olddo-b-want button').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.v;want=want.includes(v)?want.filter(x=>x!==v):want.concat(v);$('olddo-b-err').textContent='';pickUI();}));}
+function recommend(){
+ if(!bud){$('olddo-b-err').textContent='先選一個預算範圍。';return;}
+ if(!want.length){$('olddo-b-err').textContent='至少選一個最常拍的題材。';return;}
+ const ALL=B.filter(b=>b.t[bud]).map(b=>{const hit=want.filter(w=>w==='內建 ND'?!!(kitFor(b)&&kitFor(b)[6].nd):b.need.includes(w)&&!(EXC[bud]&&EXC[bud][w]&&!EXC[bud][w].includes(b.n)));return {b:b,hit:hit,sc:hit.reduce((t,w)=>t+Math.max(1,8-b.need.indexOf(w)),0)*10-ORDER.indexOf(b.n)};})
+  .filter(x=>x.hit.length);
+ let L=ALL.filter(x=>HARD.every(h=>!want.includes(h)||x.hit.includes(h))).sort((a,c)=>c.sc-a.sc).slice(0,3),near=false;
+ if(!L.length&&ALL.length){near=true;L=ALL.sort((a,c)=>(c.hit.length-a.hit.length)||(c.sc-a.sc)).slice(0,3);}
+ const bl=BUD.find(x=>x.k===bud).l;
+ let h='';
+ if(near){h='<div class="olddo-empty"><b style="color:var(--o-accent)">這個預算沒有完全符合的機種。</b>下面是最接近的選擇，標 ✗ 的是它做不到的項目，可以考慮放寬預算或少選一兩個條件。</div>';}
+ if(!L.length){h='<div class="olddo-empty">這個預算裡，沒有同時符合這些條件的品牌。可以放寬預算、少選一兩個條件，或改看下方全部品牌。</div>';}
+ else{h+=L.map((x,i)=>'<div class="olddo-rec"><span class="olddo-rank">'+(i+1)+'</span><span class="olddo-rname">'+x.b.n+' <span class="olddo-zh">'+x.b.zh+'</span></span>'+
+  '<div class="olddo-rline"><b>'+bl+'可以看：</b>'+x.b.t[bud]+'</div>'+
+  (kitFor(x.b)?'<div class="olddo-rline"><b>焦段換算：</b>'+kitText(kitFor(x.b))+'</div><div class="olddo-rline olddo-wt"><span><b>重量：</b>約 '+kitFor(x.b)[4]+' g</span><span class="olddo-wbar"><i style="width:'+Math.min(100,kitFor(x.b)[4]/25)+'%"></i></span></div>'+
+  '<div class="olddo-rline"><b>計算攝影：</b>'+kitFor(x.b)[5]+'</div>'+filt(kitFor(x.b)[6]):'')+
+  '<div class="olddo-rline"><b>為什麼：</b>'+x.b.one+'</div>'+
+  '<div class="olddo-match">'+x.hit.map(w=>'<span class="olddo-tag">'+w+' ✓</span>').join('')+want.filter(w=>!x.hit.includes(w)).map(w=>'<span class="olddo-tag olddo-miss">'+w+' ✗</span>').join('')+'</div></div>').join('');}
+ if(bud==='t1'&&(want.includes('防手震')||want.includes('防潑水')))h+='<div class="olddo-note">3 萬以內的入門機大多沒有機身防手震和防潑水，Olympus PEN E-P7 和 E-M10 系列有機身防手震，是少數例外，但沒有防潑水。新款 OM System PEN 在 3–6 萬這一級。很需要這兩項的話，建議預算拉到 3–6 萬。</div>';
+ h+='<div class="olddo-note">濾鏡：有內建 ND 或 GND 模擬的相機，拍流水、夕陽可以先不買那種濾鏡。偏光鏡（CPL）去反光、讓藍天更藍的效果，目前沒有相機算得出來，拍風景、水面、玻璃都建議另購。</div>';
+ h+='<div class="olddo-note">重量是機身含電池加上那顆鏡頭的大約數字，橫條以 2.5 公斤為滿格，方便互相比較。</div>';
+ h+='<div class="olddo-note">價格是台灣新品的大約範圍，促銷、二手或只買機身都會不同。建議預算留兩到三成給記憶卡、備用電池和第二顆鏡頭。買之前到店裡握握看，手感合不合最重要。</div>';
+ $('olddo-b-res').innerHTML=h;}
+$('olddo-b-go').addEventListener('click',recommend);
+function r(n){return Math.round(n);}
+function filt(f){const it=(name,use,v)=>'<span class="olddo-ft'+(v?' olddo-fin':'')+'"><b>'+name+'</b>'+use+'：'+(v?v+'，可以先不買':'要另購')+'</span>';
+ return '<div class="olddo-rline olddo-filt"><b>濾鏡：</b>'+it('ND 減光鏡','（流水、車軌長曝光）',f.nd)+it('GND 漸層鏡','（天空太亮、地面太暗）',f.gnd)+it('CPL 偏光鏡','（去反光、藍天更藍）',null)+'</div>';}
+function rng(a,b,c){return b?r(a*c)+'–'+r(b*c)+'mm':r(a*c)+'mm';}
+function cls(v){return v<35?'廣角':v<70?'標準':'望遠';}
+function kitText(k){const lens=k[3]?k[2]+'-'+k[3]+'mm':k[2]+'mm';return k[0]+'，等效 '+rng(k[2],k[3],k[1])+(k[1]===1?'（全片幅不用換算）':'（'+lens+' × '+k[1]+'）');}
+const CFS=[{l:'中片幅 ×0.79',v:0.79},{l:'全片幅 ×1',v:1},{l:'APS-C ×1.5',v:1.5},{l:'Canon APS-C ×1.6',v:1.6},{l:'M4/3 ×2',v:2},{l:'1 吋 ×2.7',v:2.7}];
+const KITS=[['OM System PEN＋14-42',2,14,42],['Canon R50＋18-45',1.6,18,45],['Sony ZV-E10＋16-50',1.5,16,50],['Fujifilm X-M5＋15-45',1.5,15,45],['Nikon Z50＋16-50',1.5,16,50],['Ricoh GR 18.3mm',1.5,18.3,0],['全片幅 50mm',1,50,0],['M4/3 長焦 100-400',2,100,400]];
+let cf=2;
+function cfUI(){$('olddo-b-cf').innerHTML=CFS.map(x=>'<button class="olddo-chip" data-v="'+x.v+'" aria-pressed="'+(x.v===cf)+'">'+x.l+'</button>').join('');
+ document.querySelectorAll('#olddo-b-cf button').forEach(b=>b.addEventListener('click',()=>{cf=+b.dataset.v;cfUI();conv();}));}
+function conv(){const a=parseFloat($('olddo-b-f1').value),bv=$('olddo-b-f2').value.trim(),b=bv===''?0:parseFloat(bv);
+ if(!(a>0)||a>2000){$('olddo-b-cerr').textContent='第一格請輸入 1 到 2000 之間的焦段。';$('olddo-b-cout').innerHTML='';return;}
+ if(bv!==''&&(!(b>0)||b>2000||b<a)){$('olddo-b-cerr').textContent='第二格要比第一格大，定焦鏡就留空。';$('olddo-b-cout').innerHTML='';return;}
+ $('olddo-b-cerr').textContent='';
+ const lens=b?a+'–'+b+'mm':a+'mm',lo=a*cf,hi=b?b*cf:0;
+ const kind=b?cls(lo)+(cls(hi)!==cls(lo)?'到'+cls(hi):''):cls(lo);
+ $('olddo-b-cout').innerHTML='<div class="olddo-hint">'+lens+' 裝在這個片幅上，拍到的範圍等於全片幅的</div><div class="olddo-eq">'+rng(a,b,cf)+' <small>'+kind+'</small></div>'+
+  (cf===1?'<div class="olddo-hint">全片幅是換算的基準，焦段不用換算。</div>':'<div class="olddo-hint">算法：'+lens+' × '+cf+'。'+(cf>1?'片幅越小，畫面被裁得越多，看起來越像望遠。':'中片幅比全片幅大，同樣焦段拍得更廣。')+'</div>');}
+function kitUI(){$('olddo-b-kits').innerHTML=KITS.map((k,i)=>'<button class="olddo-chip" data-i="'+i+'">'+k[0]+'</button>').join('');
+ document.querySelectorAll('#olddo-b-kits button').forEach(b=>b.addEventListener('click',()=>{const k=KITS[+b.dataset.i];cf=k[1];$('olddo-b-f1').value=k[2];$('olddo-b-f2').value=k[3]||'';cfUI();conv();}));}
+$('olddo-b-f1').addEventListener('input',conv);$('olddo-b-f2').addEventListener('input',conv);
+kitUI();cfUI();conv();
+pickUI();render();
+})();
+</script>
+</body>
+</html>

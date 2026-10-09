@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>片幅辨識王｜歐豆攝影教室</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Barlow+Condensed:wght@500;600&display=swap');
+.olddo-game{--o-bg:#F3F4F2;--o-panel:#FFFFFF;--o-ink:#1E2124;--o-muted:#5E6468;--o-line:#D9DCD8;--o-accent:#D7322B;--o-sel:#1E2124;--o-on-sel:#FFFFFF;
+--o-ff:#1E2124;--o-sensor:#378ADD;--o-sensor-soft:rgba(55,138,221,.18);--o-ok:#0B7A55;--o-ok-bg:#DFF3EA;--o-bad:#B42318;--o-bad-bg:#FBE4E2;
+--o-font-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;--o-font-num:"Barlow Condensed","Arial Narrow",sans-serif;
+background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-size:16px;line-height:1.7;max-width:820px;margin:0 auto;padding:28px 16px 40px;display:flex;flex-direction:column;gap:20px;box-sizing:border-box;text-align:left}
+.olddo-game *{box-sizing:border-box}
+.olddo-game .olddo-eyebrow{font-size:13px;letter-spacing:.08em;color:var(--o-accent);font-weight:500}
+.olddo-game h1.olddo-h1{font-size:clamp(28px,6vw,40px);line-height:1.2;margin:0;font-weight:700;color:var(--o-ink);font-family:var(--o-font-body)}
+.olddo-game .olddo-lead{margin:0;color:var(--o-muted);max-width:60ch}
+.olddo-game .olddo-card{background:var(--o-panel);border:1px solid var(--o-line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.olddo-game .olddo-bar{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--o-muted)}
+.olddo-game .olddo-prog{flex:1;height:6px;border-radius:3px;background:var(--o-line);overflow:hidden}
+.olddo-game .olddo-prog i{display:block;height:100%;background:var(--o-accent);width:0;transition:width .3s}
+.olddo-game .olddo-score{font-family:var(--o-font-num);font-size:22px;font-weight:600;color:var(--o-ink)}
+.olddo-game .olddo-kind{font-size:13px;font-weight:500;color:var(--o-accent)}
+.olddo-game .olddo-q{font-size:20px;font-weight:700;line-height:1.5;margin:0;color:var(--o-ink)}
+.olddo-game .olddo-fig{display:flex;justify-content:center}
+.olddo-game .olddo-fig svg{width:100%;max-width:420px;height:auto;display:block}
+.olddo-game .olddo-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:520px){.olddo-game .olddo-opts{grid-template-columns:minmax(0,1fr)}}
+.olddo-game button.olddo-btn{font-family:var(--o-font-body);font-size:16px;border:1px solid var(--o-line);background:var(--o-panel);color:var(--o-ink);border-radius:10px;padding:12px 14px;cursor:pointer;min-height:48px;margin:0;text-align:left;line-height:1.4;box-shadow:none;text-transform:none;width:100%}
+.olddo-game button.olddo-btn:hover{border-color:var(--o-muted)}
+.olddo-game button.olddo-btn:focus-visible{outline:2px solid var(--o-accent);outline-offset:2px}
+.olddo-game button.olddo-btn.olddo-ok{background:var(--o-ok-bg);border-color:var(--o-ok);color:var(--o-ok);font-weight:500}
+.olddo-game button.olddo-btn.olddo-bad{background:var(--o-bad-bg);border-color:var(--o-bad);color:var(--o-bad)}
+.olddo-game button.olddo-main{background:var(--o-sel);color:var(--o-on-sel);border-color:var(--o-sel);text-align:center;font-weight:500;width:auto;padding:12px 28px}
+.olddo-game .olddo-explain{border-radius:10px;padding:12px 14px;background:var(--o-bg);font-size:15px;color:var(--o-ink)}
+.olddo-game .olddo-explain b{font-weight:700}
+.olddo-game .olddo-legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--o-muted)}
+.olddo-game .olddo-sw{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.olddo-game .olddo-chips{display:flex;flex-wrap:wrap;gap:8px}
+.olddo-game button.olddo-chip{width:auto;min-height:36px;padding:4px 12px;font-size:14px;border-radius:999px;text-align:center}
+.olddo-game button.olddo-chip[aria-pressed="true"]{background:var(--o-sel);color:var(--o-on-sel);border-color:var(--o-sel)}
+.olddo-game .olddo-info h3{margin:0 0 4px;font-size:17px;color:var(--o-ink)}
+.olddo-game .olddo-info .olddo-mm{font-family:var(--o-font-num);font-size:18px;color:var(--o-muted)}
+.olddo-game .olddo-pc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;font-size:15px}
+@media (max-width:520px){.olddo-game .olddo-pc{grid-template-columns:minmax(0,1fr)}}
+.olddo-game .olddo-pc ul{margin:4px 0 0;padding-left:1.2em}
+.olddo-game .olddo-pc .olddo-plus{color:var(--o-ok);font-weight:700}
+.olddo-game .olddo-pc .olddo-minus{color:var(--o-bad);font-weight:700}
+.olddo-game .olddo-big{font-family:var(--o-font-num);font-size:64px;font-weight:600;line-height:1;color:var(--o-ink)}
+.olddo-game .olddo-center{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+.olddo-game .olddo-foot{font-size:13px;color:var(--o-muted)}
+.olddo-game .olddo-foot a{color:var(--o-ink)}
+@media (prefers-reduced-motion: reduce){.olddo-game .olddo-prog i{transition:none}}
+</style>
+</head>
+<body>
+<style>body{margin:0;background:#F3F4F2}.olddo-sitebar a{color:#161616;text-decoration:none}.olddo-sitebar a:hover{text-decoration:underline}</style>
+<div class="olddo-sitebar" style="border-bottom:1px solid #D8D4CC;background:#F4F2EE">
+<nav aria-label="網站選單" style="max-width:1080px;margin:0 auto;padding:14px 16px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;font-size:15px">
+<a href="index.html" style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:19px;letter-spacing:.06em;flex-grow:1">歐豆攝影教室</a>
+<a href="tools.html">← 攝影工具區</a>
+<a href="index.html#schedule">近期開課</a>
+</nav></div>
+
+<div class="olddo-game">
+  <div>
+    <div class="olddo-eyebrow">歐豆攝影教室・互動教材</div>
+    <h1 class="olddo-h1">片幅辨識王</h1>
+    <p class="olddo-lead">10 題挑戰：看大小認出片幅、算等效焦距、選出最適合的器材。先在下面點點看各種片幅的差別，準備好就開始。</p>
+  </div>
+
+  <div class="olddo-card" id="olddo-g-stage">
+    <div class="olddo-fig" id="olddo-g-intro-fig"></div>
+    <div class="olddo-chips" id="olddo-g-chips"></div>
+    <div class="olddo-info" id="olddo-g-info"></div>
+    <div><button class="olddo-btn olddo-main" id="olddo-g-start">開始挑戰</button></div>
+  </div>
+
+  <div class="olddo-foot">歐豆攝影教室・<a href="https://olddo.com">olddo.com</a></div>
+</div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const S={
+ mf:{n:'中片幅',w:43.8,h:32.9,c:'0.79',mm:'約 44 × 33 mm',ex:'Fujifilm GFX、Hasselblad X',plus:['畫質與細節最多，適合大尺寸輸出','高光暗部寬容度大，色彩過渡細膩','同構圖同光圈，背景最容易模糊'],minus:['機身鏡頭最貴、最重','對焦與連拍相對慢','鏡頭選擇最少']},
+ ff:{n:'全片幅',w:36,h:24,c:'1.0',mm:'36 × 24 mm',ex:'Sony A7、Canon R6、Nikon Z6',plus:['高 ISO 雜訊少，暗處好拍','淺景深容易，人像好看','廣角好取得，鏡頭選擇最多'],minus:['機身和鏡頭較貴','整套器材較重']},
+ apsc:{n:'APS-C',w:23.5,h:15.6,c:'1.5（Canon 1.6）',mm:'約 23.5 × 15.6 mm',ex:'Fujifilm X、Sony A6000 系列、Canon R50',plus:['價格親民，入門最常見','比全片幅輕巧','望遠等效焦段乘 1.5，拍遠處有利'],minus:['高 ISO 略遜全片幅','超廣角較難取得','同條件下背景沒那麼模糊']},
+ m43:{n:'M4/3',w:17.3,h:13,c:'2.0',mm:'17.3 × 13 mm',ex:'OM System、Panasonic Lumix G',plus:['整套系統最輕巧','望遠等效焦段乘 2，打鳥、運動有利','景深較深，風景、微距容易全清楚'],minus:['高 ISO 雜訊較明顯','淺景深較難做出來']},
+ one:{n:'1 吋',w:13.2,h:8.8,c:'約 2.7',mm:'13.2 × 8.8 mm',ex:'Sony RX100、高階隨身機',plus:['口袋大小，比手機畫質好','變焦鏡頭一體成形，好上手'],minus:['暗處畫質有限','背景模糊效果有限']},
+ ph:{n:'手機',w:9.8,h:7.4,c:'約 3.5 以上',mm:'主鏡頭約 9.8 × 7.4 mm（各機型不同）',ex:'手機主鏡頭',plus:['永遠帶在身上','運算攝影自動補強亮度與 HDR'],minus:['感光元件最小，暗處易糊','光學淺景深最難，人像模式靠運算模擬']}
+};
+const ORD=['mf','ff','apsc','m43','one','ph'];
+const NS='http://www.w3.org/2000/svg';
+function svg(keys,hi,showFF){
+ const W=440,H=340,k=8.6,cx=W/2,cy=H/2;let s='<svg xmlns="'+NS+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="片幅大小比較">';
+ keys.forEach(key=>{const o=S[key],w=o.w*k,h=o.h*k,on=key===hi;
+  s+='<rect x="'+(cx-w/2)+'" y="'+(cy-h/2)+'" width="'+w+'" height="'+h+'" rx="3" fill="'+(on?'var(--o-sensor-soft)':'none')+'" stroke="'+(on?'var(--o-sensor)':'var(--o-line)')+'" stroke-width="'+(on?3:1.5)+'"/>';
+  if(keys.length===1){const F=' font-family="Barlow Condensed,Arial Narrow,sans-serif" font-size="17" font-weight="600" fill="var(--o-sensor)"';
+   s+='<text x="'+cx+'" y="'+(cy-h/2-8)+'" text-anchor="middle"'+F+'>'+o.w+' mm</text>';
+   s+='<text transform="translate('+(cx-w/2-10)+','+cy+') rotate(-90)" text-anchor="middle"'+F+'>'+o.h+' mm</text>';}
+  if(keys.length>1){s+='<text x="'+(cx-w/2+6)+'" y="'+(key==='ph'?cy+h/2+15:cy-h/2+16)+'" font-size="13" fill="'+(on?'var(--o-sensor)':'var(--o-muted)')+'" font-family="sans-serif">'+o.n+'</text>';}
+ });
+ if(showFF){const w=36*k,h=24*k;s+='<rect x="'+(cx-w/2)+'" y="'+(cy-h/2)+'" width="'+w+'" height="'+h+'" rx="3" fill="none" stroke="var(--o-ff)" stroke-width="2" stroke-dasharray="8 6"/>';
+  s+='<text x="'+(cx+w/2-6)+'" y="'+(cy+h/2+18)+'" text-anchor="end" font-size="13" fill="var(--o-muted)" font-family="sans-serif">虛線：全片幅 36×24mm</text>';}
+ return s+'</svg>';}
+function info(key){const o=S[key];return '<h3>'+o.n+' <span class="olddo-mm">'+o.mm+'・裁切係數 '+o.c+'</span></h3><div style="font-size:14px;color:var(--o-muted)">常見：'+o.ex+'</div><div class="olddo-pc"><div><span class="olddo-plus">好處</span><ul>'+o.plus.map(x=>'<li>'+x+'</li>').join('')+'</ul></div><div><span class="olddo-minus">缺點</span><ul>'+o.minus.map(x=>'<li>'+x+'</li>').join('')+'</ul></div></div>';}
+let cur='ff';
+function intro(){
+ $('olddo-g-intro-fig').innerHTML=svg(ORD,cur,false);
+ $('olddo-g-chips').innerHTML=ORD.map(k=>'<button class="olddo-btn olddo-chip" data-k="'+k+'" aria-pressed="'+(k===cur)+'">'+S[k].n+'</button>').join('');
+ $('olddo-g-info').innerHTML=info(cur);
+ document.querySelectorAll('#olddo-g-chips button').forEach(b=>b.addEventListener('click',()=>{cur=b.dataset.k;intro();}));}
+const SIZE=ORD.map(k=>({kind:'看大小認片幅',fig:k,q:k==='ff'?'實心框剛好和虛線一樣大，這是哪一種片幅？':'虛線是全片幅。藍色實心框是哪一種片幅？',a:S[k].n,pool:ORD.map(x=>S[x].n),ex:'<b>'+S[k].n+'</b>：'+S[k].mm+'，裁切係數 '+S[k].c+'。'}));
+const CALC=[
+ {kind:'等效焦距',q:'50mm 鏡頭裝在 APS-C（1.5 倍）機身上，視角約等於全片幅的幾 mm？',opts:['33mm','50mm','75mm','100mm'],a:'75mm',ex:'50 × 1.5 = <b>75mm</b>。片幅小，畫面被裁切，看起來就像焦距變長。'},
+ {kind:'等效焦距',q:'M4/3 機身裝 300mm 鏡頭，等效全片幅約幾 mm？',opts:['150mm','300mm','450mm','600mm'],a:'600mm',ex:'300 × 2 = <b>600mm</b>。這就是 M4/3 拍野鳥、運動受歡迎的原因。'},
+ {kind:'等效焦距',q:'全片幅 24mm 拍到的廣角範圍，換成 APS-C 大約要用幾 mm 才一樣寬？',opts:['16mm','24mm','36mm','48mm'],a:'16mm',ex:'24 ÷ 1.5 = <b>16mm</b>。小片幅要更短的鏡頭才拍得到一樣寬，所以超廣角較難取得。'}
+];
+const PRO=[
+ {q:'整套器材最輕巧，望遠等效焦段直接乘 2，是哪一種片幅？',opts:['中片幅','全片幅','APS-C','M4/3'],a:'M4/3',ex:'<b>M4/3</b> 裁切係數 2，鏡頭小又輕，代價是高 ISO 雜訊較多。'},
+ {q:'商業攝影要做大尺寸輸出，追求最多細節和最大寬容度，首選？',opts:['中片幅','APS-C','1 吋','手機'],a:'中片幅',ex:'<b>中片幅</b>感光面積最大，細節和層次最好，但貴、重、反應較慢。'},
+ {q:'昏暗的室內婚禮不想開閃光燈，要雜訊少、鏡頭又好買，最適合？',opts:['全片幅','M4/3','1 吋','手機'],a:'全片幅',ex:'<b>全片幅</b>高 ISO 表現好，鏡頭選擇也最多，是婚禮攝影最常見的配置。'},
+ {q:'預算有限、想要可以換鏡頭又比全片幅輕，最常見的入門選擇？',opts:['中片幅','全片幅','APS-C','1 吋'],a:'APS-C',ex:'<b>APS-C</b> 是入門可換鏡頭相機最常見的片幅，價格與重量都比較友善。'},
+ {q:'裁切係數 Canon 是 1.6、其他品牌大多是 1.5，指的是哪種片幅？',opts:['全片幅','APS-C','M4/3','1 吋'],a:'APS-C',ex:'<b>APS-C</b> 各廠尺寸略有不同，Canon 稍小一點所以是 1.6。'},
+ {q:'永遠帶在身上、靠運算補強畫質，但真正的光學淺景深最難做到？',opts:['中片幅','APS-C','M4/3','手機'],a:'手機',ex:'<b>手機</b>感光元件最小，人像模式的背景模糊大多是運算模擬出來的。'},
+ {q:'同樣構圖、同樣光圈值，哪一種片幅最容易把背景拍得最模糊？',opts:['中片幅','全片幅','APS-C','M4/3'],a:'中片幅',ex:'片幅越大，同構圖要用越長的焦距或站得更近，景深就越淺，所以是 <b>中片幅</b>。'},
+ {q:'下面哪一項「不是」全片幅的缺點？',opts:['機身較重','鏡頭較貴','高 ISO 雜訊特別多','整套價格較高'],a:'高 ISO 雜訊特別多',ex:'全片幅的強項正是 <b>高 ISO 雜訊少</b>；缺點在於重和貴。'},
+ {q:'拍野鳥想用比較輕的器材得到很長的等效焦距，哪個片幅最有優勢？',opts:['中片幅','全片幅','M4/3','1 吋'],a:'M4/3',ex:'<b>M4/3</b> 的 2 倍裁切讓長焦變得輕巧，揹一整天也不累。'}
+].map(o=>Object.assign({kind:'好處與缺點'},o));
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+let Q=[],i=0,score=0,wrong=[];
+function start(){
+ const sz=shuf(SIZE).slice(0,4).map(o=>{const p=shuf(o.pool.filter(x=>x!==o.a)).slice(0,3);return Object.assign({},o,{opts:shuf(p.concat(o.a))});});
+ Q=shuf(sz.concat(shuf(CALC).slice(0,2),shuf(PRO).slice(0,4)).map(o=>o.opts&&!o.fig?Object.assign({},o,{opts:shuf(o.opts)}):o));
+ i=0;score=0;wrong=[];show();}
+function show(){
+ const o=Q[i],st=$('olddo-g-stage');
+ st.innerHTML='<div class="olddo-bar"><span>第 '+(i+1)+' / '+Q.length+' 題</span><div class="olddo-prog"><i id="olddo-g-pg"></i></div><span class="olddo-score">'+score+' 分</span></div>'+
+ '<div class="olddo-kind">'+o.kind+'</div><p class="olddo-q">'+o.q+'</p>'+(o.fig?'<div class="olddo-fig">'+svg([o.fig],o.fig,true)+'</div>':'')+
+ '<div class="olddo-opts" id="olddo-g-opts">'+o.opts.map(x=>'<button class="olddo-btn" data-v="'+x+'">'+x+'</button>').join('')+'</div><div id="olddo-g-after"></div>';
+ requestAnimationFrame(()=>{$('olddo-g-pg').style.width=(i/Q.length*100)+'%';});
+ document.querySelectorAll('#olddo-g-opts button').forEach(b=>b.addEventListener('click',()=>pick(b)));
+ const f=document.querySelector('#olddo-g-opts button');if(f&&i>0)f.focus({preventScroll:true});}
+function pick(b){
+ const o=Q[i],ok=b.dataset.v===o.a;if(ok)score++;else wrong.push(o);
+ document.querySelectorAll('#olddo-g-opts button').forEach(x=>{x.disabled=true;if(x.dataset.v===o.a)x.classList.add('olddo-ok');else if(x===b)x.classList.add('olddo-bad');});
+ const key=ORD.find(k=>S[k].n===o.a);
+ $('olddo-g-after').innerHTML='<div class="olddo-explain">'+(ok?'<b style="color:var(--o-ok)">答對了！</b> ':'<b style="color:var(--o-bad)">差一點。</b> ')+o.ex+(key&&!o.fig?'<div style="margin-top:8px">'+svg(ORD,key,false)+'</div>':'')+'</div>'+
+ '<div style="margin-top:12px"><button class="olddo-btn olddo-main" id="olddo-g-next">'+(i+1<Q.length?'下一題':'看成績')+'</button></div>';
+ document.querySelector('.olddo-score').textContent=score+' 分';
+ $('olddo-g-next').addEventListener('click',()=>{i++;if(i<Q.length)show();else end();});
+ $('olddo-g-next').focus({preventScroll:true});}
+function end(){
+ const t=score===10?'片幅達人':score>=7?'很有概念':score>=4?'再複習一下':'先從認識片幅開始';
+ const msg=score===10?'全對！可以幫同學解答器材問題了。':score>=7?'大部分都掌握了，看看錯的那幾題。':'沒關係，回到片幅比較圖多點幾次就會記住。';
+ $('olddo-g-stage').innerHTML='<div class="olddo-center"><div class="olddo-kind">你的成績</div><div class="olddo-big">'+score+'<span style="font-size:28px;color:var(--o-muted)"> / '+Q.length+'</span></div><p class="olddo-q">'+t+'</p><p style="margin:0;color:var(--o-muted)">'+msg+'</p></div>'+
+ (wrong.length?'<div class="olddo-explain"><b>答錯的題目</b><ul style="margin:6px 0 0;padding-left:1.2em">'+wrong.map(o=>'<li>'+o.q+'<br><span style="color:var(--o-muted)">答案：'+o.a+'</span></li>').join('')+'</ul></div>':'')+
+ '<div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center"><button class="olddo-btn olddo-main" id="olddo-g-again">再玩一次（題目會換）</button><button class="olddo-btn" id="olddo-g-back" style="width:auto">回到片幅比較</button></div>';
+ $('olddo-g-again').addEventListener('click',start);
+ $('olddo-g-back').addEventListener('click',reset);}
+const INTRO=$('olddo-g-stage').innerHTML;
+function reset(){$('olddo-g-stage').innerHTML=INTRO;intro();$('olddo-g-start').addEventListener('click',start);}
+reset();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>追焦練習器｜歐豆攝影教室</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Barlow+Condensed:wght@500;600&display=swap');
+.olddo-tool{--o-bg:#F3F4F2;--o-panel:#FFFFFF;--o-ink:#1E2124;--o-muted:#5E6468;--o-line:#D9DCD8;--o-accent:#D7322B;--o-sel:#1E2124;--o-on-sel:#FFFFFF;--o-road:#CFD2CE;--o-road-line:#FFFFFF;--o-cone:55,138,221;--o-cone-hot:215,50,43;
+--o-wide-bg:#E3EEFA;--o-wide-fg:#18497F;--o-std-bg:#DFF3EA;--o-std-fg:#0B5A45;--o-tele-bg:#FBE6DF;--o-tele-fg:#7A2D14;
+--o-font-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;--o-font-num:"Barlow Condensed","Arial Narrow",sans-serif;
+background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-size:16px;line-height:1.7;max-width:900px;margin:0 auto;padding:28px 16px 40px;display:flex;flex-direction:column;gap:20px;box-sizing:border-box;border-radius:12px;text-align:left}
+.olddo-tool *{box-sizing:border-box}
+.olddo-tool .olddo-head{display:flex;flex-direction:column;gap:4px}
+.olddo-tool .olddo-eyebrow{font-size:13px;letter-spacing:.08em;color:var(--o-accent);font-weight:500}
+.olddo-tool h1.olddo-h1{font-size:clamp(28px,6vw,40px);line-height:1.2;margin:0;font-weight:700;color:var(--o-ink);font-family:var(--o-font-body)}
+.olddo-tool .olddo-lead{margin:0;color:var(--o-muted);max-width:60ch}
+.olddo-tool .olddo-lcd{background:var(--o-panel);border:1px solid var(--o-line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.olddo-tool .olddo-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.olddo-tool .olddo-lbl{font-size:13px;color:var(--o-muted);min-width:4.5em}
+.olddo-tool .olddo-mode{font-family:var(--o-font-num);font-weight:600;font-size:20px;background:var(--o-accent);color:#fff;border-radius:6px;padding:0 10px;line-height:30px}
+.olddo-tool .olddo-big{font-family:var(--o-font-num);font-weight:600;font-size:34px;line-height:1;min-width:3.6em}
+.olddo-tool input.olddo-range{flex:1;min-width:160px;accent-color:var(--o-accent);height:28px;margin:0}
+.olddo-tool button.olddo-btn{font-family:var(--o-font-body);font-size:15px;border:1px solid var(--o-line);background:transparent;color:var(--o-ink);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:38px;margin:0;box-shadow:none;text-transform:none}
+.olddo-tool button.olddo-num{font-family:var(--o-font-num);font-size:19px;font-weight:500;min-width:56px}
+.olddo-tool button.olddo-btn[aria-pressed="true"]{background:var(--o-sel);color:var(--o-on-sel);border-color:var(--o-sel)}
+.olddo-tool canvas.olddo-cv{width:100%;height:auto;display:block;border-radius:10px;max-width:100%}
+.olddo-tool .olddo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+.olddo-tool .olddo-grid.olddo-grid-32{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}
+@media (max-width:620px){.olddo-tool .olddo-grid,.olddo-tool .olddo-grid.olddo-grid-32{grid-template-columns:minmax(0,1fr)}}
+.olddo-tool .olddo-cap{font-size:14px;color:var(--o-muted);margin-top:6px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.olddo-tool .olddo-cap b{color:var(--o-ink);font-weight:500}
+.olddo-tool .olddo-cap b.olddo-deg{font-family:var(--o-font-num);font-size:22px}
+.olddo-tool .olddo-tag{font-size:14px;font-weight:500;border-radius:6px;padding:2px 10px}
+.olddo-tool .olddo-tips{background:var(--o-panel);border:1px solid var(--o-line);border-radius:12px;padding:16px 18px}
+.olddo-tool .olddo-tips h2{font-size:18px;margin:0 0 8px;font-weight:700;color:var(--o-ink)}
+.olddo-tool .olddo-tips ol,.olddo-tool .olddo-tips ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
+.olddo-tool .olddo-tips li{margin:0}
+.olddo-tool .olddo-foot{font-size:13px;color:var(--o-muted)}
+.olddo-tool .olddo-foot a{color:var(--o-ink)}
+</style>
+</head>
+<body>
+<style>body{margin:0;background:#F3F4F2}.olddo-sitebar a{color:#161616;text-decoration:none}.olddo-sitebar a:hover{text-decoration:underline}</style>
+<div class="olddo-sitebar" style="border-bottom:1px solid #D8D4CC;background:#F4F2EE">
+<nav aria-label="網站選單" style="max-width:1080px;margin:0 auto;padding:14px 16px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;font-size:15px">
+<a href="index.html" style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:19px;letter-spacing:.06em;flex-grow:1">歐豆攝影教室</a>
+<a href="tools.html">← 攝影工具區</a>
+<a href="index.html#schedule">近期開課</a>
+</nav></div>
+
+<div class="olddo-tool">
+  <div class="olddo-head">
+    <div class="olddo-eyebrow">歐豆攝影教室・互動教材</div>
+    <h1 class="olddo-h1">追焦：快門先決，跟著車轉</h1>
+    <p class="olddo-lead">選一個快門速度，看相機跟著摩托車轉動時，照片裡的車和背景會變成什麼樣子。再切到「相機不動」比較看看。</p>
+  </div>
+
+  <div class="olddo-lcd" aria-label="相機設定">
+    <div class="olddo-row"><span class="olddo-lbl">模式</span><span class="olddo-mode">S</span><span style="font-size:14px;color:var(--o-muted)">快門先決（Canon 叫 Tv）</span></div>
+    <div class="olddo-row" id="olddo-p-shs"><span class="olddo-lbl">快門</span>
+      <button class="olddo-btn olddo-num" id="olddo-p-s8" data-v="8">1/8</button><button class="olddo-btn olddo-num" id="olddo-p-s15" data-v="15">1/15</button><button class="olddo-btn olddo-num" id="olddo-p-s30" data-v="30">1/30</button><button class="olddo-btn olddo-num" id="olddo-p-s60" data-v="60">1/60</button><button class="olddo-btn olddo-num" id="olddo-p-s250" data-v="250">1/250</button>
+    </div>
+    <div class="olddo-row"><span class="olddo-lbl">相機</span><button class="olddo-btn" id="olddo-p-m1">跟著轉</button><button class="olddo-btn" id="olddo-p-m2">相機不動</button><button class="olddo-btn" id="olddo-p-play">暫停動畫</button></div>
+  </div>
+
+  <div>
+    <canvas class="olddo-cv" id="olddo-p-top" width="1360" height="380" aria-label="俯視圖：攝影者轉動相機跟著摩托車"></canvas>
+    <div class="olddo-cap">俯視圖・紅色扇形是快門開啟的那一瞬間</div>
+  </div>
+
+  <div class="olddo-grid">
+    <div><canvas class="olddo-cv" id="olddo-p-vf" width="800" height="520" aria-label="觀景窗畫面"></canvas><div class="olddo-cap">觀景窗</div></div>
+    <div><canvas class="olddo-cv" id="olddo-p-rs" width="800" height="520" aria-label="拍出的照片"></canvas><div class="olddo-cap">拍出的照片：<b id="olddo-p-rl"></b></div></div>
+  </div>
+
+  <div class="olddo-tips">
+    <h2>實拍三步驟</h2>
+    <ol>
+      <li>轉到 S（Tv）模式，快門先從 1/30 開始試，車越快可以越快一點。</li>
+      <li>車還沒到面前就先對準，用腰轉動、手臂不動，平順跟著它。</li>
+      <li>按下快門後繼續跟，拍完再停。急停就會整張糊掉。</li>
+    </ol>
+  </div>
+
+  <div class="olddo-foot">歐豆攝影教室・<a href="https://olddo.com">olddo.com</a></div>
+</div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const ROOT=document.getElementById('olddo-p-top').closest('.olddo-tool');
+
+const tc=$('olddo-p-top').getContext('2d'),vf=$('olddo-p-vf').getContext('2d'),rs=$('olddo-p-rs').getContext('2d');
+let sh=30,pan=true;const SPD=1500,T=9000;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tok(n){return getComputedStyle(ROOT).getPropertyValue(n).trim();}
+function bg(c,off,w,h,k){c.fillStyle='#B5D4F4';c.fillRect(0,0,w,h);c.fillStyle='#97C459';c.fillRect(0,h*.62,w,h);c.fillStyle='#888780';c.fillRect(0,h*.72,w,h*.16);
+const s=90*k,i0=Math.floor(off/s)-1;
+for(let i=i0;i<i0+w/s+3;i++){const x=i*s-off,t=((i*7919)%5+5)%5;
+if(t==0){c.fillStyle='#854F0B';c.fillRect(x+40*k,h*.42,8*k,h*.2);c.fillStyle='#3B6D11';c.beginPath();c.arc(x+44*k,h*.38,22*k,0,7);c.fill();}
+else if(t==1){c.fillStyle='#D3D1C7';c.fillRect(x+10*k,h*.3,60*k,h*.32);c.fillStyle='#185FA5';c.fillRect(x+20*k,h*.36,14*k,14*k);c.fillRect(x+46*k,h*.36,14*k,14*k);}
+else if(t==2){c.fillStyle='#5F5E5A';c.fillRect(x+44*k,h*.2,5*k,h*.42);c.fillStyle='#FAC775';c.fillRect(x+38*k,h*.18,18*k,8*k);}
+else if(t==3){c.fillStyle='#639922';c.beginPath();c.moveTo(x+20*k,h*.62);c.lineTo(x+45*k,h*.3);c.lineTo(x+70*k,h*.62);c.fill();}
+else{c.fillStyle='#F09595';c.fillRect(x+15*k,h*.4,50*k,h*.22);c.fillStyle='#993C1D';c.fillRect(x+10*k,h*.37,60*k,8*k);}
+c.fillStyle='#F1EFE8';c.fillRect(x,h*.795,40*k,5*k);}}
+function bike(c,x,y,s){c.save();c.translate(x,y);c.scale(s,s);
+c.fillStyle='#2C2C2A';[-30,32].forEach(a=>{c.beginPath();c.arc(a,0,14,0,7);c.fill();});
+c.fillStyle='#B4B2A9';[-30,32].forEach(a=>{c.beginPath();c.arc(a,0,5,0,7);c.fill();});
+c.fillStyle='#E24B4A';c.beginPath();c.moveTo(-34,-10);c.lineTo(-10,-22);c.lineTo(22,-22);c.lineTo(36,-6);c.lineTo(10,-4);c.lineTo(-20,-4);c.fill();
+c.fillStyle='#2C2C2A';c.fillRect(-14,-28,26,6);
+c.fillStyle='#185FA5';c.beginPath();c.moveTo(-8,-26);c.lineTo(2,-52);c.lineTo(14,-50);c.lineTo(12,-26);c.fill();
+c.fillStyle='#F1EFE8';c.beginPath();c.arc(10,-60,9,0,7);c.fill();c.fillStyle='#2C2C2A';c.fillRect(12,-63,8,4);
+c.strokeStyle='#185FA5';c.lineWidth=5;c.beginPath();c.moveTo(8,-46);c.lineTo(26,-30);c.stroke();
+c.strokeStyle='#5F5E5A';c.lineWidth=3;c.beginPath();c.moveTo(26,-30);c.lineTo(32,0);c.stroke();c.restore();}
+function result(){const w=800,h=520,k=2,b=SPD/sh*k,n=Math.max(2,Math.round(b/3)),base=1200*k;rs.clearRect(0,0,w,h);
+if(pan){for(let i=0;i<=n;i++){rs.globalAlpha=1/(i+1);bg(rs,base+i*b/n-b/2,w,h,k);}rs.globalAlpha=1;bike(rs,w/2,h*.78,2.6);}
+else{bg(rs,base,w,h,k);for(let i=0;i<=n;i++){rs.globalAlpha=1/(i+1);bike(rs,w/2-b/2+i*b/n,h*.78,2.6);}rs.globalAlpha=1;}
+$('olddo-p-rl').textContent='1/'+sh+' 秒・'+(pan?(sh>=250?'車和背景都清楚，看不出速度感':'車清楚、背景拉出線條'):'背景清楚、車糊掉');}
+function topv(t){const c=tc,k=2,w=680,h=190;c.setTransform(k,0,0,k,0,0);
+c.fillStyle=tok('--o-panel');c.fillRect(0,0,w,h);c.fillStyle=tok('--o-road');c.fillRect(0,30,w,44);
+c.strokeStyle=tok('--o-road-line');c.lineWidth=2;c.setLineDash([16,12]);c.beginPath();c.moveTo(0,52);c.lineTo(w,52);c.stroke();c.setLineDash([]);
+const bx=30+620*t,px=340,py=160,exp=t>.45&&t<.55,ang=pan?Math.atan2(52-py,bx-px):-Math.PI/2,f=.18;
+c.fillStyle='rgba('+(exp?tok('--o-cone-hot'):tok('--o-cone'))+','+(exp?.3:.22)+')';
+c.beginPath();c.moveTo(px,py);c.lineTo(px+220*Math.cos(ang-f),py+220*Math.sin(ang-f));c.lineTo(px+220*Math.cos(ang+f),py+220*Math.sin(ang+f));c.fill();
+if(pan){c.strokeStyle='#378ADD';c.lineWidth=2;c.beginPath();c.arc(px,py,34,Math.atan2(52-py,30-px),ang,false);c.stroke();}
+c.fillStyle='#E24B4A';c.fillRect(bx-16,44,32,16);c.beginPath();c.moveTo(bx+16,44);c.lineTo(bx+24,52);c.lineTo(bx+16,60);c.fill();
+c.fillStyle=tok('--o-ink');c.beginPath();c.arc(px,py,11,0,7);c.fill();c.save();c.translate(px,py);c.rotate(ang);c.fillRect(8,-6,16,12);c.restore();
+c.font='500 15px "Noto Sans TC",sans-serif';c.fillStyle=tok('--o-ink');
+c.fillText(pan?(t<.45?'1. 預先跟拍，平順轉動':t<.55?'2. 按下快門，持續轉動':'3. 拍完仍要跟隨，不要急停'):'相機固定不動',16,124);
+if(exp){c.fillStyle=tok('--o-accent');c.fillText('快門開啟 1/'+sh+' 秒',16,148);}
+c.font='13px "Noto Sans TC",sans-serif';c.fillStyle=tok('--o-muted');c.fillText('攝影者',px+18,py+20);c.fillText('行進方向 →',w-100,20);}
+function view(t){const w=800,h=520,k=2,exp=t>.45&&t<.55;vf.clearRect(0,0,w,h);
+if(pan){bg(vf,t*SPD*1.15*k,w,h,k);bike(vf,w/2,h*.78,2.6);}else{bg(vf,1200*k,w,h,k);bike(vf,w/2+(t-.5)*2600,h*.78,2.6);}
+vf.strokeStyle='rgba(255,255,255,.85)';vf.lineWidth=3;vf.strokeRect(w/2-120,h/2-40,240,220);
+vf.fillStyle='rgba(0,0,0,.6)';vf.fillRect(20,20,190,52);vf.fillStyle='#fff';vf.font='600 34px "Barlow Condensed",sans-serif';vf.fillText('S   1/'+sh,36,58);
+if(exp){vf.fillStyle='#E24B4A';vf.beginPath();vf.arc(w-48,46,16,0,7);vf.fill();vf.strokeStyle='rgba(255,255,255,.9)';vf.lineWidth=12;vf.strokeRect(6,6,w-12,h-12);}}
+let playing=true,el=0,last=null;
+function loop(now){if(last===null)last=now;if(playing)el+=now-last;last=now;const t=(el%T)/T;topv(t);view(t);requestAnimationFrame(loop);}
+function setPlay(p){playing=p;$('olddo-p-play').textContent=p?'暫停動畫':'播放動畫';}
+$('olddo-p-play').addEventListener('click',()=>setPlay(!playing));setPlay(playing);
+function ui(){document.querySelectorAll('#olddo-p-shs button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.v===sh));
+$('olddo-p-m1').setAttribute('aria-pressed',pan);$('olddo-p-m2').setAttribute('aria-pressed',!pan);result();}
+document.querySelectorAll('#olddo-p-shs button').forEach(b=>b.addEventListener('click',()=>{sh=+b.dataset.v;ui();}));
+$('olddo-p-m1').addEventListener('click',()=>{pan=true;ui();});$('olddo-p-m2').addEventListener('click',()=>{pan=false;ui();});
+ui();requestAnimationFrame(loop);
+if(document.fonts)document.fonts.ready.then(()=>{});
+
+})();
+</script>
+</body>
+</html>
