@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M 模式曝光練習｜歐豆攝影教室</title>
+<meta name="description" content="在 M 手動模式下調整光圈、快門、感光度 ISO，即時看曝光表怎麼移動、照片變亮或變暗。歐豆攝影教室互動教材。">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Barlow+Condensed:wght@500;600&display=swap');
+.olddo-tool{--o-bg:#F3F4F2;--o-panel:#FFFFFF;--o-ink:#1E2124;--o-muted:#5E6468;--o-line:#D9DCD8;--o-accent:#D7322B;--o-sel:#1E2124;--o-on-sel:#FFFFFF;
+--o-dark:#2F4E7A;--o-ok:#1F7A4D;--o-bright:#B5651D;
+--o-font-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;--o-font-num:"Barlow Condensed","Arial Narrow",sans-serif;
+background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-size:16px;line-height:1.7;max-width:960px;margin:0 auto;padding:28px 16px 40px;display:flex;flex-direction:column;gap:20px;box-sizing:border-box;text-align:left}
+.olddo-tool *{box-sizing:border-box}
+.olddo-tool .olddo-head{display:flex;flex-direction:column;gap:4px}
+.olddo-tool .olddo-eyebrow{font-size:13px;letter-spacing:.08em;color:var(--o-accent);font-weight:500}
+.olddo-tool h1{font-size:clamp(28px,6vw,40px);line-height:1.2;margin:0;font-weight:700}
+.olddo-tool h2{font-size:20px;margin:0 0 4px;font-weight:700}
+.olddo-tool .olddo-lead{margin:0;color:var(--o-muted);max-width:62ch}
+.olddo-tool .olddo-card{background:var(--o-panel);border:1px solid var(--o-line);border-radius:12px;padding:16px}
+.olddo-tool .olddo-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.olddo-tool .olddo-lbl{font-size:13px;color:var(--o-muted)}
+.olddo-tool .olddo-mode{font-family:var(--o-font-num);font-weight:600;font-size:20px;background:var(--o-accent);color:#fff;border-radius:6px;padding:0 10px;line-height:30px}
+.olddo-tool button.olddo-btn{font-family:var(--o-font-body);font-size:15px;border:1px solid var(--o-line);background:transparent;color:var(--o-ink);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:40px;margin:0}
+.olddo-tool button.olddo-btn[aria-pressed="true"]{background:var(--o-sel);color:var(--o-on-sel);border-color:var(--o-sel)}
+.olddo-tool button.olddo-btn:focus-visible,.olddo-tool input:focus-visible{outline:2px solid var(--o-accent);outline-offset:2px}
+
+/* viewfinder */
+.olddo-tool .olddo-vf{background:#111;border-radius:12px;overflow:hidden;color:#EDEDED}
+.olddo-tool .olddo-photo{position:relative;aspect-ratio:3/2;overflow:hidden;background:#000}
+.olddo-tool .olddo-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:filter .25s}
+.olddo-tool .olddo-noise{position:absolute;inset:-10px;pointer-events:none;mix-blend-mode:overlay;opacity:0;transition:opacity .25s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.olddo-tool .olddo-warn{position:absolute;left:10px;top:10px;font-size:13px;background:rgba(0,0,0,.6);padding:2px 10px;border-radius:6px;display:none}
+.olddo-tool .olddo-lcd{display:grid;grid-template-columns:auto 1fr;gap:10px 16px;align-items:center;padding:14px 16px;font-family:var(--o-font-num)}
+.olddo-tool .olddo-vals{display:flex;gap:18px;font-size:30px;font-weight:600;line-height:1;align-items:baseline}
+.olddo-tool .olddo-vals small{font-size:14px;color:#9AA0A4;font-weight:500;margin-right:4px}
+.olddo-tool .olddo-meter{grid-column:1/-1}
+.olddo-tool .olddo-meter svg{width:100%;height:auto;display:block}
+.olddo-tool .olddo-status{grid-column:1/-1;font-family:var(--o-font-body);font-size:16px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.olddo-tool .olddo-pill{font-weight:700;border-radius:6px;padding:1px 10px;color:#111}
+
+/* controls */
+.olddo-tool .olddo-ctrls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.olddo-tool .olddo-ctrls{grid-template-columns:minmax(0,1fr)}}
+.olddo-tool .olddo-ctrl{display:flex;flex-direction:column;gap:8px}
+.olddo-tool .olddo-ctrl-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.olddo-tool .olddo-ctrl-top b{font-size:17px}
+.olddo-tool .olddo-ctrl-top span{font-family:var(--o-font-num);font-size:30px;font-weight:600;line-height:1}
+.olddo-tool .olddo-step{display:flex;gap:8px;align-items:center}
+.olddo-tool .olddo-step button{min-width:48px;font-size:14px}
+.olddo-tool .olddo-step input{flex:1;min-width:0;accent-color:var(--o-accent);height:28px;margin:0}
+.olddo-tool .olddo-ends{display:flex;justify-content:space-between;font-size:13px;color:var(--o-muted)}
+.olddo-tool .olddo-fx{font-size:14px;color:var(--o-ink);background:var(--o-bg);border-radius:8px;padding:6px 10px}
+
+/* overview chart */
+.olddo-tool .olddo-chart svg{width:100%;height:auto;display:block}
+.olddo-tool .olddo-chart text{font-family:var(--o-font-body)}
+.olddo-tool .olddo-chart .num{font-family:var(--o-font-num);font-size:15px}
+.olddo-tool table{border-collapse:collapse;width:100%;min-width:540px;font-size:15px}
+.olddo-tool th,.olddo-tool td{border-bottom:1px solid var(--o-line);padding:8px 6px;text-align:left;vertical-align:top}
+.olddo-tool th{font-size:13px;color:var(--o-muted);font-weight:500}
+.olddo-tool .olddo-tablewrap{overflow-x:auto}
+.olddo-tool .olddo-tips ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
+.olddo-tool .olddo-foot{font-size:13px;color:var(--o-muted)}
+.olddo-tool .olddo-foot a{color:var(--o-ink)}
+</style>
+</head>
+<body>
+<style>body{margin:0;background:#F3F4F2}.olddo-sitebar a{color:#161616;text-decoration:none}.olddo-sitebar a:hover{text-decoration:underline}</style>
+<div class="olddo-sitebar" style="border-bottom:1px solid #D8D4CC;background:#F4F2EE">
+<nav aria-label="網站選單" style="max-width:1080px;margin:0 auto;padding:14px 16px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;font-size:15px">
+<a href="index.html" style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:19px;letter-spacing:.06em;flex-grow:1">歐豆攝影教室</a>
+<a href="tools.html">← 攝影工具區</a>
+<a href="index.html#schedule">近期開課</a>
+</nav></div>
+
+<div class="olddo-tool" id="olddo-exp">
+  <div class="olddo-head">
+    <div class="olddo-eyebrow">歐豆攝影教室・互動教材</div>
+    <h1>M 模式：光圈、快門、ISO 和曝光表</h1>
+    <p class="olddo-lead">M 模式下，相機不會幫你調亮暗，只會用曝光表告訴你「太暗」還是「太亮」。調光圈、快門、ISO，看指針怎麼走，把它調回 0 就是正確曝光。</p>
+  </div>
+
+  <div class="olddo-card">
+    <div class="olddo-row" role="group" aria-label="拍攝場景">
+      <span class="olddo-lbl" style="min-width:4.5em">拍攝場景</span>
+      <span id="olddo-scenes" class="olddo-row"></span>
+    </div>
+  </div>
+
+  <div class="olddo-vf" aria-label="觀景窗">
+    <div class="olddo-photo">
+      <img id="olddo-img" src="images/olddo-work-yellow-wall.jpg" alt="示範照片，亮度會隨設定改變">
+      <div class="olddo-noise" id="olddo-noise"></div>
+      <div class="olddo-warn" id="olddo-warn"></div>
+    </div>
+    <div class="olddo-lcd">
+      <span class="olddo-mode">M</span>
+      <div class="olddo-vals" aria-live="polite"><span><small>快門</small><span id="olddo-v-s"></span></span><span><small>光圈</small><span id="olddo-v-a"></span></span><span><small>ISO</small><span id="olddo-v-i"></span></span></div>
+      <div class="olddo-meter"><svg id="olddo-meter" role="img" aria-label="曝光表"></svg></div>
+      <div class="olddo-status"><span>曝光表：</span><span class="olddo-pill" id="olddo-pill"></span><span id="olddo-say" style="color:#C9CDD0"></span></div>
+    </div>
+  </div>
+
+  <div class="olddo-ctrls">
+    <div class="olddo-card olddo-ctrl">
+      <div class="olddo-ctrl-top"><b>光圈</b><span id="olddo-c-a"></span></div>
+      <div class="olddo-step"><button class="olddo-btn" data-k="a" data-d="1" aria-label="光圈縮小一格">縮小</button><input type="range" id="olddo-r-a" aria-label="光圈"><button class="olddo-btn" data-k="a" data-d="-1" aria-label="光圈開大一格">開大</button></div>
+      <div class="olddo-ends"><span>f/22 暗</span><span>f/1.4 亮</span></div>
+      <div class="olddo-fx" id="olddo-fx-a"></div>
+    </div>
+    <div class="olddo-card olddo-ctrl">
+      <div class="olddo-ctrl-top"><b>快門</b><span id="olddo-c-s"></span></div>
+      <div class="olddo-step"><button class="olddo-btn" data-k="s" data-d="1" aria-label="快門加快一格">加快</button><input type="range" id="olddo-r-s" aria-label="快門"><button class="olddo-btn" data-k="s" data-d="-1" aria-label="快門放慢一格">放慢</button></div>
+      <div class="olddo-ends"><span>1/4000 暗</span><span>30 秒 亮</span></div>
+      <div class="olddo-fx" id="olddo-fx-s"></div>
+    </div>
+    <div class="olddo-card olddo-ctrl">
+      <div class="olddo-ctrl-top"><b>感光度 ISO</b><span id="olddo-c-i"></span></div>
+      <div class="olddo-step"><button class="olddo-btn" data-k="i" data-d="-1" aria-label="ISO 降低一格">降低</button><input type="range" id="olddo-r-i" aria-label="ISO"><button class="olddo-btn" data-k="i" data-d="1" aria-label="ISO 提高一格">提高</button></div>
+      <div class="olddo-ends"><span>100 暗</span><span>12800 亮</span></div>
+      <div class="olddo-fx" id="olddo-fx-i"></div>
+    </div>
+  </div>
+  <div class="olddo-row">
+    <button class="olddo-btn" id="olddo-fix-s">用快門調回 0</button>
+    <button class="olddo-btn" id="olddo-fix-a">用光圈調回 0</button>
+    <button class="olddo-btn" id="olddo-fix-i">用 ISO 調回 0</button>
+    <button class="olddo-btn" id="olddo-reset">重設</button>
+  </div>
+
+  <div class="olddo-card olddo-chart">
+    <h2>一覽圖：三個設定，同樣一格就是一級</h2>
+    <p class="olddo-lead" style="margin-bottom:10px">三條尺都排成「左暗、右亮」，每條長刻度是一級（1 stop），短刻度是 1/3 級。不管動哪一條，往右一級，曝光表就往 + 走 1 格；往左一級，就往 − 走 1 格。紅點是你現在的設定。</p>
+    <svg id="olddo-chart" role="img" aria-label="光圈、快門、ISO 對曝光的影響一覽圖"></svg>
+  </div>
+
+  <div class="olddo-card">
+    <h2>對照表</h2>
+    <div class="olddo-tablewrap"><table>
+      <thead><tr><th>設定</th><th>讓照片變亮</th><th>讓照片變暗</th><th>副作用（要付的代價）</th></tr></thead>
+      <tbody>
+        <tr><td><b>光圈</b></td><td>開大（f 數字變小：f/8 → f/5.6）</td><td>縮小（f 數字變大：f/8 → f/11）</td><td>開大：背景變模糊、景深變淺<br>縮小：前後都清楚，太小會變軟</td></tr>
+        <tr><td><b>快門</b></td><td>放慢（1/125 → 1/60）</td><td>加快（1/125 → 1/250）</td><td>放慢：容易手震、動的東西會糊<br>加快：可以凝結動作</td></tr>
+        <tr><td><b>ISO</b></td><td>提高（200 → 400）</td><td>降低（400 → 200）</td><td>提高：雜訊變多、畫質變粗<br>降低：畫面乾淨</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="olddo-card olddo-tips">
+    <h2>歐豆小提醒</h2>
+    <ul>
+      <li>曝光表一格通常是 1/3 級，三小格 = 1 級。相機轉盤轉「一下」就是 1/3 級。</li>
+      <li>光圈開大一級、快門加快一級，亮度不變，這叫「等量曝光」。試試看：先按一下光圈「開大」三次，再按快門「加快」三次。</li>
+      <li>指針在 0 不一定就是你要的照片。逆光、雪地、黑色主體，常常要故意偏 + 或偏 −。</li>
+    </ul>
+  </div>
+  <div class="olddo-foot">歐豆攝影教室・<a href="https://olddo.com">olddo.com</a>・示範照片的亮度與雜訊為模擬效果</div>
+</div>
+
+<script>
+(function(){
+  var A=['1.4','1.6','1.8','2','2.2','2.5','2.8','3.2','3.5','4','4.5','5','5.6','6.3','7.1','8','9','10','11','13','14','16','18','20','22'];
+  var S=['30"','25"','20"','15"','13"','10"','8"','6"','5"','4"','3.2"','2.5"','2"','1.6"','1.3"','1"','0.8"','0.6"','0.5"','0.4"','0.3"','1/4','1/5','1/6','1/8','1/10','1/13','1/15','1/20','1/25','1/30','1/40','1/50','1/60','1/80','1/100','1/125','1/160','1/200','1/250','1/320','1/400','1/500','1/640','1/800','1/1000','1/1250','1/1600','1/2000','1/2500','1/3200','1/4000'];
+  var I=['100','125','160','200','250','320','400','500','640','800','1000','1250','1600','2000','2500','3200','4000','5000','6400','8000','10000','12800'];
+  var SCENES=[{n:'晴天戶外',ev:15},{n:'陰天',ev:12},{n:'室內窗邊',ev:9},{n:'室內燈光',ev:7},{n:'夜晚街景',ev:4}];
+  var DEF={a:12,s:36,i:0,sc:1};
+  var st={a:DEF.a,s:DEF.s,i:DEF.i,sc:DEF.sc};
+  var $=function(id){return document.getElementById(id);};
+  var NS='http://www.w3.org/2000/svg';
+  function el(tag,attrs,txt){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(txt!=null)e.textContent=txt;return e;}
+  function sLabel(k){var v=S[k];return v.indexOf('"')>0?v.replace('"',' 秒'):v;}
+  // thirds: Av = 1 + a/3, Tv = -5 + s/3, Sv = i/3 ; setting EV = Av + Tv - Sv
+  function dev(){return SCENES[st.sc].ev*3 - (3 + st.a + (-15 + st.s) - st.i);} // in thirds; + = brighter
+  function fmt(t){if(t===0)return '0';var sg=t>0?'+':'−',a=Math.abs(t),w=Math.floor(a/3),r=a%3;return sg+(w?w:'')+(r?(w?' ':'')+(r===1?'⅓':'⅔'):'');}
+  var rA=$('olddo-r-a'),rS=$('olddo-r-s'),rI=$('olddo-r-i');
+  // sliders run dark→bright left→right
+  rA.min=0;rA.max=A.length-1;rS.min=0;rS.max=S.length-1;rI.min=0;rI.max=I.length-1;
+  rA.oninput=function(){st.a=A.length-1-(+rA.value);draw();};
+  rS.oninput=function(){st.s=S.length-1-(+rS.value);draw();};
+  rI.oninput=function(){st.i=+rI.value;draw();};
+  document.querySelectorAll('[data-k]').forEach(function(b){b.onclick=function(){var k=b.getAttribute('data-k'),d=+b.getAttribute('data-d'),max={a:A.length,s:S.length,i:I.length}[k]-1;st[k]=Math.max(0,Math.min(max,st[k]+d));draw();};});
+  var scWrap=$('olddo-scenes');
+  SCENES.forEach(function(sc,idx){var b=document.createElement('button');b.className='olddo-btn';b.type='button';b.textContent=sc.n;b.onclick=function(){st.sc=idx;draw();};scWrap.appendChild(b);});
+  function fix(k){var d=dev(),max={a:A.length,s:S.length,i:I.length}[k]-1;var target=k==='i'?st.i-d:st[k]+d;st[k]=Math.max(0,Math.min(max,target));draw();}
+  $('olddo-fix-s').onclick=function(){fix('s');};$('olddo-fix-a').onclick=function(){fix('a');};$('olddo-fix-i').onclick=function(){fix('i');};
+  $('olddo-reset').onclick=function(){st.a=DEF.a;st.s=DEF.s;st.i=DEF.i;st.sc=DEF.sc;draw();};
+
+  function drawMeter(d){
+    var m=$('olddo-meter');m.innerHTML='';var W=Math.max(300,m.parentNode.clientWidth||640),H=84;m.setAttribute('viewBox','0 0 '+W+' '+H);
+    var x0=30,x1=W-30,step=(x1-x0)/18,cx=function(t){return x0+(t+9)*step;};
+    m.appendChild(el('line',{x1:x0,y1:40,x2:x1,y2:40,stroke:'#EDEDED','stroke-width':2}));
+    for(var t=-9;t<=9;t++){var big=t%3===0;m.appendChild(el('line',{x1:cx(t),y1:big?22:30,x2:cx(t),y2:40,stroke:'#EDEDED','stroke-width':big?2:1.5}));
+      if(big){m.appendChild(el('text',{x:cx(t),y:16,'text-anchor':'middle',fill:'#EDEDED','font-size':17,'font-family':'Barlow Condensed,Arial Narrow,sans-serif'},t===0?'0':(t>0?'+':'−')+Math.abs(t/3)));}}
+    m.appendChild(el('text',{x:12,y:47,'text-anchor':'middle',fill:'#9AA0A4','font-size':22},'−'));
+    m.appendChild(el('text',{x:W-12,y:47,'text-anchor':'middle',fill:'#9AA0A4','font-size':22},'+'));
+    var col=d===0?'#5BD69A':(d<0?'#7FA8E0':'#F2A65A');
+    var dd=Math.max(-9,Math.min(9,d)),x=cx(dd);
+    m.appendChild(el('rect',{x:Math.min(cx(0),x),y:46,width:Math.max(3,Math.abs(x-cx(0))),height:10,fill:col,rx:2}));
+    if(Math.abs(d)<=9)m.appendChild(el('path',{d:'M'+x+' 60 l-9 16 h18 z',fill:col}));
+    else m.appendChild(el('path',{d:d>0?'M'+(x+4)+' 59 l14 9 l-14 9 z':'M'+(x-4)+' 59 l-14 9 l14 9 z',fill:col}));
+  }
+  function fxA(){var f=parseFloat(A[st.a]);if(f<=2.8)return '景深淺：主角清楚，背景很模糊';if(f<=5.6)return '景深中等：背景有點模糊';if(f<=11)return '景深深：前後大多清楚，風景常用';return '景深很深：前後都清楚，但太小可能變軟';}
+  function fxS(){var k=st.s;if(k>=42)return '很快：可以凝結動作（運動、飛鳥）';if(k>=33)return '安全：手持拍攝不容易晃';if(k>=27)return '偏慢：手要穩，走動的人可能糊';return '很慢：一定要腳架，可拍車軌、流水';}
+  function fxI(){var k=st.i;if(k<=3)return '畫面最乾淨';if(k<=9)return '還算乾淨，室內常用';if(k<=15)return '雜訊開始明顯';return '雜訊很多，畫面變粗';}
+  function drawChart(){
+    var c=$('olddo-chart');c.innerHTML='';var W=Math.max(320,c.parentNode.clientWidth-32||860),narrow=W<600;
+    var rows=[
+      {name:'光圈',left:'縮小：景深深',right:'開大：背景模糊',labels:['22','16','11','8','5.6','4','2.8','2','1.4'],cur:(A.length-1-st.a),n:A.length,every:1},
+      {name:'快門',left:'加快：凝結動作',right:'放慢：容易手震',labels:['1/4000','1/2000','1/1000','1/500','1/250','1/125','1/60','1/30','1/15','1/8','1/4','½"','1"','2"','4"','8"','15"','30"'],cur:(S.length-1-st.s),n:S.length,every:narrow?3:1},
+      {name:'ISO',left:'低：畫面乾淨',right:'高：雜訊變多',labels:['100','200','400','800','1600','3200','6400','12800'],cur:st.i,n:I.length,every:1}
+    ];
+    var x0=narrow?14:84,x1=W-14,unit=(x1-x0)/17,rowH=narrow?118:105,top=narrow?70:72,H=top+rowH*3-10;
+    c.setAttribute('viewBox','0 0 '+W+' '+H);
+    c.appendChild(el('text',{x:x0,y:20,fill:'#2F4E7A','font-size':14,'font-weight':700},'◀ 變暗（往 −）'));
+    c.appendChild(el('text',{x:x1,y:20,fill:'#B5651D','font-size':14,'font-weight':700,'text-anchor':'end'},'變亮（往 +）▶'));
+    var defs=el('defs',{});var g=el('linearGradient',{id:'olddo-g',x1:0,x2:1,y1:0,y2:0});g.appendChild(el('stop',{offset:0,'stop-color':'#1E2124'}));g.appendChild(el('stop',{offset:1,'stop-color':'#F7F3EA'}));defs.appendChild(g);c.appendChild(defs);
+    c.appendChild(el('rect',{x:x0,y:30,width:x1-x0,height:8,fill:'url(#olddo-g)',rx:4,stroke:'#D9DCD8'}));
+    rows.forEach(function(r,ri){
+      var y=top+ri*rowH+(narrow?24:0),stops=(r.n-1)/3,u=narrow?(x1-x0)/stops:unit,w=stops*u,sx=x0+(x1-x0-w)/2;
+      if(narrow)c.appendChild(el('text',{x:x0,y:y-18,'font-size':16,'font-weight':700,fill:'#1E2124'},r.name));
+      else c.appendChild(el('text',{x:4,y:y+6,'font-size':18,'font-weight':700,fill:'#1E2124'},r.name));
+      c.appendChild(el('line',{x1:sx,y1:y,x2:sx+w,y2:y,stroke:'#1E2124','stroke-width':3}));
+      var labs=[];
+      for(var t=0;t<r.n;t++){var x=sx+t*u/3,big=t%3===0;c.appendChild(el('line',{x1:x,y1:big?y-10:y-5,x2:x,y2:y+(big?10:5),stroke:'#1E2124','stroke-width':big?2:1}));
+        if(big){var tx=r.labels[t/3],lw=tx.length*7+2,a=t===0?'start':(t===r.n-1?'end':'middle'),L=a==='start'?x:(a==='end'?x-lw:x-lw/2);labs.push({x:x,t:tx,a:a,L:L,R:L+lw});}}
+      var keep=[labs[0]];for(var q=1;q<labs.length;q++){var lb=labs[q];if(q===labs.length-1){while(keep.length>1&&keep[keep.length-1].R+6>lb.L)keep.pop();keep.push(lb);}else if(lb.L>keep[keep.length-1].R+6)keep.push(lb);}
+      keep.forEach(function(lb){c.appendChild(el('text',{x:lb.x,y:y+28,'text-anchor':lb.a,'class':'num',fill:'#1E2124','font-size':13},lb.t));});
+      var cx=sx+r.cur*u/3;
+      c.appendChild(el('circle',{cx:cx,cy:y,r:9,fill:'#D7322B',stroke:'#fff','stroke-width':2}));
+      c.appendChild(el('text',{x:sx,y:y+50,'font-size':13,fill:'#5E6468'},'← '+r.left));
+      c.appendChild(el('text',{x:sx+w,y:y+50,'font-size':13,fill:'#5E6468','text-anchor':'end'},r.right+' →'));
+    });
+  }
+  function draw(){
+    var d=dev();
+    $('olddo-v-a').textContent=A[st.a];$('olddo-v-s').textContent=S[st.s];$('olddo-v-i').textContent=I[st.i];
+    $('olddo-c-a').textContent='f/'+A[st.a];$('olddo-c-s').textContent=sLabel(st.s);$('olddo-c-i').textContent=I[st.i];
+    rA.value=A.length-1-st.a;rS.value=S.length-1-st.s;rI.value=st.i;
+    rA.setAttribute('aria-valuetext','f/'+A[st.a]);rS.setAttribute('aria-valuetext',sLabel(st.s));rI.setAttribute('aria-valuetext','ISO '+I[st.i]);
+    scWrap.querySelectorAll('button').forEach(function(b,idx){b.setAttribute('aria-pressed',idx===st.sc?'true':'false');});
+    drawMeter(d);
+    var pill=$('olddo-pill'),say=$('olddo-say');
+    pill.textContent=Math.abs(d)>9?(d>0?'超過 +3':'超過 −3'):fmt(d);
+    pill.style.background=d===0?'#5BD69A':(d<0?'#7FA8E0':'#F2A65A');
+    say.textContent=d===0?'正確曝光':(d<0?'偏暗 '+fmt(-d).replace('+','')+' 級，要讓光多進來':'偏亮 '+fmt(d).replace('+','')+' 級，要讓光少進來');
+    // preview
+    var e=Math.max(-12,Math.min(12,d))/3;
+    var br=Math.pow(2,e*0.85),blur=0;var sec=st.s<=20?1:0;var tv=-5+st.s/3;if(tv<5)blur=Math.min(6,(5-tv)*0.9);
+    $('olddo-img').style.filter='brightness('+br.toFixed(3)+') contrast('+(e>1?1+Math.min(0.4,(e-1)*0.15):1)+') blur('+blur.toFixed(1)+'px)';
+    $('olddo-noise').style.opacity=Math.max(0,Math.min(0.85,(st.i-6)/15)).toFixed(2);
+    var w=$('olddo-warn');var msgs=[];if(tv<5)msgs.push('快門太慢，手持會晃');if(st.i>=15)msgs.push('ISO 很高，雜訊明顯');
+    w.style.display=msgs.length?'block':'none';w.textContent=msgs.join('・');
+    $('olddo-fx-a').textContent=fxA();$('olddo-fx-s').textContent=fxS();$('olddo-fx-i').textContent=fxI();
+    drawChart();
+  }
+  draw();
+  var rz;window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(draw,150);});
+})();
+</script>
+</body>
+</html>
