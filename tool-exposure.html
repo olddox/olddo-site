@@ -60,6 +60,22 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
 .olddo-tool th,.olddo-tool td{border-bottom:1px solid var(--o-line);padding:8px 6px;text-align:left;vertical-align:top}
 .olddo-tool th{font-size:13px;color:var(--o-muted);font-weight:500}
 .olddo-tool .olddo-tablewrap{overflow-x:auto}
+.olddo-tool .olddo-stops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.olddo-tool .olddo-stops{grid-template-columns:minmax(0,1fr)}}
+.olddo-tool .olddo-st h3{font-size:17px;margin:0 0 2px}
+.olddo-tool .olddo-st p{margin:0 0 8px;font-size:13px;color:var(--o-muted)}
+.olddo-tool .olddo-st table{min-width:0;font-family:var(--o-font-num);font-size:18px}
+.olddo-tool .olddo-st th{font-family:var(--o-font-body);font-size:12px;padding:4px 6px}
+.olddo-tool .olddo-st td{padding:0;vertical-align:middle;border-bottom:1px solid var(--o-line)}
+.olddo-tool .olddo-st td button{display:block;width:100%;text-align:left;font:inherit;background:none;border:0;padding:6px 8px;cursor:pointer;color:var(--o-muted);border-radius:6px}
+.olddo-tool .olddo-st td:first-child button{color:var(--o-ink);font-weight:600}
+.olddo-tool .olddo-st td button:hover{background:var(--o-bg)}
+.olddo-tool .olddo-st td button[aria-current="true"]{background:var(--o-accent);color:#fff}
+.olddo-tool .olddo-st td.olddo-x{vertical-align:middle;font-family:var(--o-font-body);font-size:12px;color:var(--o-muted);padding:0 6px;white-space:nowrap}
+.olddo-tool .olddo-explain{background:var(--o-bg);border-radius:10px;padding:12px 14px;margin:6px 0 10px;display:flex;flex-direction:column;gap:6px}
+.olddo-tool .olddo-explain p{margin:0;font-size:15px}
+.olddo-tool .olddo-st td span.olddo-half{display:block;padding:6px 8px;color:var(--o-muted)}
+.olddo-tool .olddo-st td:first-child span.olddo-half{color:var(--o-ink);font-weight:600}
 .olddo-tool .olddo-tips ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
 .olddo-tool .olddo-foot{font-size:13px;color:var(--o-muted)}
 .olddo-tool .olddo-foot a{color:var(--o-ink)}
@@ -133,6 +149,21 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
     <h2>一覽圖：三個設定，同樣一格就是一級</h2>
     <p class="olddo-lead" style="margin-bottom:10px">三條尺都排成「左暗、右亮」，每條長刻度是一級（1 stop），短刻度是 1/3 級。不管動哪一條，往右一級，曝光表就往 + 走 1 格；往左一級，就往 − 走 1 格。紅點是你現在的設定。</p>
     <svg id="olddo-chart" role="img" aria-label="光圈、快門、ISO 對曝光的影響一覽圖"></svg>
+  </div>
+
+  <div class="olddo-card">
+    <h2>級數表</h2>
+    <div class="olddo-explain">
+      <p><b>一級（1 stop）是什麼？</b>進光量差一倍就叫一級。光圈 f/4 → f/5.6、快門 1/125 → 1/250、ISO 400 → 200，都是「暗一級」，照片亮度剛好少一半。</p>
+      <p><b>⅓ 級：</b>大部分相機預設的刻度，把一級切成三小格，轉盤轉一下就是 ⅓ 級，轉三下 = 一級。曝光表上的小刻度也是 ⅓ 級。</p>
+      <p><b>½ 級：</b>有些相機可以在選單把刻度改成 ½ 級（例如 Canon「曝光等級增量」、Nikon「EV 步級」），一級只切成兩格，轉兩下 = 一級。調得比較快，但沒那麼細。看到 f/6.7、1/90、1/180 這些數字，就是 ½ 級。</p>
+    </div>
+    <div class="olddo-row" role="group" aria-label="刻度" style="margin:4px 0 12px"><span class="olddo-lbl">刻度</span><button class="olddo-btn" type="button" id="olddo-step3" aria-pressed="true">⅓ 級（常用）</button><button class="olddo-btn" type="button" id="olddo-step2" aria-pressed="false">½ 級</button><span id="olddo-stepnote" style="font-size:13px;color:var(--o-muted)">點數字可以直接套用到上面的相機</span></div>
+    <div class="olddo-stops">
+      <div class="olddo-st"><h3>光圈 f 值</h3><p>數字越大，光圈越小、越暗</p><table id="olddo-t-a"></table></div>
+      <div class="olddo-st"><h3>快門速度</h3><p>越往下越快、越暗（" 代表秒）</p><table id="olddo-t-s"></table></div>
+      <div class="olddo-st"><h3>感光度 ISO</h3><p>越往下 ISO 越低、越暗</p><table id="olddo-t-i"></table></div>
+    </div>
   </div>
 
   <div class="olddo-card">
@@ -232,6 +263,35 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
       c.appendChild(el('text',{x:sx+w,y:y+50,'font-size':13,fill:'#5E6468','text-anchor':'end'},r.right+' →'));
     });
   }
+  // stop tables: rows bright→dark, one full stop per row
+  var HA=['1.4','1.8','2','2.5','2.8','3.5','4','4.5','5.6','6.7','8','9.5','11','13','16','19','22'];
+  var HS=['30"','20"','15"','10"','8"','6"','4"','3"','2"','1.5"','1"','0.7"','1/2','0.3"','1/4','1/6','1/8','1/10','1/15','1/20','1/30','1/45','1/60','1/90','1/125','1/180','1/250','1/350','1/500','1/750','1/1000','1/1500','1/2000','1/3000','1/4000'];
+  var HI=['12800','9000','6400','4500','3200','2200','1600','1100','800','560','400','280','200','140','100'];
+  var step3=true;
+  function buildStops(id,key,list,order,fmtv){
+    var t=$(id),n=step3?3:2;
+    if(step3){var rows=Math.floor((list.length-1)/3)+1,h='<thead><tr><th>全級</th><th>⅓</th><th>⅔</th><th>比第一列</th></tr></thead><tbody>';
+      for(var r=0;r<rows;r++){h+='<tr>';for(var c=0;c<3;c++){var k=r*3+c;var idx=order==='up'?k:list.length-1-k;
+          if(k<list.length&&!(c>0&&r===rows-1))h+='<td><button type="button" data-st="'+key+'" data-i="'+idx+'">'+fmtv(list[idx])+'</button></td>';else h+='<td></td>';}
+        h+='<td class="olddo-x">'+(r===0?'最亮':'暗 '+r+' 級')+'</td></tr>';}
+      t.innerHTML=h+'</tbody>';
+    }else{var hl={a:HA,s:HS,i:HI}[key],rows2=(hl.length+1)/2,h2='<thead><tr><th>全級</th><th>½</th><th>比第一列</th></tr></thead><tbody>';
+      for(var r2=0;r2<rows2;r2++){var v0=hl[r2*2],v1=hl[r2*2+1];
+        h2+='<tr><td><span class="olddo-half">'+(key==='a'?'f/':'')+v0+'</span></td><td>'+(v1&&r2<rows2-1?'<span class="olddo-half">'+(key==='a'?'f/':'')+v1+'</span>':'')+'</td><td class="olddo-x">'+(r2===0?'最亮':'暗 '+r2+' 級')+'</td></tr>';}
+      t.innerHTML=h2+'</tbody>';}
+  }
+  function buildAll(){
+    buildStops('olddo-t-a','a',A,'up',function(v){return 'f/'+v;});
+    buildStops('olddo-t-s','s',S,'up',function(v){return v==='0.5"'?'1/2':v;});
+    buildStops('olddo-t-i','i',I,'down',function(v){return v;});
+    document.querySelectorAll('[data-st]').forEach(function(b){b.onclick=function(){st[b.getAttribute('data-st')]=+b.getAttribute('data-i');draw();};});
+    $('olddo-step3').setAttribute('aria-pressed',step3?'true':'false');$('olddo-step2').setAttribute('aria-pressed',step3?'false':'true');
+    $('olddo-stepnote').textContent=step3?'點數字可以直接套用到上面的相機':'½ 級只供對照，上面的練習相機用 ⅓ 級';
+    markStops();
+  }
+  $('olddo-step3').onclick=function(){step3=true;buildAll();};
+  $('olddo-step2').onclick=function(){step3=false;buildAll();};
+  function markStops(){document.querySelectorAll('[data-st]').forEach(function(b){b.setAttribute('aria-current',(+b.getAttribute('data-i'))===st[b.getAttribute('data-st')]?'true':'false');});}
   function draw(){
     var d=dev();
     $('olddo-v-a').textContent=A[st.a];$('olddo-v-s').textContent=S[st.s];$('olddo-v-i').textContent=I[st.i];
@@ -253,7 +313,9 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
     w.style.display=msgs.length?'block':'none';w.textContent=msgs.join('・');
     $('olddo-fx-a').textContent=fxA();$('olddo-fx-s').textContent=fxS();$('olddo-fx-i').textContent=fxI();
     drawChart();
+    markStops();
   }
+  buildAll();
   draw();
   var rz;window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(draw,150);});
 })();
