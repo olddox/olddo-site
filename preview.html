@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>原始碼預覽｜歐豆攝影教室</title>
+<style>
+:root{--bg:#F4F2EE;--ink:#161616;--sub:#5A5752;--line:#D8D4CC;--red:#B3261E;--panel:#FFFFFF}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:'Noto Sans TC',system-ui,sans-serif}
+.olddo-pv{display:flex;flex-direction:column;height:100%}
+.olddo-pv-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.olddo-pv-bar h1{margin:0;font-size:17px;font-weight:700;flex:1 1 auto}
+.olddo-pv-btn{font:inherit;font-size:14px;min-height:40px;padding:0 14px;border:1px solid var(--ink);background:var(--panel);color:var(--ink);cursor:pointer}
+.olddo-pv-btn.on{background:var(--ink);color:var(--bg)}
+.olddo-pv-btn.red{background:var(--red);border-color:var(--red);color:#fff}
+.olddo-pv-main{flex:1 1 auto;display:flex;min-height:0}
+.olddo-pv-src{flex:0 0 38%;display:flex;flex-direction:column;border-right:1px solid var(--line);min-width:0}
+.olddo-pv-src label{font-size:13px;color:var(--sub);padding:8px 12px}
+.olddo-pv-src textarea{flex:1 1 auto;width:100%;border:0;border-top:1px solid var(--line);padding:12px;font:13px/1.6 ui-monospace,Menlo,monospace;resize:none;background:var(--panel);color:var(--ink)}
+.olddo-pv-src textarea:focus{outline:2px solid var(--ink);outline-offset:-2px}
+.olddo-pv-view{flex:1 1 auto;display:flex;justify-content:center;align-items:stretch;overflow:auto;background:#E4E0D8;padding:16px;min-width:0}
+.olddo-pv-view iframe{width:100%;height:100%;border:0;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.15);transition:width .2s}
+.olddo-pv-view.phone iframe{width:390px;max-width:100%}
+.olddo-pv-empty{color:var(--sub);font-size:15px;align-self:center;text-align:center;line-height:1.9}
+.olddo-pv-tip{font-size:12px;color:var(--sub)}
+@media (max-width:760px){.olddo-pv-main{flex-direction:column}.olddo-pv-src{flex:0 0 40%;border-right:0;border-bottom:1px solid var(--line)}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141414;--ink:#EDEBE6;--sub:#A9A59E;--line:#3A3A3A;--panel:#1E1E1E}:root:not([data-theme="light"]) .olddo-pv-view{background:#0E0E0E}}
+</style>
+</head>
+<body>
+<div class="olddo-pv">
+  <div class="olddo-pv-bar">
+    <h1>原始碼預覽</h1>
+    <button class="olddo-pv-btn on" id="olddo-pv-pc" type="button">電腦</button>
+    <button class="olddo-pv-btn" id="olddo-pv-ph" type="button">手機</button>
+    <button class="olddo-pv-btn red" id="olddo-pv-paste" type="button">貼上並預覽</button>
+    <button class="olddo-pv-btn" id="olddo-pv-clear" type="button">清除</button>
+  </div>
+  <div class="olddo-pv-main">
+    <div class="olddo-pv-src">
+      <label for="olddo-pv-code">把 HTML 原始碼貼在下面，右邊會即時顯示（只在你的瀏覽器預覽，不會存到網站）</label>
+      <textarea id="olddo-pv-code" spellcheck="false" placeholder="在這裡貼上原始碼…"></textarea>
+    </div>
+    <div class="olddo-pv-view" id="olddo-pv-view">
+      <div class="olddo-pv-empty" id="olddo-pv-empty">左邊貼上原始碼<br>或按上面紅色的「貼上並預覽」</div>
+      <iframe id="olddo-pv-frame" title="預覽" hidden></iframe>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var code=document.getElementById('olddo-pv-code'),frame=document.getElementById('olddo-pv-frame'),
+      empty=document.getElementById('olddo-pv-empty'),view=document.getElementById('olddo-pv-view'),
+      pc=document.getElementById('olddo-pv-pc'),ph=document.getElementById('olddo-pv-ph'),t=null;
+  function base(html){
+    var tag='<base href="https://new.olddo.com/p/">';
+    if(/<head[^>]*>/i.test(html))return html.replace(/<head[^>]*>/i,function(m){return m+tag;});
+    return tag+html;
+  }
+  function render(){
+    var v=code.value;
+    if(!v.trim()){frame.hidden=true;empty.hidden=false;return;}
+    empty.hidden=true;frame.hidden=false;frame.srcdoc=base(v);
+  }
+  code.addEventListener('input',function(){clearTimeout(t);t=setTimeout(render,400);});
+  document.getElementById('olddo-pv-paste').addEventListener('click',function(){
+    if(navigator.clipboard&&navigator.clipboard.readText){
+      navigator.clipboard.readText().then(function(x){code.value=x;render();}).catch(function(){code.focus();});
+    }else{code.focus();}
+  });
+  document.getElementById('olddo-pv-clear').addEventListener('click',function(){code.value='';render();code.focus();});
+  pc.addEventListener('click',function(){view.classList.remove('phone');pc.classList.add('on');ph.classList.remove('on');});
+  ph.addEventListener('click',function(){view.classList.add('phone');ph.classList.add('on');pc.classList.remove('on');});
+})();
+</script>
+</body>
+</html>

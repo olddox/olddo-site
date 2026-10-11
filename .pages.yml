@@ -33,7 +33,7 @@ content:
       - name: body
         label: 原始碼
         type: code
-        description: 把整段 HTML 原始碼貼在這裡
+        description: 把整段 HTML 原始碼貼在這裡。想先看效果：全選複製後，打開 new.olddo.com/preview.html 按「貼上並預覽」
         options:
           format: html
 
