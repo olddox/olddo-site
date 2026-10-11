@@ -81,7 +81,8 @@ html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-fa
   function read(k){try{return localStorage.getItem(k);}catch(e){return null;}}
   function sha(s){return crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)).then(function(b){return Array.prototype.map.call(new Uint8Array(b),function(x){return ('0'+x.toString(16)).slice(-2);}).join('');});}
   function hashPw(email,pw){return sha(PEPPER+'|'+email.trim().toLowerCase()+'|'+pw);}
-  function api(body){return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body),redirect:'follow'});}
+  function post(body){return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body),redirect:'follow'});}
+  function api(body){return post(body).then(function(r){return r.text();}).then(function(t){var bad=body.action==='tool'?(t.charAt(0)!=='{'&&t.length<30000):(t.charAt(0)!=='{');if(bad)throw 0;return t;}).catch(function(){return post(body).then(function(r){return r.text();});}).then(function(t){return {text:function(){return Promise.resolve(t);},json:function(){try{return Promise.resolve(JSON.parse(t));}catch(e){return Promise.reject(e);}}};});}
   function tab(login){$('oc-t-login').classList.toggle('on',login);$('oc-t-reg').classList.toggle('on',!login);$('oc-login').classList.toggle('oc-hide',!login);$('oc-reg').classList.toggle('oc-hide',login);say('');}
   $('oc-t-login').onclick=function(){tab(true);};
   $('oc-t-reg').onclick=function(){tab(false);};
