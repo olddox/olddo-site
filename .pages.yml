@@ -11,7 +11,7 @@ content:
     path: p
     format: yaml-frontmatter
     filename:
-      template: "{slug}.html"
+      template: "{fields.slug}.html"
       field: false
     view:
       primary: title
