@@ -31,6 +31,9 @@ html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-fa
 .oc-msg.ok{color:#2E6B3A}
 .oc-note{margin:22px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--sub);line-height:1.8}
 .oc-note a{color:var(--red)}
+.oc-ver{display:flex;gap:8px;margin:0 0 18px}
+.oc-ver button{flex:1;font:inherit;font-size:14px;min-height:42px;border:1px solid var(--line);background:none;color:var(--sub);cursor:pointer}
+.oc-ver button.on{border-color:var(--ink);color:var(--ink);font-weight:700}
 .oc-hide{display:none!important}
 .oc-loading{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--bg);font-size:15px;color:var(--sub)}
 .oc-spin{width:36px;height:36px;border:3px solid var(--line);border-top-color:var(--ink);border-radius:50%;animation:oc-r 1s linear infinite}
@@ -48,6 +51,7 @@ html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-fa
       <button class="oc-tab" id="oc-t-reg" type="button" role="tab">申請帳號</button>
     </div>
 
+    <div class="oc-ver" role="group" aria-label="版本"><button type="button" id="oc-v-d">💻 電腦版</button><button type="button" id="oc-v-m">📱 手機版</button></div>
     <form id="oc-login" autocomplete="on">
       <div class="oc-f"><label for="oc-le">Email</label><input id="oc-le" type="email" autocomplete="username" required></div>
       <div class="oc-f"><label for="oc-lp">密碼</label><input id="oc-lp" type="password" autocomplete="current-password" required></div>
@@ -73,7 +77,8 @@ html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-fa
 (function(){
   var API='https://script.google.com/macros/s/AKfycbzahWJ6QNsC3v_g3cEA4kK5oMuE8Yo671RsDQRUC4MJrqO1W5hf7jUCueBbre2O9Y-Xjw/exec';
   var PEPPER='olddo-ocolor-v1';
-  var KEY='oc_token';
+  var KEY='oc_token',VKEY='oc_ver';
+  var ver=(function(){try{var v=localStorage.getItem(VKEY);if(v==='m'||v==='d')return v;}catch(e){}return (window.matchMedia&&matchMedia('(max-width:760px)').matches)?'m':'d';})();
   var $=function(id){return document.getElementById(id);};
   var msg=$('oc-msg');
   function say(t,ok){msg.textContent=t||'';msg.className='oc-msg '+(ok?'ok':'err');}
@@ -86,15 +91,27 @@ html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-fa
   function tab(login){$('oc-t-login').classList.toggle('on',login);$('oc-t-reg').classList.toggle('on',!login);$('oc-login').classList.toggle('oc-hide',!login);$('oc-reg').classList.toggle('oc-hide',login);say('');}
   $('oc-t-login').onclick=function(){tab(true);};
   $('oc-t-reg').onclick=function(){tab(false);};
+  function setVer(v){ver=v;try{localStorage.setItem(VKEY,v);}catch(e){}$('oc-v-d').classList.toggle('on',v==='d');$('oc-v-m').classList.toggle('on',v==='m');}
+  $('oc-v-d').onclick=function(){setVer('d');};
+  $('oc-v-m').onclick=function(){setVer('m');};
+  setVer(ver);
+  function addSwitch(){
+    try{var b=document.createElement('button');b.type='button';b.textContent=ver==='m'?'💻 電腦版':'📱 手機版';
+      b.setAttribute('aria-label','切換到'+(ver==='m'?'電腦版':'手機版'));
+      b.style.cssText='position:fixed;top:8px;right:8px;z-index:2147483000;font:12px/1 system-ui,sans-serif;padding:7px 10px;border:1px solid rgba(255,255,255,.35);border-radius:14px;background:rgba(20,18,16,.72);color:#f3e7d2;cursor:pointer;opacity:.85';
+      b.onclick=function(){try{localStorage.setItem(VKEY,ver==='m'?'d':'m');}catch(e){}location.reload();};
+      var n=0,t=setInterval(function(){n++;if(!b.isConnected)(document.body||document.documentElement).appendChild(b);if(n>20)clearInterval(t);},1000);
+      (document.body||document.documentElement).appendChild(b);}catch(e){}
+  }
   function busy(form,on){var b=form.querySelector('button');b.disabled=on;}
 
   function openTool(token){
     $('oc-gate').classList.add('oc-hide');$('oc-loading').classList.remove('oc-hide');
-    api({action:'tool',token:token}).then(function(r){return r.text();}).then(function(t){
+    api({action:'tool',token:token,v:ver}).then(function(r){return r.text();}).then(function(t){
       if(t.charAt(0)==='{'){var j={};try{j=JSON.parse(t);}catch(e){}
         if(j.relogin)store(KEY,null);
         $('oc-loading').classList.add('oc-hide');$('oc-gate').classList.remove('oc-hide');tab(true);say(j.msg||'無法載入，請重新登入');return;}
-      document.open();document.write(t);document.close();
+      document.open();document.write(t);document.close();setTimeout(addSwitch,1500);
       setTimeout(function(){document.title='歐色會 OCOLOR｜歐豆攝影教室';},3000);
     }).catch(function(){$('oc-loading').classList.add('oc-hide');$('oc-gate').classList.remove('oc-hide');say('網路連線有問題，請稍後再試');});
   }
