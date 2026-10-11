@@ -1,0 +1,2 @@
+# GitHub Pages：只處理 p/ 自訂頁面的設定區塊，其他檔案原樣輸出
+exclude: [README.md]

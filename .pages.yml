@@ -6,12 +6,36 @@ media:
 
 content:
   - name: pages
-    label: 自訂頁面（貼原始碼）
+    label: 自訂頁面
     type: collection
     path: p
+    format: yaml-frontmatter
     filename:
-      template: "page-{year}{month}{day}-{hour}{minute}.html"
-      field: true
+      template: "{slug}.html"
+      field: false
+    view:
+      primary: title
+      fields: [title, slug]
+    fields:
+      - name: title
+        label: 頁面名稱
+        type: string
+        required: true
+        description: 給自己看的名稱，例如「手機攝影基礎班」
+      - name: slug
+        label: 網址名稱
+        type: string
+        required: true
+        description: 只能用小寫英文、數字和「-」，例如 mobile-class。網頁網址會是 new.olddo.com/p/mobile-class.html（存檔後就不能改）
+        pattern:
+          regex: "^[a-z0-9-]+$"
+          message: 只能用小寫英文、數字和「-」
+      - name: body
+        label: 原始碼
+        type: code
+        description: 把整段 HTML 原始碼貼在這裡
+        options:
+          format: html
 
   - name: home
     label: 首頁
