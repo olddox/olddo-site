@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>白平衡練習｜歐豆攝影教室</title>
+<meta name="description" content="認識白平衡：切換現場光源、調整 K 值與色偏，練習用白紙做自訂白平衡。歐豆攝影教室互動教材。">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Barlow+Condensed:wght@500;600&display=swap');
+.olddo-tool{--o-bg:#F3F4F2;--o-panel:#FFFFFF;--o-ink:#1E2124;--o-muted:#5E6468;--o-line:#D9DCD8;--o-accent:#D7322B;--o-sel:#1E2124;--o-on-sel:#FFFFFF;
+--o-font-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;--o-font-num:"Barlow Condensed","Arial Narrow",sans-serif;
+background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-size:16px;line-height:1.7;max-width:960px;margin:0 auto;padding:28px 16px 40px;display:flex;flex-direction:column;gap:20px;box-sizing:border-box;text-align:left}
+.olddo-tool *{box-sizing:border-box}
+.olddo-tool .olddo-head{display:flex;flex-direction:column;gap:4px}
+.olddo-tool .olddo-eyebrow{font-size:13px;letter-spacing:.08em;color:var(--o-accent);font-weight:500}
+.olddo-tool h1{font-size:clamp(28px,6vw,40px);line-height:1.2;margin:0;font-weight:700}
+.olddo-tool h2{font-size:20px;margin:0 0 6px;font-weight:700}
+.olddo-tool h3{font-size:16px;margin:0 0 6px;font-weight:700}
+.olddo-tool .olddo-lead{margin:0;color:var(--o-muted);max-width:62ch}
+.olddo-tool .olddo-card{background:var(--o-panel);border:1px solid var(--o-line);border-radius:12px;padding:16px}
+.olddo-tool .olddo-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.olddo-tool .olddo-lbl{font-size:13px;color:var(--o-muted);min-width:4.5em}
+.olddo-tool button.olddo-btn{font-family:var(--o-font-body);font-size:15px;border:1px solid var(--o-line);background:transparent;color:var(--o-ink);border-radius:8px;padding:6px 12px;cursor:pointer;min-height:40px;margin:0}
+.olddo-tool button.olddo-btn[aria-pressed="true"]{background:var(--o-sel);color:var(--o-on-sel);border-color:var(--o-sel)}
+.olddo-tool button.olddo-btn.olddo-red{background:var(--o-accent);border-color:var(--o-accent);color:#fff}
+.olddo-tool button.olddo-btn:disabled{opacity:.45;cursor:not-allowed}
+.olddo-tool button.olddo-btn:focus-visible,.olddo-tool input:focus-visible{outline:2px solid var(--o-accent);outline-offset:2px}
+
+.olddo-tool .olddo-vf{background:#111;border-radius:12px;overflow:hidden;color:#EDEDED}
+.olddo-tool .olddo-photo{position:relative;aspect-ratio:3/2;background:#222}
+.olddo-tool .olddo-photo canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.olddo-tool .olddo-card-sample{position:absolute;right:10px;bottom:10px;width:min(22%,150px);aspect-ratio:4/3;border-radius:4px;box-shadow:0 2px 10px rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center;font-size:12px;color:#333;padding-bottom:4px;transition:background .2s}
+.olddo-tool .olddo-light{position:absolute;left:10px;top:10px;font-size:13px;background:rgba(0,0,0,.6);padding:2px 10px;border-radius:6px}
+.olddo-tool .olddo-lcd{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;padding:12px 16px}
+.olddo-tool .olddo-wbtag{font-family:var(--o-font-num);font-weight:600;font-size:20px;background:var(--o-accent);color:#fff;border-radius:6px;padding:0 10px;line-height:30px}
+.olddo-tool .olddo-big{font-family:var(--o-font-num);font-size:30px;font-weight:600;line-height:1}
+.olddo-tool .olddo-big small{font-size:14px;color:#9AA0A4;font-weight:500;margin-right:4px;font-family:var(--o-font-body)}
+.olddo-tool .olddo-verdict{font-size:15px;display:flex;align-items:center;gap:8px}
+.olddo-tool .olddo-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.5)}
+
+.olddo-tool .olddo-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.olddo-tool .olddo-panel[hidden]{display:none}
+.olddo-tool .olddo-slider{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.olddo-tool .olddo-slider-top{display:flex;justify-content:space-between;align-items:baseline}
+.olddo-tool .olddo-slider-top span{font-family:var(--o-font-num);font-size:28px;font-weight:600;line-height:1}
+.olddo-tool .olddo-step{display:flex;gap:8px;align-items:center}
+.olddo-tool .olddo-step input{flex:1;min-width:0;height:28px;margin:0;-webkit-appearance:none;appearance:none;border-radius:14px;background:transparent}
+.olddo-tool .olddo-step input::-webkit-slider-runnable-track{height:12px;border-radius:6px;background:var(--trk)}
+.olddo-tool .olddo-step input::-moz-range-track{height:12px;border-radius:6px;background:var(--trk)}
+.olddo-tool .olddo-step input::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;border:2px solid var(--o-ink);margin-top:-6px}
+.olddo-tool .olddo-step input::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--o-ink)}
+.olddo-tool #olddo-k{--trk:linear-gradient(90deg,#3F6FD8,#9DB8F0 30%,#F4F1EA 45%,#F3C27A 70%,#E5832E)}
+.olddo-tool #olddo-t{--trk:linear-gradient(90deg,#3FA45B,#F4F1EA 50%,#C24FA8)}
+.olddo-tool .olddo-ends{display:flex;justify-content:space-between;font-size:13px;color:var(--o-muted)}
+.olddo-tool .olddo-hint{font-size:14px;background:var(--o-bg);border-radius:8px;padding:8px 12px;margin-top:10px}
+.olddo-tool .olddo-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.olddo-tool .olddo-steps li{display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:start}
+.olddo-tool .olddo-steps .n{width:28px;height:28px;border-radius:50%;background:var(--o-line);display:flex;align-items:center;justify-content:center;font-family:var(--o-font-num);font-weight:600}
+.olddo-tool .olddo-steps li.done .n{background:var(--o-ink);color:#fff}
+.olddo-tool .olddo-steps li.now .n{background:var(--o-accent);color:#fff}
+.olddo-tool .olddo-shot{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.olddo-tool .olddo-thumb{width:120px;aspect-ratio:3/2;border-radius:6px;border:1px solid var(--o-line);display:flex;align-items:center;justify-content:center;font-size:12px;color:#555}
+
+.olddo-tool .olddo-chart svg{width:100%;height:auto;display:block}
+.olddo-tool .olddo-chart text{font-family:var(--o-font-body)}
+.olddo-tool table{border-collapse:collapse;width:100%;min-width:520px;font-size:15px}
+.olddo-tool th,.olddo-tool td{border-bottom:1px solid var(--o-line);padding:8px 6px;text-align:left;vertical-align:middle}
+.olddo-tool th{font-size:13px;color:var(--o-muted);font-weight:500}
+.olddo-tool .olddo-tablewrap{overflow-x:auto}
+.olddo-tool .olddo-sw{display:inline-block;width:18px;height:18px;border-radius:4px;vertical-align:-3px;margin-right:6px;border:1px solid rgba(0,0,0,.15)}
+.olddo-tool .olddo-tips ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
+.olddo-tool .olddo-foot{font-size:13px;color:var(--o-muted)}
+.olddo-tool .olddo-foot a{color:var(--o-ink)}
+.olddo-tool .olddo-result{font-size:16px;margin-top:10px}
+</style>
+</head>
+<body>
+<style>body{margin:0;background:#F3F4F2}.olddo-sitebar a{color:#161616;text-decoration:none}.olddo-sitebar a:hover{text-decoration:underline}</style>
+<div class="olddo-sitebar" style="border-bottom:1px solid #D8D4CC;background:#F4F2EE">
+<nav aria-label="網站選單" style="max-width:1080px;margin:0 auto;padding:14px 16px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;font-size:15px">
+<a href="index.html" style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:19px;letter-spacing:.06em;flex-grow:1">歐豆攝影教室</a>
+<a href="tools.html">← 攝影工具區</a>
+<a href="index.html#schedule">近期開課</a>
+</nav></div>
+
+<div class="olddo-tool" id="olddo-wb">
+  <div class="olddo-head">
+    <div class="olddo-eyebrow">歐豆攝影教室・互動教材</div>
+    <h1>白平衡：讓白色拍起來是白色</h1>
+    <p class="olddo-lead">不同的光有不同的顏色：燈泡偏黃、陰天偏藍。白平衡就是告訴相機「現在是什麼光」，讓它把顏色修正回來。看右下角那張白紙，調到它變回白色，就對了。</p>
+  </div>
+
+  <div class="olddo-card">
+    <div class="olddo-row" role="group" aria-label="現場光源"><span class="olddo-lbl">現場光源</span><span id="olddo-lights" class="olddo-row"></span></div>
+  </div>
+
+  <div class="olddo-vf" aria-label="觀景窗">
+    <div class="olddo-photo">
+      <canvas id="olddo-cv" role="img" aria-label="示範照片，顏色會隨白平衡設定改變"></canvas>
+      <div class="olddo-light" id="olddo-lighttag"></div>
+      <div class="olddo-card-sample" id="olddo-paper">白紙</div>
+    </div>
+    <div class="olddo-lcd">
+      <span class="olddo-wbtag" id="olddo-wbmode">AWB</span>
+      <span class="olddo-big"><small>相機設定</small><span id="olddo-setk"></span></span>
+      <span class="olddo-big"><small>色偏</small><span id="olddo-sett"></span></span>
+      <span class="olddo-verdict"><span class="olddo-dot" id="olddo-vdot"></span><span id="olddo-verdict"></span></span>
+    </div>
+  </div>
+
+  <div class="olddo-card">
+    <div class="olddo-tabs" role="tablist" aria-label="白平衡設定方式">
+      <button class="olddo-btn" role="tab" id="olddo-tab-p" aria-pressed="true">預設模式</button>
+      <button class="olddo-btn" role="tab" id="olddo-tab-k" aria-pressed="false">K 值（色溫）</button>
+      <button class="olddo-btn" role="tab" id="olddo-tab-c" aria-pressed="false">自訂白平衡</button>
+    </div>
+
+    <div class="olddo-panel" id="olddo-p-p">
+      <div class="olddo-row" id="olddo-presets" role="group" aria-label="白平衡預設"></div>
+      <div class="olddo-hint" id="olddo-presethint"></div>
+    </div>
+
+    <div class="olddo-panel" id="olddo-p-k" hidden>
+      <div class="olddo-slider">
+        <div class="olddo-slider-top"><b>色溫 K 值</b><span id="olddo-kv"></span></div>
+        <div class="olddo-step"><button class="olddo-btn" data-k="-100" aria-label="K 值減 100">−</button><input type="range" id="olddo-k" min="2500" max="10000" step="100" aria-label="色溫 K 值"><button class="olddo-btn" data-k="100" aria-label="K 值加 100">＋</button></div>
+        <div class="olddo-ends"><span>2500K 照片變藍</span><span>10000K 照片變黃</span></div>
+      </div>
+      <div class="olddo-slider">
+        <div class="olddo-slider-top"><b>色偏微調 G／M</b><span id="olddo-tv"></span></div>
+        <div class="olddo-step"><button class="olddo-btn" data-t="-1" aria-label="往綠色一格">G</button><input type="range" id="olddo-t" min="-9" max="9" step="1" aria-label="色偏 綠到洋紅"><button class="olddo-btn" data-t="1" aria-label="往洋紅一格">M</button></div>
+        <div class="olddo-ends"><span>偏綠（G）</span><span>偏洋紅（M）</span></div>
+      </div>
+      <div class="olddo-hint"><b>口訣：</b>相機的 K 值設得比現場<b>低</b>，照片變<b>藍</b>；設得比現場<b>高</b>，照片變<b>黃</b>。K 值跟現場光源一樣時，白紙就是白的。日光燈常帶一點綠，要往 M 修一點。</div>
+    </div>
+
+    <div class="olddo-panel" id="olddo-p-c" hidden>
+      <p class="olddo-lead" style="margin-bottom:10px">現場光很複雜（混光、日光燈、舞台燈）時，最準的方法是讓相機「看一張白紙」，直接量出現場光的顏色。每台相機選單名稱不同：Canon 叫「自訂白平衡」，Nikon 叫「PRE 手動預設」，Sony 叫「自訂設定」。</p>
+      <ol class="olddo-steps" id="olddo-csteps">
+        <li data-s="1"><span class="n">1</span><div><b>準備白紙或灰卡</b>，放在主角的位置，讓它照到跟主角一樣的光。</div></li>
+        <li data-s="2"><span class="n">2</span><div><b>對著白紙拍一張</b>，讓白紙填滿畫面（不用對焦，曝光正常就好）。
+          <div class="olddo-shot"><button class="olddo-btn olddo-red" id="olddo-shoot" type="button">📷 拍白紙</button><div class="olddo-thumb" id="olddo-thumb">還沒拍</div></div></div></li>
+        <li data-s="3"><span class="n">3</span><div><b>選單 → 自訂白平衡 → 選剛剛那張</b>，相機會從白紙算出現場光的顏色。
+          <div class="olddo-shot"><button class="olddo-btn" id="olddo-register" type="button" disabled>選這張當基準</button></div></div></li>
+        <li data-s="4"><span class="n">4</span><div><b>把白平衡切到「自訂」</b>（圖示是 ▲ 下面一個方框），之後在這個光線下拍的照片顏色都會正確。
+          <div class="olddo-shot"><button class="olddo-btn" id="olddo-usecustom" type="button" disabled>切到自訂白平衡</button></div></div></li>
+      </ol>
+      <div class="olddo-hint" id="olddo-chint">換了地方、換了光源，就要重新拍一次白紙。</div>
+    </div>
+  </div>
+
+  <div class="olddo-card">
+    <h2>小挑戰：猜猜現場是什麼光</h2>
+    <p class="olddo-lead">按「出題」後，現場光源會被藏起來。切到「K 值」把白紙調回白色，再按「對答案」看看差多少。</p>
+    <div class="olddo-row" style="margin-top:10px"><button class="olddo-btn olddo-red" id="olddo-quiz" type="button">出題</button><button class="olddo-btn" id="olddo-answer" type="button" disabled>對答案</button></div>
+    <div class="olddo-result" id="olddo-result" aria-live="polite"></div>
+  </div>
+
+  <div class="olddo-card olddo-chart">
+    <h2>一覽圖：常見光源的色溫</h2>
+    <p class="olddo-lead" style="margin-bottom:10px">K（Kelvin）是色溫的單位。數字越低光越黃紅，越高光越藍。把相機的 K 值設成跟光源一樣，就能拍出正確的顏色。紅色三角形是你現在相機的設定。</p>
+    <svg id="olddo-chart" role="img" aria-label="常見光源色溫一覽圖"></svg>
+  </div>
+
+  <div class="olddo-card">
+    <h2>白平衡預設對照表</h2>
+    <div class="olddo-tablewrap"><table>
+      <thead><tr><th>相機圖示／名稱</th><th>大約 K 值</th><th>適合的光</th><th>用錯會怎樣</th></tr></thead>
+      <tbody id="olddo-ptable"></tbody>
+    </table></div>
+  </div>
+
+  <div class="olddo-card olddo-tips">
+    <h2>歐豆小提醒</h2>
+    <ul>
+      <li>白平衡不一定要「正確」。日落想要更暖，可以故意把 K 值調高；夜景想要更冷，就把 K 值調低。</li>
+      <li>AWB（自動）在大太陽下很準，但在燈泡下常常會留一點黃，想要乾淨就用 K 值或自訂白平衡。</li>
+      <li>拍 RAW 檔的話，白平衡之後還能改；拍 JPG 就要現場設好，「直出」的功力就在這裡。</li>
+    </ul>
+  </div>
+  <div class="olddo-foot">歐豆攝影教室・<a href="https://olddo.com">olddo.com</a>・照片顏色為模擬效果</div>
+</div>
+
+<script>
+(function(){
+  var LIGHTS=[{n:'晴天中午',k:5500,t:0},{n:'陰天',k:6500,t:0},{n:'樹蔭／陰影',k:7500,t:0},{n:'黃昏夕陽',k:3500,t:0},{n:'鎢絲燈泡',k:2900,t:0},{n:'日光燈',k:4200,t:-3},{n:'燭光',k:1900,t:0}];
+  var PRESETS=[
+    {id:'awb',n:'AWB 自動',k:null,desc:'自動判斷',fit:'大部分情況',bad:'燈泡下會留一點黃'},
+    {id:'sun',n:'☀ 日光',k:5200,desc:'5200K',fit:'晴天戶外',bad:'在室內燈下會很黃'},
+    {id:'shade',n:'⌂ 陰影',k:7000,desc:'7000K',fit:'樹蔭、建築物陰影',bad:'在太陽下會太黃'},
+    {id:'cloud',n:'☁ 陰天',k:6000,desc:'6000K',fit:'陰天、黃昏想更暖',bad:'晴天會偏暖'},
+    {id:'tung',n:'💡 鎢絲燈',k:3200,desc:'3200K',fit:'黃色燈泡',bad:'在戶外會很藍'},
+    {id:'fluo',n:'▥ 白色日光燈',k:4000,t:3,desc:'4000K',fit:'辦公室、教室日光燈',bad:'在戶外會偏藍、偏洋紅'},
+    {id:'flash',n:'⚡ 閃光燈',k:5500,desc:'5500K',fit:'用閃光燈拍',bad:'跟日光差不多'}
+  ];
+  var st={light:0,mode:'preset',preset:'awb',k:5500,t:0,custom:null,shot:null,quiz:null};
+  var $=function(id){return document.getElementById(id);};
+  function k2rgb(K){var t=K/100,r,g,b;
+    r=t<=66?255:329.698727446*Math.pow(t-60,-0.1332047592);
+    g=t<=66?99.4708025861*Math.log(t)-161.1195681661:288.1221695283*Math.pow(t-60,-0.0755148492);
+    b=t>=66?255:(t<=19?0:138.5177312231*Math.log(t-10)-305.0447927307);
+    return [Math.max(1,Math.min(255,r)),Math.max(1,Math.min(255,g)),Math.max(1,Math.min(255,b))];}
+  function lightNow(){return st.quiz||LIGHTS[st.light];}
+  function awbOf(L){var k=L.k;if(k<3800)k=k+(3800-k)*0.45;else if(k>7000)k=7000+(k-7000)*0.6;return {k:Math.round(k/100)*100,t:Math.round(-L.t*0.5)};}
+  function camSetting(){var L=lightNow();
+    if(st.mode==='custom'&&st.custom)return {k:st.custom.k,t:st.custom.t,label:'自訂'};
+    if(st.mode==='kelvin')return {k:st.k,t:st.t,label:'K'};
+    var p=PRESETS.filter(function(x){return x.id===st.preset;})[0];
+    if(p.id==='awb'){var a=awbOf(L);return {k:a.k,t:a.t,label:'AWB'};}
+    return {k:p.k,t:p.t||0,label:p.n.replace(/^\S+\s/,'')};}
+  // channel gains: light colour divided by the colour the camera thinks it is
+  function gains(L,S){var l=k2rgb(L.k),s=k2rgb(S.k);var g=[0,1,2].map(function(i){return Math.pow((l[i]/l[1])/(s[i]/s[1]),1.3);});
+    g[1]=g[1]*Math.pow(1.045,-(L.t+S.t));var Y=0.3*g[0]+0.59*g[1]+0.11*g[2];return g.map(function(v){return v/Y;});}
+  function paperRGB(g,base){return g.map(function(v){return Math.max(0,Math.min(255,Math.round(base*v)));});}
+  function castWord(L,S){var dt=L.t+S.t,w=[];
+    var mired=1e6/L.k-1e6/S.k; // + means camera thinks colder → photo warmer
+    if(Math.abs(mired)>12)w.push(mired>0?'偏黃':'偏藍');
+    if(Math.abs(dt)>=2)w.push(dt<0?'偏綠':'偏洋紅');
+    return w.length?w.join('、'):'白紙是白的 👍';}
+  // ---------- image ----------
+  var cv=$('olddo-cv'),ctx=cv.getContext('2d',{willReadFrequently:true}),src=null,img=new Image(),pend=false;
+  img.onload=function(){var W=Math.min(1200,img.naturalWidth),H=Math.round(W*2/3);cv.width=W;cv.height=H;
+    var sw=img.naturalWidth,sh=Math.round(sw*2/3);if(sh>img.naturalHeight){sh=img.naturalHeight;sw=Math.round(sh*1.5);}
+    ctx.drawImage(img,(img.naturalWidth-sw)/2,(img.naturalHeight-sh)/2,sw,sh,0,0,W,H);
+    try{src=ctx.getImageData(0,0,W,H);}catch(e){src=null;}render();};
+  img.src='images/olddo-work-castle.jpg';
+  function paint(g){if(!src)return;var out=ctx.createImageData(src.width,src.height),a=src.data,o=out.data,r=g[0],gg=g[1],b=g[2];
+    for(var i=0;i<a.length;i+=4){var R=a[i]*r,G=a[i+1]*gg,B=a[i+2]*b;o[i]=R>255?255:R;o[i+1]=G>255?255:G;o[i+2]=B>255?255:B;o[i+3]=255;}
+    ctx.putImageData(out,0,0);}
+  function render(){if(pend)return;pend=true;requestAnimationFrame(function(){pend=false;draw();});}
+  // ---------- UI ----------
+  var lw=$('olddo-lights');
+  LIGHTS.forEach(function(L,i){var b=document.createElement('button');b.className='olddo-btn';b.type='button';b.textContent=L.n;b.onclick=function(){st.light=i;st.quiz=null;$('olddo-result').textContent='';$('olddo-answer').disabled=true;st.shot=null;resetCustomSteps(false);render();};lw.appendChild(b);});
+  var pw=$('olddo-presets');
+  PRESETS.forEach(function(p){var b=document.createElement('button');b.className='olddo-btn';b.type='button';b.textContent=p.n;b.dataset.p=p.id;b.onclick=function(){st.mode='preset';st.preset=p.id;render();};pw.appendChild(b);});
+  $('olddo-ptable').innerHTML=PRESETS.map(function(p){var c=p.k?k2rgb(p.k):[240,240,240];return '<tr><td><b>'+p.n+'</b></td><td>'+p.desc+'</td><td>'+p.fit+'</td><td>'+p.bad+'</td></tr>';}).join('');
+  function tab(which){['p','k','c'].forEach(function(x){$('olddo-tab-'+x).setAttribute('aria-pressed',x===which?'true':'false');$('olddo-p-'+x).hidden=x!==which;});
+    if(which==='p'){st.mode='preset';}
+    if(which==='k'){var s=camSetting();if(st.mode!=='kelvin'){st.k=s.k;st.t=s.t;}st.mode='kelvin';}
+    if(which==='c'){if(st.custom)st.mode='custom';}
+    render();}
+  $('olddo-tab-p').onclick=function(){tab('p');};$('olddo-tab-k').onclick=function(){tab('k');};$('olddo-tab-c').onclick=function(){tab('c');};
+  var rk=$('olddo-k'),rt=$('olddo-t');
+  rk.oninput=function(){st.mode='kelvin';st.k=+rk.value;render();};
+  rt.oninput=function(){st.mode='kelvin';st.t=+rt.value;render();};
+  document.querySelectorAll('[data-k]').forEach(function(b){b.onclick=function(){st.mode='kelvin';st.k=Math.max(2500,Math.min(10000,st.k+(+b.dataset.k)));render();};});
+  document.querySelectorAll('[data-t]').forEach(function(b){b.onclick=function(){st.mode='kelvin';st.t=Math.max(-9,Math.min(9,st.t+(+b.dataset.t)));render();};});
+  // custom WB flow
+  function resetCustomSteps(keepCustom){if(!keepCustom){st.custom=null;if(st.mode==='custom')st.mode='preset';}
+    $('olddo-thumb').style.background='';$('olddo-thumb').textContent='還沒拍';$('olddo-register').disabled=true;$('olddo-usecustom').disabled=true;stepMark();}
+  function stepMark(){var n=st.mode==='custom'&&st.custom?5:(st.custom?4:(st.shot?3:2));
+    document.querySelectorAll('#olddo-csteps li').forEach(function(li){var s=+li.dataset.s;li.className=s<n?'done':(s===n?'now':'');});}
+  $('olddo-shoot').onclick=function(){var L=lightNow(),S=camSetting(),c=paperRGB(gains(L,S),236);st.shot={k:L.k,t:-L.t,rgb:c};
+    var th=$('olddo-thumb');th.style.background='rgb('+c.join(',')+')';th.textContent='白紙（'+castWord(L,S).replace(' 👍','')+'）';$('olddo-register').disabled=false;$('olddo-usecustom').disabled=true;stepMark();
+    $('olddo-chint').textContent='拍下來的白紙不是純白，這就是現場光的顏色。相機會用它來反推修正。';};
+  $('olddo-register').onclick=function(){if(!st.shot)return;st.custom={k:st.shot.k,t:st.shot.t};$('olddo-usecustom').disabled=false;stepMark();
+    $('olddo-chint').textContent='相機記住了這個光的顏色。最後一步：把白平衡切到「自訂」。';};
+  $('olddo-usecustom').onclick=function(){st.mode='custom';stepMark();render();
+    $('olddo-chint').textContent='完成！看看右下角的白紙，已經是白色了。換光源就要重新拍一次白紙。';};
+  // quiz
+  $('olddo-quiz').onclick=function(){var k=Math.round((2600+Math.random()*6400)/100)*100,t=Math.random()<0.3?-Math.ceil(Math.random()*4):0;
+    st.quiz={n:'神秘光源',k:k,t:t};st.shot=null;resetCustomSteps(false);tab('k');st.k=5500;st.t=0;$('olddo-answer').disabled=false;$('olddo-result').textContent='題目出好了！把白紙調回白色吧。';render();};
+  $('olddo-answer').onclick=function(){if(!st.quiz)return;var S=camSetting(),q=st.quiz,d=Math.abs(S.k-q.k);
+    var msg='答案是 '+q.k+'K'+(q.t?'，色偏 '+Math.abs(q.t)+' 格綠（日光燈類的光）':'')+'。你設 '+S.k+'K，差 '+d+'K。';
+    msg+=d<=200?' 太神了！':(d<=600?' 很接近！':' 再練練，盯著白紙看。');
+    $('olddo-result').textContent=msg;st.quiz=null;$('olddo-answer').disabled=true;render();};
+  // chart
+  function drawChart(S){var c=$('olddo-chart');c.innerHTML='';var W=Math.max(320,(c.parentNode.clientWidth||860)-32),narrow=W<600,NS='http://www.w3.org/2000/svg';
+    function el(t,a,x){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+    var k0=1500,k1=10500,x0=16,x1=W-16,X=function(k){return x0+(Math.log(k)-Math.log(k0))/(Math.log(k1)-Math.log(k0))*(x1-x0);};
+    var marks=[{k:1900,n:'燭光'},{k:2900,n:'鎢絲燈泡'},{k:3500,n:'日出・夕陽'},{k:4200,n:'日光燈'},{k:5500,n:'晴天中午・閃光燈'},{k:6500,n:'陰天'},{k:7500,n:'陰影'},{k:10000,n:'藍天'}];
+    var barY=narrow?170:120,H=barY+90;c.setAttribute('viewBox','0 0 '+W+' '+H);
+    var defs=el('defs',{}),g=el('linearGradient',{id:'olddo-kg',x1:0,x2:1,y1:0,y2:0});
+    for(var i=0;i<=20;i++){var k=Math.exp(Math.log(k0)+(Math.log(k1)-Math.log(k0))*i/20),rgb=k2rgb(k);g.appendChild(el('stop',{offset:(i/20).toFixed(2),'stop-color':'rgb('+rgb.map(Math.round).join(',')+')'}));}
+    defs.appendChild(g);c.appendChild(defs);
+    c.appendChild(el('rect',{x:x0,y:barY,width:x1-x0,height:22,rx:5,fill:'url(#olddo-kg)',stroke:'#D9DCD8'}));
+    marks.forEach(function(m,i){var x=X(m.k),lvl=narrow?(i%4):(i%2),ty=barY-14-lvl*(narrow?36:40);
+      c.appendChild(el('line',{x1:x,y1:ty+6,x2:x,y2:barY,stroke:'#5E6468','stroke-width':1,'stroke-dasharray':'2 3'}));
+      var anchor=x<60?'start':(x>W-60?'end':'middle');
+      c.appendChild(el('text',{x:x,y:ty-14,'text-anchor':anchor,'font-size':narrow?12:14,fill:'#1E2124','font-weight':700},narrow?m.n.replace('・閃光燈',''):m.n));
+      c.appendChild(el('text',{x:x,y:ty+2,'text-anchor':anchor,'font-size':12,fill:'#5E6468'},m.k+'K'));});
+    (narrow?[2000,3000,5000,10000]:[2000,3000,4000,5000,6000,8000,10000]).forEach(function(k){c.appendChild(el('text',{x:X(k),y:barY+40,'text-anchor':'middle','font-size':12,fill:'#5E6468','font-family':'Barlow Condensed,Arial Narrow,sans-serif'},k));});
+    var sx=X(Math.max(k0,Math.min(k1,S.k)));c.appendChild(el('path',{d:'M'+sx+' '+(barY+26)+' l-8 14 h16 z',fill:'#D7322B'}));
+    c.appendChild(el('text',{x:Math.max(40,Math.min(W-40,sx)),y:barY+66,'text-anchor':'middle','font-size':13,fill:'#D7322B','font-weight':700},'相機設定 '+S.k+'K'));
+    c.appendChild(el('text',{x:x0,y:H-4,'font-size':12,fill:'#5E6468'},'← 光越黃紅'));c.appendChild(el('text',{x:x1,y:H-4,'font-size':12,fill:'#5E6468','text-anchor':'end'},'光越藍 →'));}
+  function draw(){var L=lightNow(),S=camSetting(),g=gains(L,S);paint(g);
+    var pc=paperRGB(g,236);$('olddo-paper').style.background='rgb('+pc.join(',')+')';
+    $('olddo-lighttag').textContent='現場：'+(st.quiz?'？？？（挑戰中）':L.n+' '+L.k+'K');
+    $('olddo-wbmode').textContent=S.label==='K'?'K':(S.label==='AWB'?'AWB':(S.label==='自訂'?'自訂':S.label));
+    $('olddo-setk').textContent=S.k+'K';$('olddo-sett').textContent=S.t===0?'0':(S.t<0?'G'+(-S.t):'M'+S.t);
+    var cw=castWord(L,S);$('olddo-verdict').textContent='白紙：'+cw;$('olddo-vdot').style.background='rgb('+pc.join(',')+')';
+    lw.querySelectorAll('button').forEach(function(b,i){b.setAttribute('aria-pressed',!st.quiz&&i===st.light?'true':'false');});
+    pw.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',st.mode==='preset'&&b.dataset.p===st.preset?'true':'false');});
+    if(st.mode==='preset'){var p=PRESETS.filter(function(x){return x.id===st.preset;})[0];
+      $('olddo-presethint').innerHTML=(p.id==='awb'?'<b>AWB：</b>相機自己猜現場光，猜成 '+S.k+'K。':'<b>'+p.n+'</b>：相機當作現場是 '+p.k+'K 的光。')+' 現場其實是 '+(st.quiz?'？？？':L.k+'K')+'，所以照片'+cw.replace(' 👍','，顏色正確 👍')+'。';}
+    rk.value=st.mode==='kelvin'?st.k:S.k;rt.value=st.mode==='kelvin'?st.t:S.t;$('olddo-kv').textContent=(st.mode==='kelvin'?st.k:S.k)+'K';
+    var tv=st.mode==='kelvin'?st.t:S.t;$('olddo-tv').textContent=tv===0?'0':(tv<0?'G'+(-tv):'M'+tv);
+    rk.setAttribute('aria-valuetext',rk.value+'K');stepMark();drawChart(S);}
+  var rz;window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(render,150);});
+  render();
+})();
+</script>
+</body>
+</html>
