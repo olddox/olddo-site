@@ -230,14 +230,16 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
   function render(){if(pend)return;pend=true;requestAnimationFrame(function(){pend=false;draw();});}
   // ---------- UI ----------
   var lw=$('olddo-lights');
-  LIGHTS.forEach(function(L,i){var b=document.createElement('button');b.className='olddo-btn';b.type='button';b.textContent=L.n;b.onclick=function(){st.light=i;st.quiz=null;$('olddo-result').textContent='';$('olddo-answer').disabled=true;st.shot=null;resetCustomSteps(false);render();};lw.appendChild(b);});
+  LIGHTS.forEach(function(L,i){var b=document.createElement('button');b.className='olddo-btn';b.type='button';b.textContent=L.n;b.onclick=function(){st.light=i;st.quiz=null;$('olddo-result').textContent='';$('olddo-answer').disabled=true;lightChanged();render();};lw.appendChild(b);});
   var pw=$('olddo-presets');
   PRESETS.forEach(function(p){var b=document.createElement('button');b.className='olddo-btn';b.type='button';b.textContent=p.n;b.dataset.p=p.id;b.onclick=function(){st.mode='preset';st.preset=p.id;render();};pw.appendChild(b);});
   $('olddo-ptable').innerHTML=PRESETS.map(function(p){var c=p.k?k2rgb(p.k):[240,240,240];return '<tr><td><b>'+p.n+'</b></td><td>'+p.desc+'</td><td>'+p.fit+'</td><td>'+p.bad+'</td></tr>';}).join('');
   function tab(which){['p','k','c'].forEach(function(x){$('olddo-tab-'+x).setAttribute('aria-pressed',x===which?'true':'false');$('olddo-p-'+x).hidden=x!==which;});
     if(which==='p'){st.mode='preset';}
     if(which==='k'){var s=camSetting();if(st.mode!=='kelvin'){st.k=s.k;st.t=s.t;}st.mode='kelvin';}
-    if(which==='c'){if(st.custom)st.mode='custom';}
+    if(which==='c'){if(st.custom)st.mode='custom';
+      else if(!st.quiz&&castWord(lightNow(),camSetting()).indexOf('白的')>=0){st.light=5;st.mode='preset';st.preset='sun';resetCustomSteps(true);
+        $('olddo-chint').textContent='示範情境：在日光燈教室拍照，相機卻設成「日光」白平衡，白紙會偏黃綠。用自訂白平衡把它修回來吧！';}}
     render();}
   $('olddo-tab-p').onclick=function(){tab('p');};$('olddo-tab-k').onclick=function(){tab('k');};$('olddo-tab-c').onclick=function(){tab('c');};
   var rk=$('olddo-k'),rt=$('olddo-t');
@@ -247,16 +249,19 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
   document.querySelectorAll('[data-t]').forEach(function(b){b.onclick=function(){st.mode='kelvin';st.t=Math.max(-9,Math.min(9,st.t+(+b.dataset.t)));render();};});
   // custom WB flow
   function resetCustomSteps(keepCustom){if(!keepCustom){st.custom=null;if(st.mode==='custom')st.mode='preset';}
-    $('olddo-thumb').style.background='';$('olddo-thumb').textContent='還沒拍';$('olddo-register').disabled=true;$('olddo-usecustom').disabled=true;stepMark();}
-  function stepMark(){var n=st.mode==='custom'&&st.custom?5:(st.custom?4:(st.shot?3:2));
+    st.shot=null;st.reg=false;$('olddo-thumb').style.background='';$('olddo-thumb').textContent='還沒拍';$('olddo-register').disabled=true;$('olddo-usecustom').disabled=true;stepMark();}
+  function lightChanged(){var had=st.mode==='custom'&&st.custom;resetCustomSteps(true);
+    $('olddo-chint').textContent=had?'換了光源！相機還用著剛才那張白紙的設定，所以顏色又跑掉了。對著白紙重新拍一次吧。':'換了地方、換了光源，就要重新拍一次白紙。';}
+  function stepMark(){var n=!st.shot?2:(!st.reg?3:(st.mode!=='custom'?4:5));
     document.querySelectorAll('#olddo-csteps li').forEach(function(li){var s=+li.dataset.s;li.className=s<n?'done':(s===n?'now':'');});}
   $('olddo-shoot').onclick=function(){var L=lightNow(),S=camSetting(),c=paperRGB(gains(L,S),236);st.shot={k:L.k,t:-L.t,rgb:c};
-    var th=$('olddo-thumb');th.style.background='rgb('+c.join(',')+')';th.textContent='白紙（'+castWord(L,S).replace(' 👍','')+'）';$('olddo-register').disabled=false;$('olddo-usecustom').disabled=true;stepMark();
-    $('olddo-chint').textContent='拍下來的白紙不是純白，這就是現場光的顏色。相機會用它來反推修正。';};
-  $('olddo-register').onclick=function(){if(!st.shot)return;st.custom={k:st.shot.k,t:st.shot.t};$('olddo-usecustom').disabled=false;stepMark();
+    var th=$('olddo-thumb');th.style.background='rgb('+c.join(',')+')';var cw0=castWord(L,S);st.before=cw0;th.textContent=cw0.indexOf('白的')>=0?'白紙（已經是白的）':'白紙（'+cw0+'）';$('olddo-register').disabled=false;$('olddo-usecustom').disabled=true;stepMark();
+    st.reg=false;$('olddo-chint').textContent=cw0.indexOf('白的')>=0?'這張白紙已經是白的，代表現在的設定剛好對。換個光源（例如日光燈）再試，差別會比較明顯。':'拍下來的白紙不是純白（'+cw0+'），這就是現場光的顏色。相機會用它來反推修正。';};
+  $('olddo-register').onclick=function(){if(!st.shot)return;st.custom={k:st.shot.k,t:st.shot.t};st.reg=true;$('olddo-usecustom').disabled=false;stepMark();
     $('olddo-chint').textContent='相機記住了這個光的顏色。最後一步：把白平衡切到「自訂」。';};
   $('olddo-usecustom').onclick=function(){st.mode='custom';stepMark();render();
-    $('olddo-chint').textContent='完成！看看右下角的白紙，已經是白色了。換光源就要重新拍一次白紙。';};
+    if(window.innerWidth<760){var vf=document.querySelector('.olddo-vf');if(vf)vf.scrollIntoView({behavior:'smooth',block:'start'});}
+    $('olddo-chint').textContent='完成！修正前白紙'+(st.before&&st.before.indexOf('白的')<0?st.before:'已經是白的')+'，現在右下角的白紙是白色了。之後換光源，就要重新拍一次白紙。';};
   // quiz
   $('olddo-quiz').onclick=function(){var k=Math.round((2600+Math.random()*6400)/100)*100,t=Math.random()<0.3?-Math.ceil(Math.random()*4):0;
     st.quiz={n:'神秘光源',k:k,t:t};st.shot=null;resetCustomSteps(false);tab('k');st.k=5500;st.t=0;$('olddo-answer').disabled=false;$('olddo-result').textContent='題目出好了！把白紙調回白色吧。';render();};
