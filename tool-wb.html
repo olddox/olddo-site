@@ -68,6 +68,21 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
 .olddo-tool th{font-size:13px;color:var(--o-muted);font-weight:500}
 .olddo-tool .olddo-tablewrap{overflow-x:auto}
 .olddo-tool .olddo-sw{display:inline-block;width:18px;height:18px;border-radius:4px;vertical-align:-3px;margin-right:6px;border:1px solid rgba(0,0,0,.15)}
+.olddo-tool .olddo-cbig{font-size:20px;font-weight:700}
+.olddo-tool .olddo-cbig.ok{color:#1F7A4D}
+.olddo-tool .olddo-ba{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.olddo-tool .olddo-bai{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:14px}
+.olddo-tool .olddo-bai small{color:var(--o-muted);font-size:13px}
+.olddo-tool .olddo-bsw{width:88px;height:60px;border-radius:6px;border:1px solid var(--o-line);background:#eee;padding:0;font:inherit;font-size:13px;font-weight:700;color:#333}
+.olddo-tool .olddo-bsw.tap{cursor:pointer;outline:3px solid #E0A355;outline-offset:2px;animation:olddo-pulse 1.2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.olddo-tool .olddo-bsw.tap{animation:none}}
+.olddo-tool .olddo-arrow{font-size:24px;color:var(--o-muted)}
+.olddo-tool .olddo-real{margin-top:14px;font-size:15px}
+.olddo-tool .olddo-real summary{cursor:pointer;color:var(--o-muted)}
+.olddo-tool .olddo-real ol{margin:8px 0 0;padding-left:1.3em}
+.olddo-tool .olddo-card-sample.tap{cursor:pointer;outline:3px solid #E0A355;outline-offset:2px;animation:olddo-pulse 1.2s ease-in-out infinite;font-weight:700;font-size:14px}
+@keyframes olddo-pulse{50%{outline-color:rgba(224,163,85,.15)}}
+@media (prefers-reduced-motion:reduce){.olddo-tool .olddo-card-sample.tap{animation:none}}
 .olddo-tool .olddo-tips ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
 .olddo-tool .olddo-foot{font-size:13px;color:var(--o-muted)}
 .olddo-tool .olddo-foot a{color:var(--o-ink)}
@@ -98,7 +113,7 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
     <div class="olddo-photo">
       <canvas id="olddo-cv" role="img" aria-label="示範照片，顏色會隨白平衡設定改變"></canvas>
       <div class="olddo-light" id="olddo-lighttag"></div>
-      <div class="olddo-card-sample" id="olddo-paper">白紙</div>
+      <div class="olddo-card-sample" id="olddo-paper" role="button" tabindex="0" aria-label="白紙，點一下設為自訂白平衡">白紙</div>
     </div>
     <div class="olddo-lcd">
       <span class="olddo-wbtag" id="olddo-wbmode">AWB</span>
@@ -135,17 +150,17 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
     </div>
 
     <div class="olddo-panel" id="olddo-p-c" hidden>
-      <p class="olddo-lead" style="margin-bottom:10px">現場光很複雜（混光、日光燈、舞台燈）時，最準的方法是讓相機「看一張白紙」，直接量出現場光的顏色。每台相機選單名稱不同：Canon 叫「自訂白平衡」，Nikon 叫「PRE 手動預設」，Sony 叫「自訂設定」。</p>
-      <ol class="olddo-steps" id="olddo-csteps">
-        <li data-s="1"><span class="n">1</span><div><b>準備白紙或灰卡</b>，放在主角的位置，讓它照到跟主角一樣的光。</div></li>
-        <li data-s="2"><span class="n">2</span><div><b>對著白紙拍一張</b>，讓白紙填滿畫面（不用對焦，曝光正常就好）。
-          <div class="olddo-shot"><button class="olddo-btn olddo-red" id="olddo-shoot" type="button">📷 拍白紙</button><div class="olddo-thumb" id="olddo-thumb">還沒拍</div></div></div></li>
-        <li data-s="3"><span class="n">3</span><div><b>選單 → 自訂白平衡 → 選剛剛那張</b>，相機會從白紙算出現場光的顏色。
-          <div class="olddo-shot"><button class="olddo-btn" id="olddo-register" type="button" disabled>選這張當基準</button></div></div></li>
-        <li data-s="4"><span class="n">4</span><div><b>把白平衡切到「自訂」</b>（圖示是 ▲ 下面一個方框），之後在這個光線下拍的照片顏色都會正確。
-          <div class="olddo-shot"><button class="olddo-btn" id="olddo-usecustom" type="button" disabled>切到自訂白平衡</button></div></div></li>
-      </ol>
-      <div class="olddo-hint" id="olddo-chint">換了地方、換了光源，就要重新拍一次白紙。</div>
+      <div class="olddo-cbig" id="olddo-cbig">👆 點一下「白紙」，告訴相機這是白色</div>
+      <p class="olddo-lead" style="margin:4px 0 12px">點照片右下角的白紙，或下面閃著框的那張都可以。相機知道哪個是白色，就會把整張照片的顏色一起修正回來。</p>
+      <div class="olddo-ba" aria-live="polite">
+        <div class="olddo-bai"><button type="button" class="olddo-bsw" id="olddo-before" aria-label="白紙，點一下設為自訂白平衡"></button><span>修正前</span><small id="olddo-before-t">—</small></div>
+        <div class="olddo-arrow">→</div>
+        <div class="olddo-bai"><span class="olddo-bsw" id="olddo-after"></span><span>修正後</span><small id="olddo-after-t">還沒點</small></div>
+      </div>
+      <div class="olddo-row" style="margin-top:14px"><span class="olddo-lbl">換個光源再試</span><span class="olddo-row" id="olddo-cl"></span></div>
+      <details class="olddo-real"><summary>在真的相機上怎麼做？</summary>
+        <ol><li>把白紙（或灰卡）放在主角的位置，對著它拍一張，讓白紙填滿畫面。</li><li>進選單找「自訂白平衡」（Nikon 叫 PRE 手動預設、Sony 叫自訂設定），選剛剛那張。</li><li>白平衡切到「自訂」。換了地方、換了光，就要重拍一次白紙。</li></ol>
+      </details>
     </div>
   </div>
 
@@ -237,9 +252,7 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
   function tab(which){['p','k','c'].forEach(function(x){$('olddo-tab-'+x).setAttribute('aria-pressed',x===which?'true':'false');$('olddo-p-'+x).hidden=x!==which;});
     if(which==='p'){st.mode='preset';}
     if(which==='k'){var s=camSetting();if(st.mode!=='kelvin'){st.k=s.k;st.t=s.t;}st.mode='kelvin';}
-    if(which==='c'){if(st.custom)st.mode='custom';
-      else if(!st.quiz&&castWord(lightNow(),camSetting()).indexOf('白的')>=0){st.light=5;st.mode='preset';st.preset='sun';resetCustomSteps(true);
-        $('olddo-chint').textContent='示範情境：在日光燈教室拍照，相機卻設成「日光」白平衡，白紙會偏黃綠。用自訂白平衡把它修回來吧！';}}
+    if(which==='c'){if(st.custom)st.mode='custom';else if(!st.quiz)setupCustomScene();}
     render();}
   $('olddo-tab-p').onclick=function(){tab('p');};$('olddo-tab-k').onclick=function(){tab('k');};$('olddo-tab-c').onclick=function(){tab('c');};
   var rk=$('olddo-k'),rt=$('olddo-t');
@@ -247,24 +260,38 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
   rt.oninput=function(){st.mode='kelvin';st.t=+rt.value;render();};
   document.querySelectorAll('[data-k]').forEach(function(b){b.onclick=function(){st.mode='kelvin';st.k=Math.max(2500,Math.min(10000,st.k+(+b.dataset.k)));render();};});
   document.querySelectorAll('[data-t]').forEach(function(b){b.onclick=function(){st.mode='kelvin';st.t=Math.max(-9,Math.min(9,st.t+(+b.dataset.t)));render();};});
-  // custom WB flow
-  function resetCustomSteps(keepCustom){if(!keepCustom){st.custom=null;if(st.mode==='custom')st.mode='preset';}
-    st.shot=null;st.reg=false;$('olddo-thumb').style.background='';$('olddo-thumb').textContent='還沒拍';$('olddo-register').disabled=true;$('olddo-usecustom').disabled=true;stepMark();}
-  function lightChanged(){var had=st.mode==='custom'&&st.custom;resetCustomSteps(true);
-    $('olddo-chint').textContent=had?'換了光源！相機還用著剛才那張白紙的設定，所以顏色又跑掉了。對著白紙重新拍一次吧。':'換了地方、換了光源，就要重新拍一次白紙。';}
-  function stepMark(){var n=!st.shot?2:(!st.reg?3:(st.mode!=='custom'?4:5));
-    document.querySelectorAll('#olddo-csteps li').forEach(function(li){var s=+li.dataset.s;li.className=s<n?'done':(s===n?'now':'');});}
-  $('olddo-shoot').onclick=function(){var L=lightNow(),S=camSetting(),c=paperRGB(gains(L,S),236);st.shot={k:L.k,t:-L.t,rgb:c};
-    var th=$('olddo-thumb');th.style.background='rgb('+c.join(',')+')';var cw0=castWord(L,S);st.before=cw0;th.textContent=cw0.indexOf('白的')>=0?'白紙（已經是白的）':'白紙（'+cw0+'）';$('olddo-register').disabled=false;$('olddo-usecustom').disabled=true;stepMark();
-    st.reg=false;$('olddo-chint').textContent=cw0.indexOf('白的')>=0?'這張白紙已經是白的，代表現在的設定剛好對。換個光源（例如日光燈）再試，差別會比較明顯。':'拍下來的白紙不是純白（'+cw0+'），這就是現場光的顏色。相機會用它來反推修正。';};
-  $('olddo-register').onclick=function(){if(!st.shot)return;st.custom={k:st.shot.k,t:st.shot.t};st.reg=true;$('olddo-usecustom').disabled=false;stepMark();
-    $('olddo-chint').textContent='相機記住了這個光的顏色。最後一步：把白平衡切到「自訂」。';};
-  $('olddo-usecustom').onclick=function(){st.mode='custom';stepMark();render();
-    if(window.innerWidth<760){var vf=document.querySelector('.olddo-vf');if(vf)vf.scrollIntoView({behavior:'smooth',block:'start'});}
-    $('olddo-chint').textContent='完成！修正前白紙'+(st.before&&st.before.indexOf('白的')<0?st.before:'已經是白的')+'，現在右下角的白紙是白色了。之後換光源，就要重新拍一次白紙。';};
+  // custom WB: tap the white paper to tell the camera "this is white"
+  function cTab(){return !$('olddo-p-c').hidden;}
+  function setupCustomScene(){ // camera on 日光, scene light that gives a visible cast
+    st.mode='preset';st.preset='sun';st.custom=null;st.before=null;
+    if(castWord(lightNow(),camSetting()).indexOf('白的')>=0)st.light=5;
+  }
+  function resetCustomSteps(){st.custom=null;st.before=null;if(st.mode==='custom')st.mode='preset';}
+  function lightChanged(){}
+  function tapPaper(){if(st.quiz)return;var L=lightNow(),S=camSetting(),g=gains(L,S);
+    st.before={rgb:paperRGB(g,236),w:castWord(L,S)};st.custom={k:L.k,t:-L.t};st.mode='custom';
+    if(!cTab())tab('c');else render();}
+  $('olddo-paper').onclick=tapPaper;$('olddo-before').onclick=function(){if($('olddo-before').classList.contains('tap')){tapPaper();if(window.innerWidth<760){var vf=document.querySelector('.olddo-vf');if(vf)vf.scrollIntoView({behavior:'smooth',block:'start'});}}};$('olddo-paper').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tapPaper();}};
+  var clw=$('olddo-cl');
+  [4,5,2,6].forEach(function(i){var b=document.createElement('button');b.className='olddo-btn';b.type='button';b.textContent=LIGHTS[i].n;b.onclick=function(){st.light=i;st.quiz=null;render();};clw.appendChild(b);});
+  function customUI(L,S,pc){
+    var c=cTab(),neutral=castWord(L,S).indexOf('白的')>=0,paper=$('olddo-paper');
+    var want=c&&!st.quiz&&!(st.mode==='custom'&&neutral);
+    paper.classList.toggle('tap',want);paper.textContent=want?'👆 點我':'白紙';var bf=$('olddo-before');bf.classList.toggle('tap',want);bf.textContent=want?'👆 點我':'';bf.disabled=!want;
+    clw.querySelectorAll('button').forEach(function(b,n){b.setAttribute('aria-pressed',[4,5,2,6][n]===st.light&&!st.quiz?'true':'false');});
+    if(!c)return;
+    var big=$('olddo-cbig');
+    if(st.mode==='custom'&&neutral){big.textContent='✓ 修好了！白紙變回白色';big.className='olddo-cbig ok';}
+    else if(st.mode==='custom'){big.textContent='換了光源，顏色又跑掉了 → 再點一次白紙';big.className='olddo-cbig';}
+    else {big.textContent='👆 點一下「白紙」，告訴相機這是白色';big.className='olddo-cbig';}
+    var b=st.before&&st.mode==='custom'&&neutral?st.before:{rgb:pc,w:castWord(L,S)};
+    $('olddo-before').style.background='rgb('+b.rgb.join(',')+')';$('olddo-before-t').textContent=b.w.replace(' 👍','');
+    if(st.mode==='custom'&&neutral){$('olddo-after').style.background='rgb('+pc.join(',')+')';$('olddo-after-t').textContent='白的 👍';}
+    else{$('olddo-after').style.background='repeating-linear-gradient(45deg,#eee,#eee 6px,#f7f7f7 6px,#f7f7f7 12px)';$('olddo-after-t').textContent='還沒點';}
+  }
   // quiz
   $('olddo-quiz').onclick=function(){var k=Math.round((2600+Math.random()*6400)/100)*100,t=Math.random()<0.3?-Math.ceil(Math.random()*4):0;
-    st.quiz={n:'神秘光源',k:k,t:t};st.shot=null;resetCustomSteps(false);tab('k');st.k=5500;st.t=0;$('olddo-answer').disabled=false;$('olddo-result').textContent='題目出好了！把白紙調回白色吧。';render();};
+    st.quiz={n:'神秘光源',k:k,t:t};resetCustomSteps();tab('k');st.k=5500;st.t=0;$('olddo-answer').disabled=false;$('olddo-result').textContent='題目出好了！把白紙調回白色吧。';render();};
   $('olddo-answer').onclick=function(){if(!st.quiz)return;var S=camSetting(),q=st.quiz,d=Math.abs(S.k-q.k);
     var msg='答案是 '+q.k+'K'+(q.t?'，色偏 '+Math.abs(q.t)+' 格綠（日光燈類的光）':'')+'。你設 '+S.k+'K，差 '+d+'K。';
     msg+=d<=200?' 太神了！':(d<=600?' 很接近！':' 再練練，盯著白紙看。');
@@ -300,7 +327,7 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
       $('olddo-presethint').innerHTML=(p.id==='awb'?'<b>AWB：</b>相機自己猜現場光，猜成 '+S.k+'K。':'<b>'+p.n+'</b>：相機當作現場是 '+p.k+'K 的光。')+' 現場其實是 '+(st.quiz?'？？？':L.k+'K')+'，所以照片'+cw.replace(' 👍','，顏色正確 👍')+'。';}
     rk.value=st.mode==='kelvin'?st.k:S.k;rt.value=st.mode==='kelvin'?st.t:S.t;$('olddo-kv').textContent=(st.mode==='kelvin'?st.k:S.k)+'K';
     var tv=st.mode==='kelvin'?st.t:S.t;$('olddo-tv').textContent=tv===0?'0':(tv<0?'G'+(-tv):'M'+tv);
-    rk.setAttribute('aria-valuetext',rk.value+'K');stepMark();drawChart(S);}
+    rk.setAttribute('aria-valuetext',rk.value+'K');customUI(L,S,pc);drawChart(S);}
   var rz;window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(render,150);});
   render();
 })();
