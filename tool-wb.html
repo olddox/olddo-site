@@ -30,6 +30,7 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
 .olddo-tool .olddo-photo{position:relative;aspect-ratio:3/2;background:#222}
 .olddo-tool .olddo-photo canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .olddo-tool .olddo-card-sample{position:absolute;right:10px;bottom:10px;width:min(22%,150px);aspect-ratio:4/3;border-radius:4px;box-shadow:0 2px 10px rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center;font-size:12px;color:#333;padding-bottom:4px;transition:background .2s}
+.olddo-tool .olddo-photo.pick .olddo-light{top:auto;bottom:10px}
 .olddo-tool .olddo-light{position:absolute;left:10px;top:10px;font-size:13px;background:rgba(0,0,0,.6);padding:2px 10px;border-radius:6px}
 .olddo-tool .olddo-lcd{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;padding:12px 16px}
 .olddo-tool .olddo-wbtag{font-family:var(--o-font-num);font-weight:600;font-size:20px;background:var(--o-accent);color:#fff;border-radius:6px;padding:0 10px;line-height:30px}
@@ -70,6 +71,14 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
 .olddo-tool .olddo-sw{display:inline-block;width:18px;height:18px;border-radius:4px;vertical-align:-3px;margin-right:6px;border:1px solid rgba(0,0,0,.15)}
 .olddo-tool .olddo-cbig{font-size:20px;font-weight:700}
 .olddo-tool .olddo-cbig.ok{color:#1F7A4D}
+.olddo-tool .olddo-cbig.bad{color:#C0281F}
+.olddo-tool .olddo-photo.pick canvas{cursor:crosshair}
+.olddo-tool .olddo-mark{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px rgba(0,0,0,.6),inset 0 0 0 2px rgba(0,0,0,.6);pointer-events:none}
+.olddo-tool .olddo-mark.bad{border-color:#FF5A4F}
+.olddo-tool .olddo-mark[hidden],.olddo-tool .olddo-pickmsg[hidden]{display:none}
+.olddo-tool .olddo-pickmsg{position:absolute;left:50%;top:10px;transform:translateX(-50%);max-width:calc(100% - 20px);background:rgba(0,0,0,.78);color:#fff;font-size:14px;font-weight:700;padding:5px 12px;border-radius:8px;text-align:center;pointer-events:none}
+.olddo-tool .olddo-pickmsg.ok{background:rgba(31,122,77,.92)}
+.olddo-tool .olddo-pickmsg.bad{background:rgba(192,40,31,.92)}
 .olddo-tool .olddo-ba{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .olddo-tool .olddo-bai{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:14px}
 .olddo-tool .olddo-bai small{color:var(--o-muted);font-size:13px}
@@ -114,6 +123,8 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
       <canvas id="olddo-cv" role="img" aria-label="示範照片，顏色會隨白平衡設定改變"></canvas>
       <div class="olddo-light" id="olddo-lighttag"></div>
       <div class="olddo-card-sample" id="olddo-paper" role="button" tabindex="0" aria-label="白紙，點一下設為自訂白平衡">白紙</div>
+      <div class="olddo-mark" id="olddo-mark" hidden></div>
+      <div class="olddo-pickmsg" id="olddo-pickmsg" hidden></div>
     </div>
     <div class="olddo-lcd">
       <span class="olddo-wbtag" id="olddo-wbmode">AWB</span>
@@ -150,12 +161,12 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
     </div>
 
     <div class="olddo-panel" id="olddo-p-c" hidden>
-      <div class="olddo-cbig" id="olddo-cbig">👆 點一下「白紙」，告訴相機這是白色</div>
-      <p class="olddo-lead" style="margin:4px 0 12px">點照片右下角的白紙，或下面閃著框的那張都可以。相機知道哪個是白色，就會把整張照片的顏色一起修正回來。</p>
+      <div class="olddo-cbig" id="olddo-cbig">👆 在照片上點一個「白色」的地方</div>
+      <p class="olddo-lead" style="margin:4px 0 12px">告訴相機「這裡是白色」，它就照這個修正整張照片。白紙、白牆、白雲都可以，灰色、黑色的地方也行（它們本身沒有顏色）。<b>點到紅葉、藍天這種有顏色的地方，相機會被騙，整張照片的顏色就會跑掉。</b></p>
       <div class="olddo-ba" aria-live="polite">
-        <div class="olddo-bai"><button type="button" class="olddo-bsw" id="olddo-before" aria-label="白紙，點一下設為自訂白平衡"></button><span>修正前</span><small id="olddo-before-t">—</small></div>
+        <div class="olddo-bai"><span class="olddo-bsw" id="olddo-before"></span><span>你點的地方</span><small id="olddo-before-t">還沒點</small></div>
         <div class="olddo-arrow">→</div>
-        <div class="olddo-bai"><span class="olddo-bsw" id="olddo-after"></span><span>修正後</span><small id="olddo-after-t">還沒點</small></div>
+        <div class="olddo-bai"><span class="olddo-bsw" id="olddo-after"></span><span>白紙現在</span><small id="olddo-after-t">—</small></div>
       </div>
       <div class="olddo-row" style="margin-top:14px"><span class="olddo-lbl">換個光源再試</span><span class="olddo-row" id="olddo-cl"></span></div>
       <details class="olddo-real"><summary>在真的相機上怎麼做？</summary>
@@ -218,7 +229,7 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
   function lightNow(){return st.quiz||LIGHTS[st.light];}
   function awbOf(L){var k=L.k;if(k<3800)k=k+(3800-k)*0.45;else if(k>7000)k=7000+(k-7000)*0.6;return {k:Math.round(k/100)*100,t:Math.round(-L.t*0.5)};}
   function camSetting(){var L=lightNow();
-    if(st.mode==='custom'&&st.custom)return {k:st.custom.k,t:st.custom.t,label:'自訂'};
+    if(st.mode==='custom'&&st.custom)return {k:st.custom.k,t:0,label:'自訂'};
     if(st.mode==='kelvin')return {k:st.k,t:st.t,label:'K'};
     var p=PRESETS.filter(function(x){return x.id===st.preset;})[0];
     if(p.id==='awb'){var a=awbOf(L);return {k:a.k,t:a.t,label:'AWB'};}
@@ -226,6 +237,12 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
   // channel gains: light colour divided by the colour the camera thinks it is
   function gains(L,S){var l=k2rgb(L.k),s=k2rgb(S.k);var g=[0,1,2].map(function(i){return Math.pow((l[i]/l[1])/(s[i]/s[1]),1.3);});
     g[1]=g[1]*Math.pow(1.045,-(L.t+S.t));var Y=0.3*g[0]+0.59*g[1]+0.11*g[2];return g.map(function(v){return v/Y;});}
+  var D65={k:5500,t:0};
+  function curGains(L,S){if(st.mode==='custom'&&st.custom){var b=gains(L,D65),C=st.custom.C,g=[b[0]*C[0],b[1]*C[1],b[2]*C[2]],Y=0.3*g[0]+0.59*g[1]+0.11*g[2];return g.map(function(v){return v/Y;});}return gains(L,S);}
+  function hueName(rgb){var r=rgb[0],g=rgb[1],b=rgb[2],mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn,h;if(d===0)return '';
+    if(mx===r)h=((g-b)/d)%6;else if(mx===g)h=(b-r)/d+2;else h=(r-g)/d+4;h*=60;if(h<0)h+=360;
+    return h<15||h>=345?'紅':h<40?'橘':h<70?'黃':h<160?'綠':h<200?'青':h<255?'藍':h<290?'紫':'洋紅';}
+  function rgbCast(rgb){var mx=Math.max.apply(null,rgb),mn=Math.min.apply(null,rgb);return (mx-mn)/Math.max(mx,1)<0.06?'白紙是白的 👍':'偏'+hueName(rgb);}
   function paperRGB(g,base){return g.map(function(v){return Math.max(0,Math.min(255,Math.round(base*v)));});}
   function castWord(L,S){var dt=L.t+S.t,w=[];
     var mired=1e6/L.k-1e6/S.k; // + means camera thinks colder → photo warmer
@@ -251,43 +268,60 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
   $('olddo-ptable').innerHTML=PRESETS.map(function(p){var c=p.k?k2rgb(p.k):[240,240,240];return '<tr><td><b>'+p.n+'</b></td><td>'+p.desc+'</td><td>'+p.fit+'</td><td>'+p.bad+'</td></tr>';}).join('');
   function tab(which){['p','k','c'].forEach(function(x){$('olddo-tab-'+x).setAttribute('aria-pressed',x===which?'true':'false');$('olddo-p-'+x).hidden=x!==which;});
     if(which==='p'){st.mode='preset';}
-    if(which==='k'){var s=camSetting();if(st.mode!=='kelvin'){st.k=s.k;st.t=s.t;}st.mode='kelvin';}
+    if(which==='k'){var s=camSetting();if(st.mode!=='kelvin'){st.k=s.k||lightNow().k;st.t=s.t;}st.mode='kelvin';}
     if(which==='c'){if(st.custom)st.mode='custom';else if(!st.quiz)setupCustomScene();}
     render();}
-  $('olddo-tab-p').onclick=function(){tab('p');};$('olddo-tab-k').onclick=function(){tab('k');};$('olddo-tab-c').onclick=function(){tab('c');};
+  $('olddo-tab-p').onclick=function(){tab('p');};$('olddo-tab-k').onclick=function(){tab('k');};$('olddo-tab-c').onclick=function(){tab('c');if(window.innerWidth<760){var vf=document.querySelector('.olddo-vf');if(vf)vf.scrollIntoView({behavior:'smooth',block:'start'});}};
   var rk=$('olddo-k'),rt=$('olddo-t');
   rk.oninput=function(){st.mode='kelvin';st.k=+rk.value;render();};
   rt.oninput=function(){st.mode='kelvin';st.t=+rt.value;render();};
   document.querySelectorAll('[data-k]').forEach(function(b){b.onclick=function(){st.mode='kelvin';st.k=Math.max(2500,Math.min(10000,st.k+(+b.dataset.k)));render();};});
   document.querySelectorAll('[data-t]').forEach(function(b){b.onclick=function(){st.mode='kelvin';st.t=Math.max(-9,Math.min(9,st.t+(+b.dataset.t)));render();};});
-  // custom WB: tap the white paper to tell the camera "this is white"
+  // custom WB: tap a spot on the photo to tell the camera "this is white"
   function cTab(){return !$('olddo-p-c').hidden;}
   function setupCustomScene(){ // camera on 日光, scene light that gives a visible cast
-    st.mode='preset';st.preset='sun';st.custom=null;st.before=null;
+    st.mode='preset';st.preset='sun';st.custom=null;
     if(castWord(lightNow(),camSetting()).indexOf('白的')>=0)st.light=5;
   }
-  function resetCustomSteps(){st.custom=null;st.before=null;if(st.mode==='custom')st.mode='preset';}
+  function resetCustomSteps(){st.custom=null;if(st.mode==='custom')st.mode='preset';}
   function lightChanged(){}
-  function tapPaper(){if(st.quiz)return;var L=lightNow(),S=camSetting(),g=gains(L,S);
-    st.before={rgb:paperRGB(g,236),w:castWord(L,S)};st.custom={k:L.k,t:-L.t};st.mode='custom';
-    if(!cTab())tab('c');else render();}
-  $('olddo-paper').onclick=tapPaper;$('olddo-before').onclick=function(){if($('olddo-before').classList.contains('tap')){tapPaper();if(window.innerWidth<760){var vf=document.querySelector('.olddo-vf');if(vf)vf.scrollIntoView({behavior:'smooth',block:'start'});}}};$('olddo-paper').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tapPaper();}};
+  function pickColor(srgb,pos){if(st.quiz)return;var L=lightNow(),S=camSetting(),gNow=curGains(L,S);
+    var raw=gains(L,D65).map(function(v,i){return Math.max(2,srgb[i]*v);}),Y=0.3*raw[0]+0.59*raw[1]+0.11*raw[2];
+    var C=raw.map(function(v){return Math.max(0.45,Math.min(2.4,Y/v));});
+    var mx=Math.max.apply(null,srgb),mn=Math.min.apply(null,srgb),sat=(mx-mn)/Math.max(mx,1),lum=0.3*srgb[0]+0.59*srgb[1]+0.11*srgb[2];
+    var kind=lum<22?'dark':(sat<0.15?(lum>185?'白色':(lum>70?'灰色':'黑色')):'color');
+    st.custom={C:C,k:kind==='color'||kind==='dark'?null:L.k,lightK:L.k,lightT:L.t,pos:pos,kind:kind,hue:hueName(srgb),seen:paperRGB(gNow,1).map(function(v,i){return Math.max(0,Math.min(255,Math.round(srgb[i]*gNow[i])));})};
+    st.mode='custom';if(!cTab())tab('c');else render();}
+  function tapPaper(){var ph=$('olddo-paper'),box=ph.parentNode.getBoundingClientRect(),r=ph.getBoundingClientRect();
+    pickColor([236,236,236],{x:(r.left+r.width/2-box.left)/box.width,y:(r.top+r.height/2-box.top)/box.height});}
+  $('olddo-paper').onclick=tapPaper;$('olddo-paper').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tapPaper();}};
+  cv.addEventListener('click',function(e){if(!cTab()||!src)return;var r=cv.getBoundingClientRect(),fx=(e.clientX-r.left)/r.width,fy=(e.clientY-r.top)/r.height;
+    var X=Math.round(fx*src.width),Y=Math.round(fy*src.height),sum=[0,0,0],n=0;
+    for(var dy=-4;dy<=4;dy++)for(var dx=-4;dx<=4;dx++){var x=X+dx,y=Y+dy;if(x<0||y<0||x>=src.width||y>=src.height)continue;var o=(y*src.width+x)*4;sum[0]+=src.data[o];sum[1]+=src.data[o+1];sum[2]+=src.data[o+2];n++;}
+    if(!n)return;pickColor(sum.map(function(v){return v/n;}),{x:fx,y:fy});});
   var clw=$('olddo-cl');
   [4,5,2,6].forEach(function(i){var b=document.createElement('button');b.className='olddo-btn';b.type='button';b.textContent=LIGHTS[i].n;b.onclick=function(){st.light=i;st.quiz=null;render();};clw.appendChild(b);});
   function customUI(L,S,pc){
-    var c=cTab(),neutral=castWord(L,S).indexOf('白的')>=0,paper=$('olddo-paper');
-    var want=c&&!st.quiz&&!(st.mode==='custom'&&neutral);
-    paper.classList.toggle('tap',want);paper.textContent=want?'👆 點我':'白紙';var bf=$('olddo-before');bf.classList.toggle('tap',want);bf.textContent=want?'👆 點我':'';bf.disabled=!want;
+    var c=cTab(),cu=st.mode==='custom'&&st.custom?st.custom:null,paper=$('olddo-paper'),mk=$('olddo-mark'),pcCast=rgbCast(pc),ok=pcCast.indexOf('白的')>=0;
+    $('olddo-cv').parentNode.classList.toggle('pick',c&&!st.quiz);
+    var want=c&&!st.quiz&&!cu;paper.classList.toggle('tap',want);paper.textContent=want?'👆 白紙':'白紙';
+    if(cu&&c){mk.hidden=false;mk.style.left=(cu.pos.x*100)+'%';mk.style.top=(cu.pos.y*100)+'%';mk.classList.toggle('bad',!ok);}else mk.hidden=true;
     clw.querySelectorAll('button').forEach(function(b,n){b.setAttribute('aria-pressed',[4,5,2,6][n]===st.light&&!st.quiz?'true':'false');});
+    var pm=$('olddo-pickmsg');
+    if(!c)pm.hidden=true;
     if(!c)return;
-    var big=$('olddo-cbig');
-    if(st.mode==='custom'&&neutral){big.textContent='✓ 修好了！白紙變回白色';big.className='olddo-cbig ok';}
-    else if(st.mode==='custom'){big.textContent='換了光源，顏色又跑掉了 → 再點一次白紙';big.className='olddo-cbig';}
-    else {big.textContent='👆 點一下「白紙」，告訴相機這是白色';big.className='olddo-cbig';}
-    var b=st.before&&st.mode==='custom'&&neutral?st.before:{rgb:pc,w:castWord(L,S)};
-    $('olddo-before').style.background='rgb('+b.rgb.join(',')+')';$('olddo-before-t').textContent=b.w.replace(' 👍','');
-    if(st.mode==='custom'&&neutral){$('olddo-after').style.background='rgb('+pc.join(',')+')';$('olddo-after-t').textContent='白的 👍';}
-    else{$('olddo-after').style.background='repeating-linear-gradient(45deg,#eee,#eee 6px,#f7f7f7 6px,#f7f7f7 12px)';$('olddo-after-t').textContent='還沒點';}
+    var big=$('olddo-cbig'),sameLight=cu&&cu.lightK===L.k&&cu.lightT===L.t;
+    if(!cu){big.textContent='👆 在照片上點一個「白色」的地方';big.className='olddo-cbig';}
+    else if(!sameLight){big.textContent='換了光源，顏色又跑掉了 → 再點一次白色的地方';big.className='olddo-cbig';}
+    else if(cu.kind==='color'){big.textContent='✗ 你點的是「'+cu.hue+'色」的地方，不是白色！相機被騙了，整張照片變成'+pcCast;big.className='olddo-cbig bad';}
+    else if(cu.kind==='dark'){big.textContent='✗ 這裡太暗了，相機讀不出顏色，請點亮一點的白色或灰色';big.className='olddo-cbig bad';}
+    else if(ok){big.textContent='✓ 正確！你點的是'+cu.kind+'，照片顏色修正好了';big.className='olddo-cbig ok';}
+    else {big.textContent='△ 你點的是'+cu.kind+'，方向對了，但照片還是有點'+pcCast+'。'+(cu.kind==='黑色'?'暗的地方顏色不準，':'')+'換一塊更純的白色或灰色試試';big.className='olddo-cbig';}
+    pm.hidden=false;pm.className='olddo-pickmsg '+(big.className.indexOf('ok')>0?'ok':(big.className.indexOf('bad')>0?'bad':''));
+    pm.textContent=!cu?'👆 點照片裡白色的地方':(!sameLight?'換光源了，再點一次':(cu.kind==='color'?'✗ 點到'+cu.hue+'色，照片變'+pcCast:(cu.kind==='dark'?'✗ 太暗，讀不出顏色':(ok?'✓ 正確！顏色修好了':'△ 還有點'+pcCast))));
+    if(cu){$('olddo-before').style.background='rgb('+cu.seen.join(',')+')';$('olddo-before-t').textContent=cu.kind==='color'?cu.hue+'色（有顏色）':(cu.kind==='dark'?'太暗':cu.kind);}
+    else{$('olddo-before').style.background='repeating-linear-gradient(45deg,#eee,#eee 6px,#f7f7f7 6px,#f7f7f7 12px)';$('olddo-before-t').textContent='還沒點';}
+    $('olddo-after').style.background='rgb('+pc.join(',')+')';$('olddo-after-t').textContent=pcCast;
   }
   // quiz
   $('olddo-quiz').onclick=function(){var k=Math.round((2600+Math.random()*6400)/100)*100,t=Math.random()<0.3?-Math.ceil(Math.random()*4):0;
@@ -312,20 +346,21 @@ background:var(--o-bg);color:var(--o-ink);font-family:var(--o-font-body);font-si
       c.appendChild(el('text',{x:x,y:ty-14,'text-anchor':anchor,'font-size':narrow?12:14,fill:'#1E2124','font-weight':700},narrow?m.n.replace('・閃光燈',''):m.n));
       c.appendChild(el('text',{x:x,y:ty+2,'text-anchor':anchor,'font-size':12,fill:'#5E6468'},m.k+'K'));});
     (narrow?[2000,3000,5000,10000]:[2000,3000,4000,5000,6000,8000,10000]).forEach(function(k){c.appendChild(el('text',{x:X(k),y:barY+40,'text-anchor':'middle','font-size':12,fill:'#5E6468','font-family':'Barlow Condensed,Arial Narrow,sans-serif'},k));});
+    if(!S.k){c.appendChild(el('text',{x:W/2,y:barY+66,'text-anchor':'middle','font-size':13,fill:'#D7322B','font-weight':700},'相機設定：自訂（點到有顏色的地方，算不出正確色溫）'));return;}
     var sx=X(Math.max(k0,Math.min(k1,S.k)));c.appendChild(el('path',{d:'M'+sx+' '+(barY+26)+' l-8 14 h16 z',fill:'#D7322B'}));
     c.appendChild(el('text',{x:Math.max(40,Math.min(W-40,sx)),y:barY+66,'text-anchor':'middle','font-size':13,fill:'#D7322B','font-weight':700},'相機設定 '+S.k+'K'));
     c.appendChild(el('text',{x:x0,y:H-4,'font-size':12,fill:'#5E6468'},'← 光越黃紅'));c.appendChild(el('text',{x:x1,y:H-4,'font-size':12,fill:'#5E6468','text-anchor':'end'},'光越藍 →'));}
-  function draw(){var L=lightNow(),S=camSetting(),g=gains(L,S);paint(g);
+  function draw(){var L=lightNow(),S=camSetting(),g=curGains(L,S);paint(g);
     var pc=paperRGB(g,236);$('olddo-paper').style.background='rgb('+pc.join(',')+')';
     $('olddo-lighttag').textContent='現場：'+(st.quiz?'？？？（挑戰中）':L.n+' '+L.k+'K');
     $('olddo-wbmode').textContent=S.label==='K'?'K':(S.label==='AWB'?'AWB':(S.label==='自訂'?'自訂':S.label));
-    $('olddo-setk').textContent=S.k+'K';$('olddo-sett').textContent=S.t===0?'0':(S.t<0?'G'+(-S.t):'M'+S.t);
-    var cw=castWord(L,S);$('olddo-verdict').textContent='白紙：'+cw;$('olddo-vdot').style.background='rgb('+pc.join(',')+')';
+    var isC=st.mode==='custom'&&st.custom;$('olddo-setk').textContent=isC?'點選':S.k+'K';$('olddo-sett').textContent=isC?'—':(S.t===0?'0':(S.t<0?'G'+(-S.t):'M'+S.t));
+    var cw=isC?rgbCast(pc):castWord(L,S);$('olddo-verdict').textContent='白紙：'+cw;$('olddo-vdot').style.background='rgb('+pc.join(',')+')';
     lw.querySelectorAll('button').forEach(function(b,i){b.setAttribute('aria-pressed',!st.quiz&&i===st.light?'true':'false');});
     pw.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',st.mode==='preset'&&b.dataset.p===st.preset?'true':'false');});
     if(st.mode==='preset'){var p=PRESETS.filter(function(x){return x.id===st.preset;})[0];
       $('olddo-presethint').innerHTML=(p.id==='awb'?'<b>AWB：</b>相機自己猜現場光，猜成 '+S.k+'K。':'<b>'+p.n+'</b>：相機當作現場是 '+p.k+'K 的光。')+' 現場其實是 '+(st.quiz?'？？？':L.k+'K')+'，所以照片'+cw.replace(' 👍','，顏色正確 👍')+'。';}
-    rk.value=st.mode==='kelvin'?st.k:S.k;rt.value=st.mode==='kelvin'?st.t:S.t;$('olddo-kv').textContent=(st.mode==='kelvin'?st.k:S.k)+'K';
+    var Sk=S.k||L.k;rk.value=st.mode==='kelvin'?st.k:Sk;rt.value=st.mode==='kelvin'?st.t:S.t;$('olddo-kv').textContent=(st.mode==='kelvin'?st.k:Sk)+'K';
     var tv=st.mode==='kelvin'?st.t:S.t;$('olddo-tv').textContent=tv===0?'0':(tv<0?'G'+(-tv):'M'+tv);
     rk.setAttribute('aria-valuetext',rk.value+'K');customUI(L,S,pc);drawChart(S);}
   var rz;window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(render,150);});
