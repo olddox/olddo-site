@@ -541,6 +541,11 @@ slug: mobile-class
   .sched-table .t { font-size:12px; color:var(--soft-ink); white-space:nowrap; }
   .sched-table .k { font-size:11.5px; padding:1px 6px; border:1px solid var(--indoor-tag); color:var(--indoor-tag); white-space:nowrap; }
   .sched-table tr.o .k { border-color:var(--outdoor-tag); color:var(--outdoor-tag); }
+  .olddo-topnav{background:#F4F2EE;border-bottom:1px solid #D8D4CC}
+  .olddo-topnav-in{max-width:1280px;margin:0 auto;padding:16px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 32px}
+  .olddo-topnav a{color:#161616;text-decoration:none;font-size:15px}
+  .olddo-topnav a:hover{color:#B3261E}
+  .olddo-topnav .brand{font-family:'Noto Serif TC',serif;font-weight:900;font-size:20px;letter-spacing:.08em;flex-grow:1}
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -565,7 +570,8 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 </head>
 <body>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"手機攝影基礎班","description":"台中西區小班手機攝影課，多個上課時段可選，共六堂（3堂室內＋3堂外拍），手機設定、構圖、人像、美食與街景拍攝，零基礎也能學會。","provider":{"@type":"Organization","name":"歐豆攝影教室","sameAs":"https://www.olddo.com"},"offers":[{"@type":"Offer","category":"新生報名","price":"3600","priceCurrency":"TWD"},{"@type":"Offer","category":"早鳥優惠","price":"3300","priceCurrency":"TWD"},{"@type":"Offer","category":"團體報名","price":"3000","priceCurrency":"TWD"}],"hasCourseInstance":[{"@type":"CourseInstance","name":"週三早上班","courseMode":"Onsite","startDate":"2026-10-28","endDate":"2026-12-02","courseSchedule":{"@type":"Schedule","byDay":"Wednesday","startTime":"10:00","endTime":"12:00"},"location":{"@type":"Place","name":"歐豆攝影教室","address":{"@type":"PostalAddress","streetAddress":"西區三民路一段170號3F之二","addressLocality":"台中市","addressCountry":"TW"},"@id":"#studio"}},{"@type":"CourseInstance","name":"週四晚上班","courseMode":"Onsite","startDate":"2026-11-19","endDate":"2026-12-06","courseSchedule":{"@type":"Schedule","byDay":"Thursday","startTime":"19:30","endTime":"21:30"},"location":{"@id":"#studio"}}]}</script>
+<div class="olddo-topnav"><nav class="olddo-topnav-in" aria-label="主選單"><a class="brand" href="../index.html">歐豆攝影教室</a><a href="../index.html#courses">課程</a><a href="../index.html#schedule">近期開課</a><a href="../index.html#works">作品</a><a href="../tools.html">攝影工具</a><a href="../index.html#contact">聯絡</a></nav></div>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"手機攝影基礎班","description":"台中西區小班手機攝影課，多個上課時段可選，共六堂（3堂室內＋3堂外拍），手機設定、構圖、人像、美食與街景拍攝，零基礎也能學會。","provider":{"@type":"Organization","name":"歐豆攝影教室","sameAs":"https://www.olddo.com"},"offers":[{"@type":"Offer","category":"新生報名","price":"3600","priceCurrency":"TWD"},{"@type":"Offer","category":"早鳥優惠","price":"3300","priceCurrency":"TWD"},{"@type":"Offer","category":"團體報名","price":"3000","priceCurrency":"TWD"}],"hasCourseInstance":[{"@type":"CourseInstance","name":"週三早上班","courseMode":"Onsite","startDate":"2026-10-28","endDate":"2026-12-02","courseSchedule":{"@type":"Schedule","byDay":"Wednesday","startTime":"10:00","endTime":"12:00"},"location":{"@type":"Place","name":"歐豆攝影教室","address":{"@type":"PostalAddress","streetAddress":"西區三民路一段170號3F之二","addressLocality":"台中市","addressCountry":"TW"},"@id":"#studio"}},{"@type":"CourseInstance","name":"週四晚上班","courseMode":"Onsite","startDate":"2026-11-19","endDate":"2026-12-05","courseSchedule":{"@type":"Schedule","byDay":"Thursday","startTime":"19:30","endTime":"21:30"},"location":{"@id":"#studio"}}]}</script>
 <script>
   // 來訪人數計數器：呼叫 Apps Script Web App，累加並顯示目前次數
   // 網址拆段組合，避免主機防火牆把完整外部網址誤判為攻擊而擋下儲存
@@ -614,7 +620,7 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
       </button>
       <button type="button" class="cohort-card" id="card-c1119" data-cohort="c1119">
         <div class="cn">週四晚上班</div>
-        <div class="cd">11/19 開課・週四晚上＋週日外拍</div>
+        <div class="cd">11/19 開課・週四晚上＋週六早上外拍</div>
         <span class="cs" id="cs-c1119">招生中</span>
       </button>
     </div>
@@ -635,11 +641,11 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
       <thead><tr><th>堂</th><th>日期／時間</th><th>類型</th><th>主題</th></tr></thead>
       <tbody>
         <tr><td>01</td><td>11/19（四）<div class="t">19:30–21:30</div></td><td><span class="k">室內</span></td><td>手機拍照基本技巧</td></tr>
-        <tr class="o"><td>02</td><td>11/22（日）<div class="t">14:00–16:00</div></td><td><span class="k">外拍</span></td><td>戶外拍攝實際應用</td></tr>
+        <tr class="o"><td>02</td><td>11/21（六）<div class="t">10:00–12:00</div></td><td><span class="k">外拍</span></td><td>戶外拍攝實際應用</td></tr>
         <tr><td>03</td><td>11/26（四）<div class="t">19:30–21:30</div></td><td><span class="k">室內</span></td><td>構圖技巧與人像拍攝</td></tr>
-        <tr class="o"><td>04</td><td>11/29（日）<div class="t">14:00–16:00</div></td><td><span class="k">外拍</span></td><td>風景與街景拍攝實戰</td></tr>
+        <tr class="o"><td>04</td><td>11/28（六）<div class="t">10:00–12:00</div></td><td><span class="k">外拍</span></td><td>風景與街景拍攝實戰</td></tr>
         <tr><td>05</td><td>12/03（四）<div class="t">19:30–21:30</div></td><td><span class="k">室內</span></td><td>美食攝影要訣</td></tr>
-        <tr class="o"><td>06</td><td>12/06（日）<div class="t">14:00–16:00</div></td><td><span class="k">外拍</span></td><td>外拍實作（結業）</td></tr>
+        <tr class="o"><td>06</td><td>12/05（六）<div class="t">10:00–12:00</div></td><td><span class="k">外拍</span></td><td>外拍實作（結業）</td></tr>
       </tbody>
     </table>
 
@@ -974,7 +980,7 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
     if (fallbackId === '') fallbackId = id;
   };
   setupCohort('c1028', '2026-11-11', '2026-12-02');
-  setupCohort('c1119', '2026-12-03', '2026-12-06');
+  setupCohort('c1119', '2026-12-03', '2026-12-05');
   const selectCohort = id => {
     COHORT_IDS.forEach(x => {
       const t = document.getElementById('sched-' + x);
