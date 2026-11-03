@@ -598,6 +598,8 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-715857408"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-715857408');</script>
 </head>
 <body>
 <div class="olddo-topnav"><nav class="olddo-topnav-in" aria-label="主選單"><a class="brand" href="../index.html">歐豆攝影教室</a><a href="../index.html#courses">課程</a><a href="../index.html#schedule">近期開課</a><a href="../index.html#works">作品</a><a href="../tools.html">攝影工具</a><a href="../index.html#contact">聯絡</a></nav></div>
@@ -894,7 +896,7 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
           <label class="camera-chip"><input type="radio" name="camera" value="Fujifilm">Fujifilm</label>
           <label class="camera-chip"><input type="radio" name="camera" value="Leica">Leica</label>
           <label class="camera-chip"><input type="radio" name="camera" value="OM SYSTEM">OM SYSTEM</label>
-          <label class="camera-chip"><input type="radio" name="camera" value="Panansonic">Panasonic</label>
+          <label class="camera-chip"><input type="radio" name="camera" value="Panasonic">Panasonic</label>
           <label class="camera-chip"><input type="radio" name="camera" value="Sony">Sony</label>
           <label class="camera-chip"><input type="radio" name="camera" value="還沒買，『第一堂課可以不用先買』">還沒買</label>
         </div>
@@ -965,13 +967,14 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
   let isClosed = true;
   let shownId = '';
   let fallbackId = '';
-  const setupCohort = (id, closeDate, endDate) => {
+  const setupCohort = (id, closeDate, endDate, startDate) => {
     let open = nowTime < new Date(closeDate + 'T00:00:00+08:00');
     if (MANUAL_OVERRIDE !== null) open = MANUAL_OVERRIDE;
     const ended = nowTime >= new Date(endDate + 'T23:59:59+08:00');
     if (open) {
       isClosed = false;
       if (shownId === '') shownId = id;
+      if (nowTime >= new Date(startDate + 'T00:00:00+08:00')) document.getElementById('cs-' + id).textContent = '上課中・可報名';
       return;
     }
     const opt = document.getElementById('opt-' + id);
@@ -984,10 +987,10 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
     }
     document.getElementById('card-' + id).classList.add('closed');
     document.getElementById('card-' + id).disabled = true;
-    document.getElementById('cs-' + id).textContent = '已截止';
+    document.getElementById('cs-' + id).textContent = '上課中・已截止';
     if (fallbackId === '') fallbackId = id;
   };
-  setupCohort('c1106', '2026-11-20', '2026-12-13');
+  setupCohort('c1106', '2026-11-20', '2026-12-13', '2026-11-06');
   const selectCohort = id => {
     COHORT_IDS.forEach(x => {
       const t = document.getElementById('sched-' + x);
@@ -1108,10 +1111,15 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
     fd.append('entry.1793277311', document.getElementById('f_class').value);
     fd.append('entry.1234029283', document.getElementById('f_type').value);
     fd.append('entry.1453552635', document.getElementById('f_pay').value);
+    let extraNote = '';
     if (sourceVal) fd.append('entry.633081430', sourceVal.value);
     const cameraVal = document.querySelector('input[name="camera"]:checked');
-    if (cameraVal) fd.append('entry.670835952', cameraVal.value);
-    fd.append('entry.130299036',  document.getElementById('f_note').value.trim());
+    const CAM_OK = ['Canon', 'Nikon', 'Fujifilm', 'Leica', 'OM SYSTEM', 'Panasonic', 'Sony', '手機', '還沒買，『第一堂課可以不用先買』'];
+    if (cameraVal) {
+      if (CAM_OK.indexOf(cameraVal.value) >= 0) fd.append('entry.670835952', cameraVal.value);
+      else extraNote = extraNote + '［相機：' + cameraVal.value + '］';
+    }
+    fd.append('entry.130299036',  (document.getElementById('f_note').value.trim() + ' ' + extraNote).trim());
 
     btn.disabled = true;
     btn.textContent = '送出中…';
