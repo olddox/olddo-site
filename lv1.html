@@ -599,7 +599,7 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
 </head>
 <body>
 <div class="olddo-topnav"><nav class="olddo-topnav-in" aria-label="主選單"><a class="brand" href="index.html">歐豆攝影教室</a><a href="index.html#courses">課程</a><a href="index.html#schedule">近期開課</a><a href="index.html#works">作品</a><a href="tools.html">攝影工具</a><a href="index.html#contact">聯絡</a></nav></div>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"LV1 數位攝影基礎班","description":"台中西區小班攝影課，多個上課時段可選，共十堂（6堂室內＋4堂外拍），從光圈、快門、ISO 到外拍實戰，零基礎也能學會。","provider":{"@type":"Organization","name":"歐豆攝影教室","sameAs":"https://www.olddo.com"},"offers":[{"@type":"Offer","category":"新生報名","price":"5000","priceCurrency":"TWD"},{"@type":"Offer","category":"早鳥優惠","price":"4800","priceCurrency":"TWD"},{"@type":"Offer","category":"優惠價格","price":"4500","priceCurrency":"TWD"}],"hasCourseInstance":[{"@type":"CourseInstance","name":"週四晚上班","courseMode":"Onsite","startDate":"2026-10-08","endDate":"2026-11-14","courseSchedule":{"@type":"Schedule","byDay":"Thursday","startTime":"19:30","endTime":"21:30"},"location":{"@type":"Place","name":"歐豆攝影教室","address":{"@type":"PostalAddress","streetAddress":"西區三民路一段170號3F之二","addressLocality":"台中市","addressCountry":"TW"},"@id":"#studio"}},{"@type":"CourseInstance","name":"週三晚上班","courseMode":"Onsite","startDate":"2026-12-02","endDate":"2027-01-16","courseSchedule":{"@type":"Schedule","byDay":"Wednesday","startTime":"19:30","endTime":"21:30"},"location":{"@id":"#studio"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"LV1 數位攝影基礎班","description":"台中西區小班攝影課，多個上課時段可選，共十堂（6堂室內＋4堂外拍），從光圈、快門、ISO 到外拍實戰，零基礎也能學會。","provider":{"@type":"Organization","name":"歐豆攝影教室","sameAs":"https://www.olddo.com"},"offers":[{"@type":"Offer","category":"新生報名","price":"5000","priceCurrency":"TWD"},{"@type":"Offer","category":"早鳥優惠","price":"4800","priceCurrency":"TWD"},{"@type":"Offer","category":"優惠價格","price":"4500","priceCurrency":"TWD"}],"hasCourseInstance":[{"@type":"CourseInstance","name":"週三晚上班","courseMode":"Onsite","startDate":"2026-12-02","endDate":"2027-01-16","courseSchedule":{"@type":"Schedule","byDay":"Wednesday","startTime":"19:30","endTime":"21:30"},"location":{"@type":"Place","name":"歐豆攝影教室","address":{"@type":"PostalAddress","streetAddress":"西區三民路一段170號3F之二","addressLocality":"台中市","addressCountry":"TW"},"@id":"#studio"}}]}</script>
 
 <header class="olddo-header">
   <div class="header-label">Olddo Photography ── LV1 Basic Course</div>
@@ -675,6 +675,7 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
       ＊ 各班室內課與外拍時間以上表為準，外拍集合地點於室內課通知<br>
       ＊ 以上為預定安排，實際日期可能依天候、場地調整，異動將另行通知
     </div>
+    <a href="p/flash-class.html" style="display:block;margin-top:24px;padding:16px;border:1px solid var(--accent-light);color:var(--accent);font-weight:600;text-align:center">上完基礎班？下一步：閃燈攝影班 →</a>
   </section>
 
   <!-- NOTES -->
@@ -1101,13 +1102,11 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
 
 
     if (hasSubmittedOnce) {
-      const proceed = confirm(`您已經成功送出過一次報名。
+      const proceed = confirm(`您已經送出過一次報名，再送會多一筆新紀錄。
 
-再次送出會建立「新的一筆」報名紀錄（不會覆蓋原本那筆），老師端也會再收到一次通知信。
+只是要修正資料的話，用 Line 或電話告訴老師即可。
 
-若只是想修正資料，建議改用 Line 或電話直接告知老師即可，不用重新送出表單。
-
-仍要繼續送出嗎？`);
+仍要送出嗎？`);
       if (!proceed) return;
     }
 
