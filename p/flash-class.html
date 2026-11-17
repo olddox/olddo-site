@@ -930,7 +930,7 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
       <div class="success-notice">
         <div class="success-notice-title">★ 提醒事項</div>
         <ul>
-          <li>第一堂上課時間：<span id="firstLesson"></span>，地點：台中市西區三民路一段170號3F之二</li>
+          <li>第一堂上課時間：<span id="firstLesson">將另行通知</span>，地點：台中市西區三民路一段170號3F之二</li>
           <li>老師會在【兩天內】主動與您聯絡，確認報名及繳費事宜</li>
           <li>繳費方式：永豐銀行（807）003-018-00125598／Line Pay：olddo／教室現金面交</li>
           <li>繳費後請以 Line 或簡訊通知老師：olddo／0930-209111</li>
@@ -1154,7 +1154,8 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
       const classText = document.getElementById('f_class').options[document.getElementById('f_class').selectedIndex]?.textContent || '';
       let firstText = '將另行通知';
       if (document.getElementById('f_class').value === document.getElementById('opt-c1106').value) firstText = '11/06（五）19:30–21:30';
-      document.getElementById('firstLesson').textContent = firstText;
+      const flEl = document.getElementById('firstLesson');
+      if (flEl) flEl.textContent = firstText;
       const typeText = document.getElementById('f_type').options[document.getElementById('f_type').selectedIndex]?.textContent || '';
       const payText = document.getElementById('f_pay').options[document.getElementById('f_pay').selectedIndex]?.textContent || '';
       const rows = [
