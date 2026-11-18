@@ -957,8 +957,10 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
     opt.disabled = true;
     opt.style.display = 'none';
     if (ended) {
-      document.getElementById('card-' + id).style.display = 'none';
       document.getElementById('sched-' + id).style.display = 'none';
+      document.getElementById('card-' + id).classList.add('closed');
+      document.getElementById('card-' + id).disabled = true;
+      document.getElementById('cs-' + id).textContent = '已結業';
       return;
     }
     document.getElementById('card-' + id).classList.add('closed');
@@ -1004,7 +1006,6 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
   if (shownId === '') shownId = fallbackId;
   if (shownId !== '') selectCohort(shownId);
   if (shownId === '') {
-    document.getElementById('cohortCards').style.display = 'none';
     document.getElementById('noCohort').style.display = 'block';
   }
 
