@@ -625,35 +625,14 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
     </div>
 
     <div class="cohort-cards" id="cohortCards">
-      <button type="button" class="cohort-card active" id="card-c1008" data-cohort="c1008">
-        <div class="cn">週四晚上班</div>
-        <div class="cd">10/8 開課・每週四 19:30</div>
-        <span class="cs" id="cs-c1008">招生中</span>
-      </button>
-      <button type="button" class="cohort-card" id="card-c1202" data-cohort="c1202">
+      <button type="button" class="cohort-card active" id="card-c1202" data-cohort="c1202">
         <div class="cn">週三晚上班</div>
         <div class="cd">12/9 開課・每週三 19:30</div>
         <span class="cs" id="cs-c1202">招生中</span>
       </button>
     </div>
     <div style="margin:-12px 0 20px; font-size:13.5px; color:var(--soft-ink);">時間無法配合？<a href="https://www.olddo.com//products/info.php?id=111255&title_id=4700#page" style="color:var(--accent); font-weight:600;">請預約報名 →</a>，開新班時優先通知您</div>
-
-    <table class="sched-table" id="sched-c1008">
-      <thead><tr><th>堂</th><th>日期／時間</th><th>類型</th><th>主題</th></tr></thead>
-      <tbody>
-        <tr><td>01</td><td>10/08（四）<div class="t">19:30–21:30</div></td><td><span class="k">室內</span></td><td>數位攝影觀念與相機操作</td></tr>
-        <tr><td>02</td><td>10/15（四）<div class="t">19:30–21:30</div></td><td><span class="k">室內</span></td><td>曝光三元素與測光技巧</td></tr>
-        <tr class="o"><td>03</td><td>10/17（六）<div class="t">15:00–18:00</div></td><td><span class="k">外拍</span></td><td>測光與曝光實戰練習</td></tr>
-        <tr><td>04</td><td>10/22（四）<div class="t">19:30–21:30</div></td><td><span class="k">室內</span></td><td>白平衡與色彩模式實作</td></tr>
-        <tr><td>05</td><td>10/29（四）<div class="t">19:30–21:30</div></td><td><span class="k">室內</span></td><td>對焦模式與景深運用</td></tr>
-        <tr class="o"><td>06</td><td>10/31（六）<div class="t">09:00–12:00</div></td><td><span class="k">外拍</span></td><td>色彩、色溫與白平衡實作練習</td></tr>
-        <tr><td>07</td><td>11/05（四）<div class="t">19:30–21:30</div></td><td><span class="k">室內</span></td><td>光影控制與反差應對</td></tr>
-        <tr class="o"><td>08</td><td>11/07（六）<div class="t">15:00–18:00</div></td><td><span class="k">外拍</span></td><td>光影控制與對焦實作練習</td></tr>
-        <tr><td>09</td><td>11/12（四）<div class="t">19:30–21:30</div></td><td><span class="k">室內</span></td><td>夜間攝影技巧與實戰應用</td></tr>
-        <tr class="o"><td>10</td><td>11/14（六）<div class="t">19:00–21:00</div></td><td><span class="k">外拍</span></td><td>夜間場景拍攝練習（結業）</td></tr>
-      </tbody>
-    </table>
-    <table class="sched-table" id="sched-c1202" style="display:none">
+    <table class="sched-table" id="sched-c1202">
       <thead><tr><th>堂</th><th>日期／時間</th><th>類型</th><th>主題</th></tr></thead>
       <tbody>
         <tr><td>01</td><td>12/09（三）<div class="t">19:30–21:30</div></td><td><span class="k">室內</span></td><td>數位攝影觀念與相機操作</td></tr>
@@ -830,7 +809,6 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
         <label>報名班別 <span class="req">＊</span></label>
         <select id="f_class" required>
           <option value="">── 請選擇 ──</option>
-          <option id="opt-c1008" value="10/8日(週四)晚上數位攝影基礎班" data-cohort="c1008">週四晚上班　10/8 開課</option>
           <option id="opt-c1202" value="12/9日(週三)晚上數位攝影基礎班" data-cohort="c1202">週三晚上班　12/9 開課</option>
         </select>
       </div>
@@ -975,7 +953,7 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
   // ══════════════════════════════════════════════════════════
   // 各班設定：每班一行 setupCohort('代號', '截止報名日', '結業日')；截止日 = 開課後 14 天，結業日 = 最後一堂
   // 報名選單的選項文字在下方 HTML 的 <option id="opt-代號">，必須與 Google 表單「報名班別」逐字相同
-  const COHORT_IDS = ['c1008', 'c1202'];
+  const COHORT_IDS = ['c1202'];
   const MANUAL_OVERRIDE = null;
   const nowTime = new Date();
   let isClosed = true;
@@ -1004,7 +982,6 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
     document.getElementById('cs-' + id).textContent = '上課中・已截止';
     if (fallbackId === '') fallbackId = id;
   };
-  setupCohort('c1008', '2026-10-22', '2026-11-14', '2026-10-08');
   setupCohort('c1202', '2026-12-23', '2027-01-17', '2026-12-09');
   const selectCohort = id => {
     COHORT_IDS.forEach(x => {
@@ -1172,7 +1149,6 @@ src="https://www.facebook.com/tr?id=391072592949741&ev=PageView&noscript=1"
       // 組成功畫面的摘要內容
       const classText = eClass.options[eClass.selectedIndex]?.textContent || '';
       let firstText = '將另行通知';
-      if (eClass.value === document.getElementById('opt-c1008').value) firstText = '10/08（四）19:30–21:30';
       if (eClass.value === document.getElementById('opt-c1202').value) firstText = '12/09（三）19:30–21:30';
       const flEl = document.getElementById('firstLesson');
       if (flEl) flEl.textContent = firstText;
